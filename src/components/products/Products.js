@@ -14,7 +14,6 @@ const Products = () => {
           <ProductBox />
           <ProductBox />
           <ProductBox />
-          <ProductBox />
         </div>
       </div>
     </div>

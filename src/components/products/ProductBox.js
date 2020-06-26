@@ -1,15 +1,28 @@
 import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import {
+  Grid,
+  Card,
+  CardContent,
+  CardActions,
+  CardMedia,
+  Typography,
+  Button
+} from "@material-ui/core";
 
-const ProductBox = () => {
-  const productBox = {
+const useStyles = makeStyles(theme => ({
+  productBox: {
     flex: "0 0 24%",
     boxShadow: "0 0 12px #aaa",
     marginBottom: "40px",
     transition: "box-shadow .3s ease-in-out",
-    position: "relative"
-  };
+    position: "relative",
+    "&:hover": {
+      boxShadow: "0 0 12px 0 rgba(0, 0, 0, 0.8)"
+    }
+  },
 
-  const productLabel = {
+  label: {
     backgroundColor: "#f32836",
     color: "white",
     fontWeight: "700",
@@ -17,79 +30,71 @@ const ProductBox = () => {
     position: "absolute",
     top: "0",
     right: "0"
-  };
-
-  const image = {
-    maxWidth: "100%"
-  };
-
-  const productManufacturer = {
+  },
+  productManufacturer: {
     fontSize: "14px",
-    margin: "10px 0"
-  };
-
-  const productName = {
+    margin: "10px 0",
+    textTransform: "uppercase"
+  },
+  productName: {
     fontSize: "16px",
+    fontWeight: "700",
     lineHeight: "16px",
-    marginBottom: "10px"
-  };
-
-  const productPrice = {
-    display: "flex",
-    alignItems: "baseline",
-    marginBottom: "10px"
-  };
-
-  const currentPrice = {
+    marginBottom: "10px",
+    textTransform: "uppercase",
+    letterSpacing: "0"
+  },
+  currentPrice: {
     color: "#f32836",
     fontWeight: "500",
     fontSize: "21px"
-  };
-
-  const oldPrice = {
+  },
+  oldPrice: {
     fontSize: "16px",
-    marginLeft: "20px",
     textDecoration: "line-through"
-  };
+  },
+  buttonContainer: {
+    padding: "0 16px 16px 16px"
+  },
+  button: {
+    color: "white",
+    backgroundColor: "#f32836"
+  }
+}));
+
+const ProductBox = () => {
+  const classes = useStyles();
 
   return (
-    <div style={productBox} className="product-box">
-      <div className="product-box-wrapper">
-        <div style={productLabel} className="product-label">
-          <span className="text-uppercase">-20%</span>
-        </div>
-        <div className="product_img mt-4">
-          <img
-            style={image}
-            src="https://climbing-shop.s3-eu-west-1.amazonaws.com/black_diamond_helmet.jpg"
-            alt=""
-          />
-        </div>
-        <div className="produt_content p-3">
-          <div style={productManufacturer} className="product_manufacturer">
-            <span className="text-uppercase">Black Diamond</span>
-          </div>
-          <div style={productName} className="product_name">
-            <span className="text-uppercase">
-              <strong>KASK WSPINACZKOWY BLACK DIAMOND HALF DOME - SLATE</strong>
-            </span>
-          </div>
-          <div style={productPrice} className="product_price">
-            <span style={currentPrice} className="">
-              210zł
-            </span>
-            <span style={oldPrice} className="text-uppercase">
-              240zł
-            </span>
-          </div>
-          <div>
-            <a href="#" className="text-uppercase btn btn-dark">
-              BUY
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Card className={classes.productBox}>
+      <CardContent>
+        <Typography className={classes.label}>-20%</Typography>
+      </CardContent>
+      <CardMedia
+        component="img"
+        src="https://climbing-shop.s3-eu-west-1.amazonaws.com/black_diamond_helmet.jpg"
+      />
+      <CardContent>
+        <Typography className={classes.productManufacturer}>
+          Black Diamond
+        </Typography>
+        <Typography className={classes.productName}>
+          KASK WSPINACZKOWY BLACK DIAMOND HALF DOME - SLATE
+        </Typography>
+        <Grid container direction="row" alignItems="center">
+          <Grid item container xs={4}>
+            <Typography className={classes.currentPrice}>210 zl</Typography>
+          </Grid>
+          <Grid item container xs={4}>
+            <Typography className={classes.oldPrice}>240zl</Typography>
+          </Grid>
+          <Grid item container xs={4}></Grid>
+        </Grid>
+      </CardContent>
+      <CardActions className={classes.buttonContainer}>
+        <Button className={classes.button}>BUY</Button>
+      </CardActions>
+    </Card>
   );
 };
 

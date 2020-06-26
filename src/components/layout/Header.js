@@ -8,7 +8,7 @@ const Header = () => {
   const searchIcon = {
     top: "8px",
     right: "5px",
-    color: "#495057",
+    color: "#!495057",
     fontSize: "22px"
   };
 
@@ -52,13 +52,13 @@ const Header = () => {
               Log in
             </button>
             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a className="dropdown-item" href="#">
+              <a className="dropdown-item" href="#!">
                 Action
               </a>
-              <a className="dropdown-item" href="#">
+              <a className="dropdown-item" href="#!">
                 Another action
               </a>
-              <a className="dropdown-item" href="#">
+              <a className="dropdown-item" href="#!">
                 Something else here
               </a>
             </div>
