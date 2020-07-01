@@ -5,6 +5,7 @@ import About from "./components/pages/About";
 import Products from "./components/products/Products";
 import SignUp from "./components/auth/SignUp";
 import SignIn from "./components/auth/SignIn";
+import ForgotPassword from "./components/auth/ForgotPassword";
 import "./App.css";
 
 const App = () => {
@@ -16,6 +17,7 @@ const App = () => {
         <Route exact path="/products" component={Products} />
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/signin" component={SignIn} />
+        <Route exact path="/forgot-password" component={ForgotPassword} />
       </Switch>
     </Router>
   );
