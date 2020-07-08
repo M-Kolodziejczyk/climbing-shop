@@ -4,6 +4,8 @@ import "./index.css";
 import App from "./App";
 import Amplify from "aws-amplify";
 import config from "./config";
+import { Provider } from "react-redux";
+import store from "./state/store";
 
 Amplify.configure({
   Auth: {
@@ -16,7 +18,9 @@ Amplify.configure({
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );

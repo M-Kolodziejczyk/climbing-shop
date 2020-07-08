@@ -62,7 +62,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ProductBox = () => {
+const ProductItem = () => {
   const classes = useStyles();
 
   return (
@@ -98,4 +98,4 @@ const ProductBox = () => {
   );
 };
 
-export default ProductBox;
+export default ProductItem;

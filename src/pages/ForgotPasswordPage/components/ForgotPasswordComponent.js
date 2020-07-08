@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ForgotPassword = () => {
+const ForgotPasswordComponent = () => {
   const classes = useStyles();
 
   return (
@@ -38,7 +38,7 @@ const ForgotPassword = () => {
           If you've forgotten your password, enter your e-mail address and we'll
           send you an e-mail telling you how to recover it.
         </Typography>
-        <Container item maxWidth="sm">
+        <Container maxWidth="sm">
           <form className={classes.form} noValidate>
             <TextField
               variant="outlined"
@@ -68,4 +68,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default ForgotPasswordComponent;

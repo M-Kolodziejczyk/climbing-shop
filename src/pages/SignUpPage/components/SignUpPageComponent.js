@@ -10,7 +10,6 @@ import {
   Typography,
   Container
 } from "@material-ui/core";
-import { Auth } from "aws-amplify";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -32,43 +31,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const SignUp = () => {
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    password2: ""
-  });
-
-  const onChange = e => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
-  };
-
-  const onSubmit = async e => {
-    e.preventDefault();
-
-    const { firstName, lastName, email, password, password2 } = formData;
-
-    try {
-      const signUpResponse = await Auth.signUp({
-        username: email,
-        password,
-        attributes: {
-          "custom:firstName": firstName,
-          "custom:lastName": lastName
-        }
-      });
-      console.log(signUpResponse);
-    } catch (error) {
-      let err = null;
-      !error.message ? (err = { message: error }) : (err = error);
-      console.log("Error: ", err);
-    }
+const SignUp = props => {
+  const handleChange = e => {
+    props.onChange(e);
   };
 
   const classes = useStyles();
@@ -82,7 +47,7 @@ const SignUp = () => {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate onSubmit={onSubmit}>
+        <form className={classes.form} noValidate onSubmit={props.onSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -94,8 +59,8 @@ const SignUp = () => {
                 id="firstName"
                 label="First Name"
                 autoFocus
-                onChange={onChange}
-                value={formData.firstName}
+                onChange={handleChange}
+                value={props.formData.firstName}
               />
             </Grid>
             <Grid item xs={12}>
@@ -107,8 +72,8 @@ const SignUp = () => {
                 label="Last Name"
                 name="lastName"
                 autoComplete="lname"
-                onChange={onChange}
-                value={formData.lastName}
+                onChange={props.onChange}
+                value={props.formData.lastName}
               />
             </Grid>
             <Grid item xs={12}>
@@ -120,8 +85,8 @@ const SignUp = () => {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                onChange={onChange}
-                value={formData.email}
+                onChange={props.onChange}
+                value={props.formData.email}
               />
             </Grid>
             <Grid item xs={12}>
@@ -134,8 +99,8 @@ const SignUp = () => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-                onChange={onChange}
-                value={formData.password}
+                onChange={props.onChange}
+                value={props.formData.password}
               />
             </Grid>
             <Grid item xs={12}>
@@ -148,8 +113,8 @@ const SignUp = () => {
                 type="password"
                 id="password2"
                 autoComplete="current-password"
-                onChange={onChange}
-                value={formData.password2}
+                onChange={props.onChange}
+                value={props.formData.password2}
               />
             </Grid>
           </Grid>
