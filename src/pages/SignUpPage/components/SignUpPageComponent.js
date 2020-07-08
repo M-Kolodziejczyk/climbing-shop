@@ -51,6 +51,8 @@ const SignUp = props => {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
+                error={props.errors.firstName ? true : false}
+                helperText={"" || props.errors.firstName}
                 autoComplete="fname"
                 name="firstName"
                 variant="outlined"
@@ -65,6 +67,8 @@ const SignUp = props => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                error={props.errors.lastName ? true : false}
+                helperText={"" || props.errors.lastName}
                 variant="outlined"
                 required
                 fullWidth
@@ -78,6 +82,8 @@ const SignUp = props => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                error={props.errors.email ? true : false}
+                helperText={"" || props.errors.email}
                 variant="outlined"
                 required
                 fullWidth
@@ -91,6 +97,8 @@ const SignUp = props => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                error={props.errors.password ? true : false}
+                helperText={"" || props.errors.password}
                 variant="outlined"
                 required
                 fullWidth
@@ -105,6 +113,8 @@ const SignUp = props => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                error={props.errors.password2 ? true : false}
+                helperText={"" || props.errors.password2}
                 variant="outlined"
                 required
                 fullWidth

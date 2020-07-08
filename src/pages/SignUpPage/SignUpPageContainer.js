@@ -1,19 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SignUpPageComponent from "./components/SignUpPageComponent";
 import { registerUser } from "../../state/auth/authActions";
+import validate from "../../validators/SignUpFormValidationRules";
 
 const SignUpPageContainer = () => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.auth.user);
 
-  const [formData, setFormData] = useState({
+  const initailState = {
     firstName: "",
     lastName: "",
     email: "",
     password: "",
     password2: ""
-  });
+  };
+
+  const [formData, setFormData] = useState(initailState);
+
+  const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (Object.keys(errors).length === 0 && isSubmitting) {
+      dispatch(registerUser(formData));
+      setFormData(initailState);
+    }
+  }, [errors]);
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -25,13 +38,15 @@ const SignUpPageContainer = () => {
 
   const onSubmit = async e => {
     e.preventDefault();
-    dispatch(registerUser(formData));
+    setIsSubmitting(true);
+    setErrors(validate(formData));
   };
   return (
     <SignUpPageComponent
       onChange={handleChange}
       formData={formData}
       onSubmit={onSubmit}
+      errors={errors}
     />
   );
 };
