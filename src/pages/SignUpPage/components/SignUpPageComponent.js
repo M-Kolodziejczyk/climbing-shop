@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import {
   Avatar,
   Button,
+  Box,
   TextField,
   Link,
   Grid,
@@ -144,6 +145,15 @@ const SignUp = props => {
               </Link>
             </Grid>
           </Grid>
+          {props.authError && (
+            <Grid container>
+              <Box mt={2}>
+                <Typography component="p" variant="subtitle2" color="error">
+                  {props.authError.message}
+                </Typography>
+              </Box>
+            </Grid>
+          )}
         </form>
       </div>
     </Container>

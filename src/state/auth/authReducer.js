@@ -1,9 +1,15 @@
-import { REGISTER_SUCCESS, REGISTER_FAIL, SET_LOADING } from "../types";
+import {
+  REGISTER_SUCCESS,
+  REGISTER_FAIL,
+  SET_LOADING,
+  CLEAR_ERRORS
+} from "../types";
 
 const initialState = {
   user: null,
   isRegister: false,
-  loading: false
+  loading: false,
+  authError: null
 };
 
 export default (state = initialState, action) => {
@@ -15,10 +21,20 @@ export default (state = initialState, action) => {
         loading: false,
         user: action.payload
       };
+    case REGISTER_FAIL:
+      return {
+        ...state,
+        authError: action.payload
+      };
     case SET_LOADING:
       return {
         ...state,
         loading: true
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        authError: null
       };
     default:
       return state;

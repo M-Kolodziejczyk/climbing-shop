@@ -6,7 +6,7 @@ import validate from "../../validators/SignUpFormValidationRules";
 
 const SignUpPageContainer = () => {
   const dispatch = useDispatch();
-  const user = useSelector(state => state.auth.user);
+  const authError = useSelector(state => state.auth.authError);
 
   const initailState = {
     firstName: "",
@@ -26,6 +26,7 @@ const SignUpPageContainer = () => {
       dispatch(registerUser(formData));
       setFormData(initailState);
     }
+    // eslint-disable-next-line
   }, [errors]);
 
   const handleChange = e => {
@@ -47,6 +48,7 @@ const SignUpPageContainer = () => {
       formData={formData}
       onSubmit={onSubmit}
       errors={errors}
+      authError={authError}
     />
   );
 };
