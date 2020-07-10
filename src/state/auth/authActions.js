@@ -1,6 +1,8 @@
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
   SET_LOADING,
   CLEAR_ERRORS
 } from "../types";
@@ -28,6 +30,22 @@ export const registerUser = user => async dispatch => {
       payload: error
     });
     console.log("Error: ", error);
+  }
+};
+
+export const loginUser = user => async dispatch => {
+  try {
+    setLoading();
+    const data = await Auth.signIn(user.email, user.password);
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: data
+    });
+  } catch (error) {
+    dispatch({
+      type: LOGIN_FAIL,
+      payload: error
+    });
   }
 };
 

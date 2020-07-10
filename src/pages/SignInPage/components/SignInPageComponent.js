@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import {
   Avatar,
+  Box,
   Button,
   TextField,
   FormControlLabel,
@@ -34,7 +35,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const SignInPageComponent = () => {
+const SignInPageComponent = props => {
+  const handleChange = e => {
+    props.onChange(e);
+  };
   const classes = useStyles();
 
   return (
@@ -47,8 +51,10 @@ const SignInPageComponent = () => {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={props.onSubmit}>
           <TextField
+            error={props.errors.email ? true : false}
+            helperText={"" || props.errors.email}
             variant="outlined"
             margin="normal"
             required
@@ -58,8 +64,12 @@ const SignInPageComponent = () => {
             name="email"
             autoComplete="email"
             autoFocus
+            onChange={handleChange}
+            value={props.formData.firstName}
           />
           <TextField
+            error={props.errors.password ? true : false}
+            helperText={"" || props.errors.password}
             variant="outlined"
             margin="normal"
             required
@@ -69,6 +79,8 @@ const SignInPageComponent = () => {
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={handleChange}
+            value={props.formData.password}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -95,6 +107,15 @@ const SignInPageComponent = () => {
               </Link>
             </Grid>
           </Grid>
+          {props.authError && (
+            <Grid container>
+              <Box mt={2}>
+                <Typography component="p" variant="subtitle2" color="error">
+                  {props.authError.message}
+                </Typography>
+              </Box>
+            </Grid>
+          )}
         </form>
       </div>
     </Container>
