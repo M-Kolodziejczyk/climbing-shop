@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./pages/HomePage/HomePageContainer";
 import About from "./pages/AboutPage/AboutPageContainer";
@@ -6,9 +6,16 @@ import Products from "./pages/ProductsListPage/ProductListPageContainer";
 import SignUp from "./pages/SignUpPage/SignUpPageContainer";
 import SignIn from "./pages/SignInPage/SignInPageContainer";
 import ForgotPassword from "./pages/ForgotPasswordPage/ForgotPasswordContainer";
+import { loadUser } from "./state/auth/authActions";
+import { useDispatch } from "react-redux";
 import "./App.css";
 
 const App = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(loadUser());
+  }, [dispatch]);
+
   return (
     <Router>
       <Switch>

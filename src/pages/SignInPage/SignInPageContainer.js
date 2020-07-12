@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import SignInPageComponent from "./components/SignInPageComponent";
 import { loginUser } from "../../state/auth/authActions";
 import validate from "../../validators/SignInFormValidationRules";
 import useForm from "../../customHooks/useForm";
 
-const SignInPageContainer = () => {
+const SignInPageContainer = props => {
   const authError = useSelector(state => state.auth.authError);
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
 
   const initialState = {
     email: "",
@@ -18,6 +19,12 @@ const SignInPageContainer = () => {
     validate,
     loginUser
   );
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      props.history.push("/");
+    }
+  }, [isAuthenticated, props.history]);
 
   return (
     <SignInPageComponent

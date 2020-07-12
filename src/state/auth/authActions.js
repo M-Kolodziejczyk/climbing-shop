@@ -4,7 +4,8 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   SET_LOADING,
-  CLEAR_ERRORS
+  CLEAR_ERRORS,
+  USER_LOADED
 } from "../types";
 import { Auth } from "aws-amplify";
 
@@ -41,11 +42,25 @@ export const loginUser = user => async dispatch => {
       type: LOGIN_SUCCESS,
       payload: data
     });
+    loadUser();
   } catch (error) {
     dispatch({
       type: LOGIN_FAIL,
       payload: error
     });
+  }
+};
+
+export const loadUser = () => async dispatch => {
+  try {
+    await Auth.currentSession();
+    const res = await Auth.currentAuthenticatedUser();
+    dispatch({
+      type: USER_LOADED,
+      payload: res
+    });
+  } catch (error) {
+    console.log(error);
   }
 };
 
