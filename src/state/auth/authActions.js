@@ -11,7 +11,8 @@ import { Auth } from "aws-amplify";
 
 export const registerUser = user => async dispatch => {
   try {
-    setLoading();
+    dispatch(setLoading());
+
     await Auth.signUp({
       username: user.email,
       password: user.password,
@@ -36,12 +37,15 @@ export const registerUser = user => async dispatch => {
 
 export const loginUser = user => async dispatch => {
   try {
-    setLoading();
+    dispatch(setLoading());
+
     const data = await Auth.signIn(user.email, user.password);
+
     dispatch({
       type: LOGIN_SUCCESS,
       payload: data
     });
+
     loadUser();
   } catch (error) {
     dispatch({
@@ -53,8 +57,11 @@ export const loginUser = user => async dispatch => {
 
 export const loadUser = () => async dispatch => {
   try {
+    dispatch(setLoading());
+
     await Auth.currentSession();
     const res = await Auth.currentAuthenticatedUser();
+
     dispatch({
       type: USER_LOADED,
       payload: res

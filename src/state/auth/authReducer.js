@@ -16,6 +16,8 @@ const initialState = {
   authError: null
 };
 
+console.log(2);
+
 export default (state = initialState, action) => {
   switch (action.type) {
     case REGISTER_SUCCESS:
@@ -34,7 +36,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         user: action.payload,
-        isAuthenticated: true
+        isAuthenticated: true,
+        loading: false
       };
     case LOGIN_FAIL:
       return {
@@ -55,7 +58,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         user: action.payload.attributes,
-        isAuthenticated: true
+        isAuthenticated: true,
+        loading: false
       };
     default:
       return state;
