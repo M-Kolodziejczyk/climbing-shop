@@ -2,6 +2,8 @@ import React from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { makeStyles } from "@material-ui/core/styles";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Spinner from "../../../common/components/Spinner";
+
 import {
   Avatar,
   Box,
@@ -43,6 +45,7 @@ const SignInPageComponent = props => {
 
   return (
     <Container component="main" maxWidth="xs">
+      {props.loading && <Spinner />}
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>

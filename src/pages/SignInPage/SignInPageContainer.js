@@ -8,6 +8,7 @@ import useForm from "../../customHooks/useForm";
 const SignInPageContainer = props => {
   const authError = useSelector(state => state.auth.authError);
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+  const loading = useSelector(state => state.auth.loading);
 
   const initialState = {
     email: "",
@@ -33,6 +34,7 @@ const SignInPageContainer = props => {
       onSubmit={handleSubmit}
       errors={errors}
       authError={authError}
+      loading={loading}
     />
   );
 };
