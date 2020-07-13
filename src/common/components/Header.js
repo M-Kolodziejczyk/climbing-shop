@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-const Header = () => {
+const Header = props => {
   const logoContainer = {
     maxHeight: "150px"
   };
@@ -11,6 +11,14 @@ const Header = () => {
     color: "#!495057",
     fontSize: "22px"
   };
+
+  const [user, setUser] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(null);
+
+  useEffect(() => {
+    setUser(props.user);
+    setIsAuthenticated(props.isAuthenticated);
+  }, [props.user, props.isAuthenticated]);
 
   return (
     <div className="container">
@@ -41,16 +49,29 @@ const Header = () => {
         <div className="col-2">
           <div className="dropdown">
             <i className="fas fa-user mr-2"></i>
-            <button
-              className="btn btn-light dropdown-toggle"
-              type="button"
-              id="dropdownMenuButton"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              Log in
-            </button>
+            {isAuthenticated ? (
+              <button
+                className="btn btn-light dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                {user["custom:firstName"]}
+              </button>
+            ) : (
+              <button
+                className="btn btn-light dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Log in
+              </button>
+            )}
             <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <a className="dropdown-item" href="#!">
                 Action
