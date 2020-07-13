@@ -1,11 +1,11 @@
 import {
   REGISTER_SUCCESS,
-  REGISTER_FAIL,
   LOGIN_SUCCESS,
-  LOGIN_FAIL,
   SET_LOADING,
   CLEAR_ERRORS,
-  USER_LOADED
+  USER_LOADED,
+  USER_LOGOUT,
+  AUTH_ERROR
 } from "../types";
 import { Auth } from "aws-amplify";
 
@@ -28,10 +28,9 @@ export const registerUser = user => async dispatch => {
     });
   } catch (error) {
     dispatch({
-      type: REGISTER_FAIL,
+      type: AUTH_ERROR,
       payload: error
     });
-    console.log("Error: ", error);
   }
 };
 
@@ -45,11 +44,26 @@ export const loginUser = user => async dispatch => {
       type: LOGIN_SUCCESS,
       payload: data
     });
-
-    loadUser();
   } catch (error) {
     dispatch({
-      type: LOGIN_FAIL,
+      type: AUTH_ERROR,
+      payload: error
+    });
+  }
+};
+
+export const userLogout = () => async dispatch => {
+  try {
+    dispatch(setLoading());
+
+    await Auth.signOut();
+
+    dispatch({
+      type: USER_LOGOUT
+    });
+  } catch (error) {
+    dispatch({
+      type: AUTH_ERROR,
       payload: error
     });
   }
@@ -67,7 +81,10 @@ export const loadUser = () => async dispatch => {
       payload: res
     });
   } catch (error) {
-    console.log(error);
+    dispatch({
+      type: AUTH_ERROR,
+      payload: error
+    });
   }
 };
 

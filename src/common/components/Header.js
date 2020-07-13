@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
+import { Link } from "react-router-dom";
 
 const Header = props => {
   const logoContainer = {
@@ -50,39 +51,41 @@ const Header = props => {
           <div className="dropdown">
             <i className="fas fa-user mr-2"></i>
             {isAuthenticated ? (
-              <button
-                className="btn btn-light dropdown-toggle"
-                type="button"
-                id="dropdownMenuButton"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                {user["custom:firstName"]}
-              </button>
+              <Fragment>
+                <button
+                  className="btn btn-lg btn-light dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  {user["custom:firstName"]}
+                </button>
+                <div
+                  className="dropdown-menu"
+                  aria-labelledby="dropdownMenuButton"
+                >
+                  <a className="dropdown-item" href="#!">
+                    Action
+                  </a>
+                  <a className="dropdown-item" href="#!">
+                    Another action
+                  </a>
+                  <a
+                    onClick={props.signOut}
+                    className="dropdown-item"
+                    href="#!"
+                  >
+                    Log Out
+                  </a>
+                </div>
+              </Fragment>
             ) : (
-              <button
-                className="btn btn-light dropdown-toggle"
-                type="button"
-                id="dropdownMenuButton"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
+              <Link className="btn btn-light btn-lg" to="/signin" type="button">
                 Log in
-              </button>
+              </Link>
             )}
-            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a className="dropdown-item" href="#!">
-                Action
-              </a>
-              <a className="dropdown-item" href="#!">
-                Another action
-              </a>
-              <a className="dropdown-item" href="#!">
-                Something else here
-              </a>
-            </div>
           </div>
         </div>
         <div className="col-1">

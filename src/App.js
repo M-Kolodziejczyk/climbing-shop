@@ -13,7 +13,9 @@ import "./App.css";
 const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(loadUser());
+    if (localStorage.length > 0) {
+      dispatch(loadUser());
+    }
   }, [dispatch]);
 
   return (

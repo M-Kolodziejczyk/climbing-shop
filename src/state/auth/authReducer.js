@@ -1,11 +1,11 @@
 import {
   REGISTER_SUCCESS,
-  REGISTER_FAIL,
   LOGIN_SUCCESS,
-  LOGIN_FAIL,
   SET_LOADING,
   CLEAR_ERRORS,
-  USER_LOADED
+  USER_LOADED,
+  USER_LOGOUT,
+  AUTH_ERROR
 } from "../types";
 
 const initialState = {
@@ -16,8 +16,6 @@ const initialState = {
   authError: null
 };
 
-console.log(2);
-
 export default (state = initialState, action) => {
   switch (action.type) {
     case REGISTER_SUCCESS:
@@ -25,24 +23,24 @@ export default (state = initialState, action) => {
         ...state,
         isRegister: true,
         loading: false,
-        user: action.payload
-      };
-    case REGISTER_FAIL:
-      return {
-        ...state,
-        authError: action.payload
+        user: action.payload,
+        authError: null
       };
     case LOGIN_SUCCESS:
       return {
         ...state,
-        user: action.payload,
+        user: action.payload.attributes,
         isAuthenticated: true,
-        loading: false
+        loading: false,
+        authError: null
       };
-    case LOGIN_FAIL:
+    case USER_LOGOUT:
       return {
         ...state,
-        authError: action.payload
+        user: null,
+        isAuthenticated: false,
+        loading: false,
+        authError: null
       };
     case SET_LOADING:
       return {
@@ -60,6 +58,11 @@ export default (state = initialState, action) => {
         user: action.payload.attributes,
         isAuthenticated: true,
         loading: false
+      };
+    case AUTH_ERROR:
+      return {
+        ...state,
+        authError: action.payload
       };
     default:
       return state;
