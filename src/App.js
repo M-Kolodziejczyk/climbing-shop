@@ -6,6 +6,7 @@ import Products from "./pages/ProductsListPage/ProductListPageContainer";
 import SignUp from "./pages/SignUpPage/SignUpPageContainer";
 import SignIn from "./pages/SignInPage/SignInPageContainer";
 import ForgotPassword from "./pages/ForgotPasswordPage/ForgotPasswordContainer";
+import WelcomePageContainer from "./pages/WelcomePage/WelcomePageContainer";
 import { loadUser } from "./state/auth/authActions";
 import { useDispatch } from "react-redux";
 import "./App.css";
@@ -27,6 +28,7 @@ const App = () => {
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/signin" component={SignIn} />
         <Route exact path="/forgot-password" component={ForgotPassword} />
+        <Route exact path="/welcome" component={WelcomePageContainer} />
       </Switch>
     </Router>
   );

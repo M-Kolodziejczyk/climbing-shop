@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import SignUpPageComponent from "./components/SignUpPageComponent";
 import { registerUser } from "../../state/auth/authActions";
 import validate from "../../validators/SignUpFormValidationRules";
 import useForm from "../../customHooks/useForm";
 
-const SignUpPageContainer = () => {
+const SignUpPageContainer = props => {
   const authError = useSelector(state => state.auth.authError);
+  const isRegister = useSelector(state => state.auth.isRegister);
+  const loading = useSelector(state => state.auth.loading);
 
   const initailState = {
     firstName: "",
@@ -22,6 +24,12 @@ const SignUpPageContainer = () => {
     registerUser
   );
 
+  useEffect(() => {
+    if (isRegister) {
+      props.history.push("/welcome");
+    }
+  }, [isRegister, props.history]);
+
   return (
     <SignUpPageComponent
       onChange={handleChange}
@@ -29,6 +37,7 @@ const SignUpPageContainer = () => {
       onSubmit={handleSubmit}
       errors={errors}
       authError={authError}
+      loading={loading}
     />
   );
 };

@@ -1,6 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Spinner from "../../../common/components/Spinner";
 import {
   Avatar,
   Button,
@@ -41,6 +42,7 @@ const SignUp = props => {
 
   return (
     <Container component="main" maxWidth="xs">
+      {props.loading && <Spinner />}
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />

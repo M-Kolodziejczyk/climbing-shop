@@ -10,6 +10,7 @@ import {
 
 const initialState = {
   user: null,
+  registerUser: null,
   isRegister: false,
   loading: false,
   isAuthenticated: false,
@@ -23,7 +24,7 @@ export default (state = initialState, action) => {
         ...state,
         isRegister: true,
         loading: false,
-        user: action.payload,
+        registerUser: action.payload,
         authError: null
       };
     case LOGIN_SUCCESS:
@@ -62,7 +63,8 @@ export default (state = initialState, action) => {
     case AUTH_ERROR:
       return {
         ...state,
-        authError: action.payload
+        authError: action.payload.message,
+        loading: false
       };
     default:
       return state;
