@@ -74,17 +74,19 @@ const AdmnPageDetails = props => {
           ref={inputEl}
           hidden={true}
         />
-        <Grid item xs={2}>
-          <ListItemSecondaryAction>
-            <Button onClick={handleFormClick} ref={editBtn}>
-              <EditIcon className={classes.editBtn} />
-              <ListItemText>Edit</ListItemText>
-            </Button>
-            <Button type="submit" ref={saveBtn} hidden={true}>
-              <ListItemText>Save</ListItemText>
-            </Button>
-          </ListItemSecondaryAction>
-        </Grid>
+        {props.edit && (
+          <Grid item xs={2}>
+            <ListItemSecondaryAction>
+              <Button onClick={handleFormClick} ref={editBtn}>
+                <EditIcon className={classes.editBtn} />
+                <ListItemText>Edit</ListItemText>
+              </Button>
+              <Button type="submit" ref={saveBtn} hidden={true}>
+                <ListItemText>Save</ListItemText>
+              </Button>
+            </ListItemSecondaryAction>
+          </Grid>
+        )}
       </form>
     </ListItem>
   );

@@ -95,12 +95,19 @@ const AdminPageComponent = props => {
                   {user && (
                     <Fragment>
                       <AdmnPageDetails
-                        userData={user["custom:firstName"]}
-                        labelName={"First Name"}
+                        userData={user["email"]}
+                        labelName={"Email"}
+                        edit={false}
                       />
                       <AdmnPageDetails
                         userData={user["custom:firstName"]}
                         labelName={"First Name"}
+                        edit={true}
+                      />
+                      <AdmnPageDetails
+                        userData={user["custom:lastName"]}
+                        labelName={"Last Name"}
+                        edit={true}
                       />
                     </Fragment>
                   )}
