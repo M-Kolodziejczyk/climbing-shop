@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import EditIcon from "@material-ui/icons/Edit";
+import { updateUser } from "../../../state/auth/authActions";
+import useForm from "../../../customHooks/useForm";
 import {
-  Input,
+  TextField,
   Button,
   Grid,
   ListItem,
@@ -25,7 +27,6 @@ const AdmnPageDetails = props => {
   const classes = useStyles();
   const [userData, setUserData] = useState(null);
   const [label, setLabel] = useState(null);
-  const [value, setValue] = useState(props.userData);
   const inputEl = useRef(null);
   const userEl = useRef(null);
   const saveBtn = useRef(null);
@@ -34,13 +35,13 @@ const AdmnPageDetails = props => {
   useEffect(() => {
     setUserData(props.userData);
     setLabel(props.labelName);
-    setValue(props.userData);
-    // eslint-disable-next-line
-  }, []);
+  }, [props]);
 
-  const handleChange = e => {
-    setValue(e.target.value);
-  };
+  const { handleChange, handleSubmit, values, errors } = useForm(
+    { [props.attributeName]: props.userData },
+    props.validate,
+    updateUser
+  );
 
   const handleFormClick = e => {
     userEl.current.setAttribute("hidden", true);
@@ -49,8 +50,14 @@ const AdmnPageDetails = props => {
     saveBtn.current.removeAttribute("hidden");
   };
 
-  const handleSubmit = e => {
-    e.preventDefault();
+  const handleForm = e => {
+    handleSubmit(e);
+    if (!errors) {
+      userEl.current.removeAttribute("hidden");
+      editBtn.current.removeAttribute("hidden");
+      inputEl.current.setAttribute("hidden", true);
+      saveBtn.current.setAttribute("hidden", true);
+    }
   };
 
   return (
@@ -65,14 +72,18 @@ const AdmnPageDetails = props => {
         className={classes.form}
         noValidate
         autoComplete="off"
-        onSubmit={handleSubmit}
+        onSubmit={handleForm}
       >
-        <Input
+        <TextField
+          name={props.attributeName}
           className="input"
-          value={value}
+          error={errors[props.attributeName] ? true : false}
+          helperText={"" || errors[props.attributeName]}
+          value={values[props.attributeName]}
           onChange={handleChange}
           ref={inputEl}
           hidden={true}
+          autoFocus
         />
         {props.edit && (
           <Grid item xs={2}>

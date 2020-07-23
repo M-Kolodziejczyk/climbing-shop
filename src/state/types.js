@@ -6,3 +6,4 @@ export const CLEAR_ERRORS = "CLEAR_ERRORS";
 export const USER_LOADED = "USER_LOADED";
 export const USER_LOGOUT = "USER_LOGOUT";
 export const AUTH_ERROR = "AUTH_ERROR";
+export const UPDATE_USER = "UPDATE_USER";

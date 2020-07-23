@@ -5,7 +5,8 @@ import {
   CLEAR_ERRORS,
   USER_LOADED,
   USER_LOGOUT,
-  AUTH_ERROR
+  AUTH_ERROR,
+  UPDATE_USER
 } from "../types";
 
 const initialState = {
@@ -65,6 +66,12 @@ export default (state = initialState, action) => {
         ...state,
         authError: action.payload.message,
         loading: false
+      };
+    case UPDATE_USER:
+      return {
+        ...state,
+        loading: false,
+        user: action.payload.attributes
       };
     default:
       return state;

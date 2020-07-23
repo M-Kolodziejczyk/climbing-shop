@@ -4,6 +4,11 @@ import HeaderContainer from "../../../common/containers/HeaderContainer";
 import Footer from "../../../common/components/Footer";
 import Navbar from "../../../common/components/Navbar";
 import AdmnPageDetails from "./AdmnPageDetails";
+import Spinner from "../../../common/components/Spinner";
+import {
+  FirstNameValidation,
+  LastNameValidation
+} from "../../../validators/AdminAccountValidationRules";
 import {
   Box,
   Grid,
@@ -59,8 +64,6 @@ const AdminPageComponent = props => {
   useEffect(() => {
     setUser(props.user);
   }, [props.user]);
-  if (user) {
-  }
 
   const handleChange = (e, newValue) => {
     setValue(newValue);
@@ -88,41 +91,50 @@ const AdminPageComponent = props => {
                 <Tab label="Shopping history" {...a11yProps(3)} />
               </Tabs>
             </Grid>
-            <Grid item xs={10}>
-              <TabPanel value={value} index={0}>
-                <Typography variant="h4">My account</Typography>
-                <List>
-                  {user && (
-                    <Fragment>
-                      <AdmnPageDetails
-                        userData={user["email"]}
-                        labelName={"Email"}
-                        edit={false}
-                      />
-                      <AdmnPageDetails
-                        userData={user["custom:firstName"]}
-                        labelName={"First Name"}
-                        edit={true}
-                      />
-                      <AdmnPageDetails
-                        userData={user["custom:lastName"]}
-                        labelName={"Last Name"}
-                        edit={true}
-                      />
-                    </Fragment>
-                  )}
-                </List>
-              </TabPanel>
-              <TabPanel value={value} index={1}>
-                MY Address
-              </TabPanel>
-              <TabPanel value={value} index={2}>
-                My Cart
-              </TabPanel>
-              <TabPanel value={value} index={3}>
-                something
-              </TabPanel>
-            </Grid>
+            {props.loading ? (
+              <Spinner />
+            ) : (
+              <Grid item xs={10}>
+                <TabPanel value={value} index={0}>
+                  <Typography variant="h4">My account</Typography>
+                  <List>
+                    {user && (
+                      <Fragment>
+                        <AdmnPageDetails
+                          attributeName={"email"}
+                          userData={user["email"]}
+                          labelName={"Email"}
+                          edit={false}
+                        />
+                        <AdmnPageDetails
+                          attributeName={"custom:firstName"}
+                          userData={user["custom:firstName"]}
+                          labelName={"First Name"}
+                          edit={true}
+                          validate={FirstNameValidation}
+                        />
+                        <AdmnPageDetails
+                          attributeName={"custom:lastName"}
+                          userData={user["custom:lastName"]}
+                          labelName={"Last Name"}
+                          edit={true}
+                          validate={LastNameValidation}
+                        />
+                      </Fragment>
+                    )}
+                  </List>
+                </TabPanel>
+                <TabPanel value={value} index={1}>
+                  MY Address
+                </TabPanel>
+                <TabPanel value={value} index={2}>
+                  My Cart
+                </TabPanel>
+                <TabPanel value={value} index={3}>
+                  something
+                </TabPanel>
+              </Grid>
+            )}
           </Grid>
         </Box>
       </Container>
