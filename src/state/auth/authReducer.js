@@ -6,7 +6,8 @@ import {
   USER_LOADED,
   USER_LOGOUT,
   AUTH_ERROR,
-  UPDATE_USER
+  UPDATE_USER,
+  CHANGE_USER_PASSWORD
 } from "../types";
 
 const initialState = {
@@ -15,7 +16,8 @@ const initialState = {
   isRegister: false,
   loading: false,
   isAuthenticated: false,
-  authError: null
+  authError: null,
+  changePassword: null
 };
 
 export default (state = initialState, action) => {
@@ -48,6 +50,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: true
+      };
+    case CHANGE_USER_PASSWORD:
+      return {
+        ...state,
+        loading: false,
+        changePassword: action.payload
       };
     case CLEAR_ERRORS:
       return {

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import EditIcon from "@material-ui/icons/Edit";
-import { updateUser } from "../../../state/auth/authActions";
 import useForm from "../../../customHooks/useForm";
 import {
   TextField,
@@ -40,7 +39,7 @@ const AdmnPageDetails = props => {
   const { handleChange, handleSubmit, values, errors } = useForm(
     { [props.attributeName]: props.userData },
     props.validate,
-    updateUser
+    props.callback
   );
 
   const handleFormClick = e => {
@@ -68,24 +67,24 @@ const AdmnPageDetails = props => {
       <Grid item xs={8} ref={userEl}>
         <ListItemText>{userData && userData}</ListItemText>
       </Grid>
-      <form
-        className={classes.form}
-        noValidate
-        autoComplete="off"
-        onSubmit={handleForm}
-      >
-        <TextField
-          name={props.attributeName}
-          className="input"
-          error={errors[props.attributeName] ? true : false}
-          helperText={"" || errors[props.attributeName]}
-          value={values[props.attributeName]}
-          onChange={handleChange}
-          ref={inputEl}
-          hidden={true}
-          autoFocus
-        />
-        {props.edit && (
+      {props.edit && !props.passwordForm && (
+        <form
+          className={classes.form}
+          noValidate
+          autoComplete="off"
+          onSubmit={handleForm}
+        >
+          <TextField
+            name={props.attributeName}
+            className="input"
+            error={errors[props.attributeName] ? true : false}
+            helperText={"" || errors[props.attributeName]}
+            value={values[props.attributeName]}
+            onChange={handleChange}
+            ref={inputEl}
+            hidden={true}
+            autoFocus
+          />
           <Grid item xs={2}>
             <ListItemSecondaryAction>
               <Button onClick={handleFormClick} ref={editBtn}>
@@ -97,8 +96,8 @@ const AdmnPageDetails = props => {
               </Button>
             </ListItemSecondaryAction>
           </Grid>
-        )}
-      </form>
+        </form>
+      )}
     </ListItem>
   );
 };

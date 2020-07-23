@@ -7,3 +7,4 @@ export const USER_LOADED = "USER_LOADED";
 export const USER_LOGOUT = "USER_LOGOUT";
 export const AUTH_ERROR = "AUTH_ERROR";
 export const UPDATE_USER = "UPDATE_USER";
+export const CHANGE_USER_PASSWORD = "CHANGE_USER_PASSWORD";

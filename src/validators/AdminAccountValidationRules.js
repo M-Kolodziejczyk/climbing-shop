@@ -28,8 +28,11 @@ export const LastNameValidation = values => {
 
 export const PasswordValidation = values => {
   let errors = {};
-
-  if (!values.password) {
+  if (!values.oldPassword) {
+    errors.oldPassword = "Old password is required";
+  } else if (values.oldPassword === values.password) {
+    errors.password = "New password must be different from old password ";
+  } else if (!values.password) {
     errors.password = "Password is required";
   } else if (values.password.length < 8) {
     errors.password = "Password needs to be more than 6 characters";
@@ -41,9 +44,5 @@ export const PasswordValidation = values => {
     errors.password = "Password needs at least one digit";
   }
 
-  if (!values.password2) {
-    errors.password2 = "Confirm password";
-  } else if (values.password !== values.password2) {
-    errors.password2 = "Passwords do not match!";
-  }
+  return errors;
 };

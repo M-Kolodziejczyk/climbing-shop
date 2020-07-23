@@ -4,10 +4,13 @@ import HeaderContainer from "../../../common/containers/HeaderContainer";
 import Footer from "../../../common/components/Footer";
 import Navbar from "../../../common/components/Navbar";
 import AdmnPageDetails from "./AdmnPageDetails";
+import PasswordComponent from "./PasswordComponent";
 import Spinner from "../../../common/components/Spinner";
+import { updateUser, changePassword } from "../../../state/auth/authActions";
 import {
   FirstNameValidation,
-  LastNameValidation
+  LastNameValidation,
+  PasswordValidation
 } from "../../../validators/AdminAccountValidationRules";
 import {
   Box,
@@ -112,6 +115,7 @@ const AdminPageComponent = props => {
                           labelName={"First Name"}
                           edit={true}
                           validate={FirstNameValidation}
+                          callback={updateUser}
                         />
                         <AdmnPageDetails
                           attributeName={"custom:lastName"}
@@ -119,6 +123,11 @@ const AdminPageComponent = props => {
                           labelName={"Last Name"}
                           edit={true}
                           validate={LastNameValidation}
+                          callback={updateUser}
+                        />
+                        <PasswordComponent
+                          validate={PasswordValidation}
+                          callback={changePassword}
                         />
                       </Fragment>
                     )}
