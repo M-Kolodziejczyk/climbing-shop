@@ -24,10 +24,9 @@ const ForgotPasswordContainer = props => {
 
   useEffect(() => {
     if (!loading && forgotPasswordSuccess) {
-      // push to forgot-password-confirmation page
-      // props.history.push('')
+      props.history.push("/forgot-password-email");
     }
-  }, [loading, forgotPasswordSuccess]);
+  }, [loading, forgotPasswordSuccess, props]);
 
   return (
     <Fragment>
