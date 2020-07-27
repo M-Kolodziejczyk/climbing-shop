@@ -7,6 +7,7 @@ import {
   USER_LOGOUT,
   AUTH_ERROR,
   UPDATE_USER,
+  UPDATE_ADDRESS,
   CHANGE_USER_PASSWORD
 } from "../types";
 import { Auth } from "aws-amplify";
@@ -127,6 +128,26 @@ export const changePassword = data => async dispatch => {
     dispatch({
       type: CHANGE_USER_PASSWORD,
       payload: res
+    });
+  } catch (error) {
+    dispatch({
+      type: AUTH_ERROR,
+      payload: error
+    });
+  }
+};
+
+export const updateAddress = data => async dispatch => {
+  try {
+    dispatch(setLoading());
+
+    const user = await Auth.currentAuthenticatedUser();
+    await Auth.updateUserAttributes(user, data);
+    const newUser = await Auth.currentAuthenticatedUser();
+
+    dispatch({
+      type: UPDATE_ADDRESS,
+      payload: newUser
     });
   } catch (error) {
     dispatch({

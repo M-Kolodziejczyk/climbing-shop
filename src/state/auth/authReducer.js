@@ -7,6 +7,7 @@ import {
   USER_LOGOUT,
   AUTH_ERROR,
   UPDATE_USER,
+  UPDATE_ADDRESS,
   CHANGE_USER_PASSWORD
 } from "../types";
 
@@ -76,6 +77,12 @@ export default (state = initialState, action) => {
         loading: false
       };
     case UPDATE_USER:
+      return {
+        ...state,
+        loading: false,
+        user: action.payload.attributes
+      };
+    case UPDATE_ADDRESS:
       return {
         ...state,
         loading: false,

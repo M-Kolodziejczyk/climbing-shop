@@ -5,6 +5,7 @@ import Footer from "../../../common/components/Footer";
 import Navbar from "../../../common/components/Navbar";
 import AdmnPageDetails from "./AdmnPageDetails";
 import PasswordComponent from "./PasswordComponent";
+import UserAddressComponent from "./UserAddressComponent";
 import Spinner from "../../../common/components/Spinner";
 import { updateUser, changePassword } from "../../../state/auth/authActions";
 import {
@@ -134,7 +135,8 @@ const AdminPageComponent = props => {
                   </List>
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                  MY Address
+                  <Typography variant="h4">My address</Typography>
+                  <UserAddressComponent user={props.user} />
                 </TabPanel>
                 <TabPanel value={value} index={2}>
                   My Cart
