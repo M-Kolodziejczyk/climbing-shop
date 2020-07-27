@@ -8,7 +8,8 @@ import {
   AUTH_ERROR,
   UPDATE_USER,
   UPDATE_ADDRESS,
-  CHANGE_USER_PASSWORD
+  CHANGE_USER_PASSWORD,
+  FORGOT_PASSWORD
 } from "../types";
 
 const initialState = {
@@ -18,7 +19,8 @@ const initialState = {
   loading: false,
   isAuthenticated: false,
   authError: null,
-  changePassword: null
+  changePassword: null,
+  forgotPasswordSuccess: false
 };
 
 export default (state = initialState, action) => {
@@ -87,6 +89,12 @@ export default (state = initialState, action) => {
         ...state,
         loading: false,
         user: action.payload.attributes
+      };
+    case FORGOT_PASSWORD:
+      return {
+        ...state,
+        forgotPasswordSuccess: true,
+        loading: false
       };
     default:
       return state;

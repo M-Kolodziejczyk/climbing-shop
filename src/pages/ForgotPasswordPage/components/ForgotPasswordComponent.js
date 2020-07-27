@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ForgotPasswordComponent = () => {
+const ForgotPasswordComponent = props => {
   const classes = useStyles();
 
   return (
@@ -39,8 +39,10 @@ const ForgotPasswordComponent = () => {
           send you an e-mail telling you how to recover it.
         </Typography>
         <Container maxWidth="sm">
-          <form className={classes.form} noValidate>
+          <form className={classes.form} noValidate onSubmit={props.onSubmit}>
             <TextField
+              error={props.errors.email ? true : false}
+              helperText={"" || props.errors.email}
               variant="outlined"
               margin="normal"
               required
@@ -50,6 +52,8 @@ const ForgotPasswordComponent = () => {
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={props.onChange}
+              value={props.formData.email}
             />
 
             <Button
