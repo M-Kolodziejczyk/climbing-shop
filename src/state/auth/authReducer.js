@@ -9,7 +9,8 @@ import {
   UPDATE_USER,
   UPDATE_ADDRESS,
   CHANGE_USER_PASSWORD,
-  FORGOT_PASSWORD
+  FORGOT_PASSWORD,
+  FORGOT_PASSWORD_VERIFICATION
 } from "../types";
 
 const initialState = {
@@ -94,6 +95,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         forgotPasswordSuccess: true,
+        loading: false
+      };
+    case FORGOT_PASSWORD_VERIFICATION:
+      return {
+        ...state,
+        changePassword: true,
         loading: false
       };
     default:

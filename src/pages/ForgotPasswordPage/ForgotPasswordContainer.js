@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from "react";
 import ForgotPasswordComponent from "./components/ForgotPasswordComponent";
 import { useSelector } from "react-redux";
 import { forgotPassword } from "../../state/auth/authActions";
-import validate from "../../validators/ForgotPasswordValidationRules";
+import { EmailValidation } from "../../validators/ForgotPasswordValidationRules";
 import useForm from "../../customHooks/useForm";
 import Spinner from "../../common/components/Spinner";
 
@@ -18,7 +18,7 @@ const ForgotPasswordContainer = props => {
 
   const { handleChange, handleSubmit, values, errors } = useForm(
     initialState,
-    validate,
+    EmailValidation,
     forgotPassword
   );
 

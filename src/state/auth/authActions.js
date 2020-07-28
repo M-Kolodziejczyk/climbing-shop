@@ -9,7 +9,8 @@ import {
   UPDATE_USER,
   UPDATE_ADDRESS,
   CHANGE_USER_PASSWORD,
-  FORGOT_PASSWORD
+  FORGOT_PASSWORD,
+  FORGOT_PASSWORD_VERIFICATION
 } from "../types";
 import { Auth } from "aws-amplify";
 
@@ -160,11 +161,31 @@ export const updateAddress = data => async dispatch => {
 
 export const forgotPassword = data => async dispatch => {
   try {
+    dispatch(setLoading());
     const res = await Auth.forgotPassword(data.email);
 
     dispatch({
       type: FORGOT_PASSWORD,
       payload: res
+    });
+  } catch (error) {
+    dispatch({
+      type: AUTH_ERROR,
+      payload: error
+    });
+  }
+};
+
+export const forgotPasswordVerification = data => async dispatch => {
+  try {
+    await Auth.forgotPasswordSubmit(
+      data.email,
+      data.verificationCode,
+      data.password
+    );
+
+    dispatch({
+      type: FORGOT_PASSWORD_VERIFICATION
     });
   } catch (error) {
     dispatch({
