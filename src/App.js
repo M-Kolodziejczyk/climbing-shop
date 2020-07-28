@@ -10,6 +10,7 @@ import WelcomePageContainer from "./pages/WelcomePage/WelcomePageContainer";
 import AdminPageContainer from "./pages/AdminPage/AdminPageContainer";
 import ForgotPasswordConfirmationPageContainer from "./pages/ForgotPasswordConfirmationPage/ForgotPasswordConfirmationPageContainer";
 import ForgotPasswordVerificationPageContainer from "./pages/ForgotPasswordVerificationPage/ForgotPasswordVerificationPageContainer";
+import ChangePasswordConfirmationPageComponent from "./pages/ChangePasswordConfirmationPage/ChangePasswordConfirmationPageContainer";
 import { loadUser } from "./state/auth/authActions";
 import { useDispatch } from "react-redux";
 import "./App.css";
@@ -42,6 +43,11 @@ const App = () => {
           exact
           path="/forgot-password-verification/:email/:code"
           component={ForgotPasswordVerificationPageContainer}
+        />
+        <Route
+          exact
+          path="/change-password-confirm"
+          component={ChangePasswordConfirmationPageComponent}
         />
       </Switch>
     </Router>
