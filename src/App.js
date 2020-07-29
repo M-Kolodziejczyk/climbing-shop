@@ -11,6 +11,7 @@ import AdminPageContainer from "./pages/AdminPage/AdminPageContainer";
 import ForgotPasswordConfirmationPageContainer from "./pages/ForgotPasswordConfirmationPage/ForgotPasswordConfirmationPageContainer";
 import ForgotPasswordVerificationPageContainer from "./pages/ForgotPasswordVerificationPage/ForgotPasswordVerificationPageContainer";
 import ChangePasswordConfirmationPageComponent from "./pages/ChangePasswordConfirmationPage/ChangePasswordConfirmationPageContainer";
+import NotFoundPageContainer from "./pages/NotFoundPage/NotFoundPageContainer";
 import { loadUser } from "./state/auth/authActions";
 import { useDispatch } from "react-redux";
 import "./App.css";
@@ -49,6 +50,7 @@ const App = () => {
           path="/change-password-confirm"
           component={ChangePasswordConfirmationPageComponent}
         />
+        <Route component={NotFoundPageContainer} />
       </Switch>
     </Router>
   );
