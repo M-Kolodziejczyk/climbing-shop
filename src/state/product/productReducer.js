@@ -1,4 +1,9 @@
-import { SET_LOADING, PRODUCT_ERROR, GET_ALL_PRODUCTS } from "../types";
+import {
+  SET_LOADING,
+  PRODUCT_ERROR,
+  GET_ALL_PRODUCTS,
+  ADD_PRODUCT
+} from "../types";
 
 const initialState = {
   products: null,
@@ -25,6 +30,12 @@ export default (state = initialState, action) => {
         ...state,
         loading: false,
         products: action.payload
+      };
+    case ADD_PRODUCT:
+      return {
+        ...state,
+        loading: false,
+        product: action.payload
       };
 
     default:
