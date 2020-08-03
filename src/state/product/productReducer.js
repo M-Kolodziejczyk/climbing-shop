@@ -3,7 +3,7 @@ import { SET_LOADING, PRODUCT_ERROR, GET_ALL_PRODUCTS } from "../types";
 const initialState = {
   products: null,
   product: null,
-  loading: false,
+  loading: true,
   productError: null
 };
 

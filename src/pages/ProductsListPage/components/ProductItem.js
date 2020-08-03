@@ -1,5 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import PropTypes from "prop-types";
 import {
   Grid,
   Card,
@@ -62,7 +63,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ProductItem = () => {
+const ProductItem = ({ product }) => {
   const classes = useStyles();
 
   return (
@@ -76,7 +77,7 @@ const ProductItem = () => {
       />
       <CardContent>
         <Typography className={classes.productManufacturer}>
-          Black Diamond
+          {product.producent}
         </Typography>
         <Typography className={classes.productName}>
           KASK WSPINACZKOWY BLACK DIAMOND HALF DOME - SLATE
@@ -96,6 +97,10 @@ const ProductItem = () => {
       </CardActions>
     </Card>
   );
+};
+
+ProductItem.propTypes = {
+  product: PropTypes.object.isRequired
 };
 
 export default ProductItem;
