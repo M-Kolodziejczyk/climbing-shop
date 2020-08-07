@@ -2,14 +2,16 @@ import {
   SET_LOADING,
   PRODUCT_ERROR,
   GET_ALL_PRODUCTS,
-  ADD_PRODUCT
+  ADD_PRODUCT,
+  FORM_LOADING
 } from "../types";
 
 const initialState = {
   products: null,
   product: null,
   loading: true,
-  productError: null
+  productError: null,
+  formLoading: false
 };
 
 export default (state = initialState, action) => {
@@ -34,10 +36,14 @@ export default (state = initialState, action) => {
     case ADD_PRODUCT:
       return {
         ...state,
-        loading: false,
+        formLoading: false,
         product: action.payload
       };
-
+    case FORM_LOADING:
+      return {
+        ...state,
+        formLoading: true
+      };
     default:
       return state;
   }

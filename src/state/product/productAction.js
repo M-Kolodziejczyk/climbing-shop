@@ -2,7 +2,8 @@ import {
   SET_LOADING,
   PRODUCT_ERROR,
   GET_ALL_PRODUCTS,
-  ADD_PRODUCT
+  ADD_PRODUCT,
+  FORM_LOADING
 } from "../types";
 import axios from "axios";
 import config from "../../config";
@@ -23,17 +24,13 @@ export const getAllProduct = () => async dispatch => {
   }
 };
 
-export const addProduct = (id, formData) => async dispatch => {
-  dispatch(setLoading());
+export const addProduct = product => async dispatch => {
+  dispatch(setFormLoading());
   try {
-    const params = {
-      id: id,
-      producent: formData.producent
-    };
-    await axios.post(`${config.api.invokeUrl}/products/{id}`, params);
+    await axios.post(`${config.api.invokeUrl}/products/{id}`, product);
     dispatch({
       type: ADD_PRODUCT,
-      pyload: params
+      pyload: product
     });
   } catch (error) {
     dispatch({
@@ -46,5 +43,11 @@ export const addProduct = (id, formData) => async dispatch => {
 export const setLoading = () => {
   return {
     type: SET_LOADING
+  };
+};
+
+export const setFormLoading = () => {
+  return {
+    type: FORM_LOADING
   };
 };

@@ -9,6 +9,7 @@ import ForgotPassword from "./pages/ForgotPasswordPage/ForgotPasswordContainer";
 import WelcomePageContainer from "./pages/WelcomePage/WelcomePageContainer";
 import AdminPageContainer from "./pages/AdminPage/AdminPageContainer";
 // import ProductsPageContainer from "./pages/ProductsPage/ProductsPageContainer";
+import ProductFormPageContainer from "./pages/ProductFormPage/ProductFormPageContainer";
 import ForgotPasswordConfirmationPageContainer from "./pages/ForgotPasswordConfirmationPage/ForgotPasswordConfirmationPageContainer";
 import ForgotPasswordVerificationPageContainer from "./pages/ForgotPasswordVerificationPage/ForgotPasswordVerificationPageContainer";
 import ChangePasswordConfirmationPageComponent from "./pages/ChangePasswordConfirmationPage/ChangePasswordConfirmationPageContainer";
@@ -52,6 +53,7 @@ const App = () => {
           path="/change-password-confirm"
           component={ChangePasswordConfirmationPageComponent}
         />
+        <Route exact path="/product/add" component={ProductFormPageContainer} />
         <Route component={NotFoundPageContainer} />
       </Switch>
     </Router>
