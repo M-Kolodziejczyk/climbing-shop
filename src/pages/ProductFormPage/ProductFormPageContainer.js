@@ -4,13 +4,14 @@ import ProductFormPageComponent from "./components/ProductFormPageComponent";
 import { addProduct } from "../../state/product/productAction";
 import validate from "../../validators/AddProductValidationRules";
 import useForm from "../../customHooks/useForm";
+import { v4 } from "uuid";
 
 const ProductFormPageContainer = () => {
   const productError = useSelector(state => state.product.productError);
   const formLoading = useSelector(state => state.product.FormLoading);
 
   const initialState = {
-    id: "200",
+    id: v4(),
     productName: "",
     manufacturer: "",
     price: "",
