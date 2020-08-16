@@ -13,6 +13,12 @@ Amplify.configure({
     region: config.cognito.REGION,
     userPoolId: config.cognito.USER_POOL_ID,
     userPoolWebClientId: config.cognito.APP_CLIENT_ID
+  },
+  Storage: {
+    AWSS3: {
+      bucket: config.bucket.BUCKET,
+      region: config.bucket.REGION
+    }
   }
 });
 
