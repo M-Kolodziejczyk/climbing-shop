@@ -1,7 +1,7 @@
 
 /aws
 /src/config.json
-
+/src/pages/workingPage/*
 # dependencies
 /node_modules
 /.pnp

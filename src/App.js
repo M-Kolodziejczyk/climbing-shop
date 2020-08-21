@@ -13,6 +13,7 @@ import ProductFormPageContainer from "./pages/ProductFormPage/ProductFormPageCon
 import ForgotPasswordConfirmationPageContainer from "./pages/ForgotPasswordConfirmationPage/ForgotPasswordConfirmationPageContainer";
 import ForgotPasswordVerificationPageContainer from "./pages/ForgotPasswordVerificationPage/ForgotPasswordVerificationPageContainer";
 import ChangePasswordConfirmationPageComponent from "./pages/ChangePasswordConfirmationPage/ChangePasswordConfirmationPageContainer";
+import WorkingPageContainer from "./pages/workingPage/WorkingPageContainer";
 import NotFoundPageContainer from "./pages/NotFoundPage/NotFoundPageContainer";
 import { loadUser } from "./state/auth/authActions";
 import { useDispatch } from "react-redux";
@@ -54,6 +55,7 @@ const App = () => {
           component={ChangePasswordConfirmationPageComponent}
         />
         <Route exact path="/product/add" component={ProductFormPageContainer} />
+        {/* <Route exact path="/working" component={WorkingPageContainer} /> */}
         <Route component={NotFoundPageContainer} />
       </Switch>
     </Router>

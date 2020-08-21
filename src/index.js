@@ -9,6 +9,7 @@ import store from "./state/store";
 
 Amplify.configure({
   Auth: {
+    identityPoolId: config.cognito.IDENTITY_POOL_ID,
     mandatorySignId: true,
     region: config.cognito.REGION,
     userPoolId: config.cognito.USER_POOL_ID,
@@ -16,8 +17,8 @@ Amplify.configure({
   },
   Storage: {
     AWSS3: {
-      bucket: config.bucket.BUCKET,
-      region: config.bucket.REGION
+      bucket: config.storage.BUCKET,
+      region: config.storage.REGION
     }
   }
 });
