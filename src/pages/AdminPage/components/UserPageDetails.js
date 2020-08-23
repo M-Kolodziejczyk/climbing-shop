@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const AdmnPageDetails = props => {
+const UserPageDetails = props => {
   const classes = useStyles();
   const [userData, setUserData] = useState(null);
   const [label, setLabel] = useState(null);
@@ -102,4 +102,4 @@ const AdmnPageDetails = props => {
   );
 };
 
-export default AdmnPageDetails;
+export default UserPageDetails;

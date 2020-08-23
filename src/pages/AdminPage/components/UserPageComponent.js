@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import HeaderContainer from "../../../common/containers/HeaderContainer";
 import Footer from "../../../common/components/Footer";
 import Navbar from "../../../common/components/Navbar";
-import AdmnPageDetails from "./AdmnPageDetails";
+import UserPageDetails from "./UserPageDetails";
 import PasswordComponent from "./PasswordComponent";
 import UserAddressComponent from "./UserAddressComponent";
 import Spinner from "../../../common/components/Spinner";
@@ -60,7 +60,7 @@ const useStyles = makeStyles(theme => ({
   form: {}
 }));
 
-const AdminPageComponent = props => {
+const UserPageComponent = props => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
   const [user, setUser] = useState(null);
@@ -104,13 +104,13 @@ const AdminPageComponent = props => {
                   <List>
                     {user && (
                       <Fragment>
-                        <AdmnPageDetails
+                        <UserPageDetails
                           attributeName={"email"}
                           userData={user["email"]}
                           labelName={"Email"}
                           edit={false}
                         />
-                        <AdmnPageDetails
+                        <UserPageDetails
                           attributeName={"custom:firstName"}
                           userData={user["custom:firstName"]}
                           labelName={"First Name"}
@@ -118,7 +118,7 @@ const AdminPageComponent = props => {
                           validate={FirstNameValidation}
                           callback={updateUser}
                         />
-                        <AdmnPageDetails
+                        <UserPageDetails
                           attributeName={"custom:lastName"}
                           userData={user["custom:lastName"]}
                           labelName={"Last Name"}
@@ -154,4 +154,4 @@ const AdminPageComponent = props => {
   );
 };
 
-export default AdminPageComponent;
+export default UserPageComponent;

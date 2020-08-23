@@ -8,7 +8,7 @@ import SignUp from "./pages/SignUpPage/SignUpPageContainer";
 import SignIn from "./pages/SignInPage/SignInPageContainer";
 import ForgotPassword from "./pages/ForgotPasswordPage/ForgotPasswordContainer";
 import WelcomePageContainer from "./pages/WelcomePage/WelcomePageContainer";
-import AdminPageContainer from "./pages/AdminPage/AdminPageContainer";
+import UserPageContainer from "./pages/AdminPage/UserPageContainer";
 // import ProductsPageContainer from "./pages/ProductsPage/ProductsPageContainer";
 import ProductFormPageContainer from "./pages/ProductFormPage/ProductFormPageContainer";
 import ForgotPasswordConfirmationPageContainer from "./pages/ForgotPasswordConfirmationPage/ForgotPasswordConfirmationPageContainer";
@@ -18,6 +18,7 @@ import WorkingPageContainer from "./pages/workingPage/WorkingPageContainer";
 import NotFoundPageContainer from "./pages/NotFoundPage/NotFoundPageContainer";
 
 import AdminRoute from "./routing/AdminRoute";
+import UserRoute from "./routing/UserRoute";
 
 import { loadUser } from "./state/auth/authActions";
 import "./App.css";
@@ -38,7 +39,7 @@ const App = () => {
         <Route exact path="/signin" component={SignIn} />
         <Route exact path="/forgot-password" component={ForgotPassword} />
         <Route exact path="/welcome" component={WelcomePageContainer} />
-        <Route exact path="/admin" component={AdminPageContainer} />
+        <UserRoute exact path="/admin" component={UserPageContainer} />
         {/* <Route exact path="/products" component={ProductsPageContainer} /> */}
         <Route
           exact
