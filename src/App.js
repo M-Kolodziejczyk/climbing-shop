@@ -14,6 +14,7 @@ import ProductFormPageContainer from "./pages/ProductFormPage/ProductFormPageCon
 import ForgotPasswordConfirmationPageContainer from "./pages/ForgotPasswordConfirmationPage/ForgotPasswordConfirmationPageContainer";
 import ForgotPasswordVerificationPageContainer from "./pages/ForgotPasswordVerificationPage/ForgotPasswordVerificationPageContainer";
 import ChangePasswordConfirmationPageComponent from "./pages/ChangePasswordConfirmationPage/ChangePasswordConfirmationPageContainer";
+import EditProductPageContainer from "./pages/EditProductPage/EditProductPageContainer";
 import WorkingPageContainer from "./pages/workingPage/WorkingPageContainer";
 import NotFoundPageContainer from "./pages/NotFoundPage/NotFoundPageContainer";
 
@@ -62,6 +63,11 @@ const App = () => {
           component={ProductFormPageContainer}
         />
         {/* <Route exact path="/working" component={WorkingPageContainer} /> */}
+        <AdminRoute
+          exact
+          path="/product/edit/:id"
+          component={EditProductPageContainer}
+        />
         <Route component={NotFoundPageContainer} />
       </Switch>
     </Router>
