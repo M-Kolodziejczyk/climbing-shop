@@ -18,10 +18,12 @@ const initialState = {
   registerUser: null,
   isRegister: false,
   loading: false,
+  loadingUser: true,
   isAuthenticated: false,
   authError: null,
   changePassword: null,
-  forgotPasswordSuccess: false
+  forgotPasswordSuccess: false,
+  userGroups: [""]
 };
 
 export default (state = initialState, action) => {
@@ -70,14 +72,20 @@ export default (state = initialState, action) => {
       return {
         ...state,
         user: action.payload.attributes,
+        userGroups:
+          action.payload.signInUserSession.accessToken.payload[
+            "cognito:groups"
+          ],
         isAuthenticated: true,
-        loading: false
+        loading: false,
+        loadingUser: false
       };
     case AUTH_ERROR:
       return {
         ...state,
         authError: action.payload.message,
-        loading: false
+        loading: false,
+        loadingUser: false
       };
     case UPDATE_USER:
       return {

@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./pages/HomePage/HomePageContainer";
 import About from "./pages/AboutPage/AboutPageContainer";
@@ -15,16 +16,16 @@ import ForgotPasswordVerificationPageContainer from "./pages/ForgotPasswordVerif
 import ChangePasswordConfirmationPageComponent from "./pages/ChangePasswordConfirmationPage/ChangePasswordConfirmationPageContainer";
 import WorkingPageContainer from "./pages/workingPage/WorkingPageContainer";
 import NotFoundPageContainer from "./pages/NotFoundPage/NotFoundPageContainer";
+
+import AdminRoute from "./routing/AdminRoute";
+
 import { loadUser } from "./state/auth/authActions";
-import { useDispatch } from "react-redux";
 import "./App.css";
 
 const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    if (localStorage.length > 0) {
-      dispatch(loadUser());
-    }
+    dispatch(loadUser());
   }, [dispatch]);
 
   return (
@@ -54,7 +55,11 @@ const App = () => {
           path="/change-password-confirm"
           component={ChangePasswordConfirmationPageComponent}
         />
-        <Route exact path="/product/add" component={ProductFormPageContainer} />
+        <AdminRoute
+          exact
+          path="/product/add"
+          component={ProductFormPageContainer}
+        />
         {/* <Route exact path="/working" component={WorkingPageContainer} /> */}
         <Route component={NotFoundPageContainer} />
       </Switch>
