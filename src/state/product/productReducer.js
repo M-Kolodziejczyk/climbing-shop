@@ -3,7 +3,8 @@ import {
   PRODUCT_ERROR,
   GET_ALL_PRODUCTS,
   ADD_PRODUCT,
-  FORM_LOADING
+  FORM_LOADING,
+  GET_PRODUCT
 } from "../types";
 
 const initialState = {
@@ -37,6 +38,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         formLoading: false,
+        product: action.payload
+      };
+    case GET_PRODUCT:
+      return {
+        ...state,
+        loading: false,
         product: action.payload
       };
     case FORM_LOADING:

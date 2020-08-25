@@ -1,42 +1,43 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { Fragment, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import EditProductPageComponent from "./components/EditProductPageComponent";
-import { addProduct } from "../../state/product/productAction";
+import Spinner from "../../common/components/Spinner";
+import HeaderContainer from "../../common/containers/HeaderContainer";
+import Navbar from "../../common/components/Navbar";
+import Footer from "../../common/components/Footer";
+import { addProduct, getProduct } from "../../state/product/productAction";
 import validate from "../../validators/AddProductValidationRules";
-import useForm from "../../customHooks/useForm";
-import { v4 } from "uuid";
 
-const EditProductPageContainer = () => {
+const EditProductPageContainer = props => {
+  const dispatch = useDispatch();
   const productError = useSelector(state => state.product.productError);
-  const formLoading = useSelector(state => state.product.FormLoading);
+  const loading = useSelector(state => state.product.loading);
+  const formLoading = useSelector(state => state.product.formLoading);
+  const product = useSelector(state => state.product.product);
 
-  const initialState = {
-    id: v4(),
-    productName: "",
-    manufacturer: "",
-    price: "",
-    discount: "",
-    description: "",
-    quantity: "",
-    properties: ""
-  };
+  useEffect(() => {
+    dispatch(getProduct(props.match.params.id));
+    // eslint-disable-next-line
+  }, []);
 
-  const { handleChange, handleSubmit, values, errors } = useForm(
-    initialState,
-    validate,
-    addProduct
-  );
-
-  return (
-    <EditProductPageComponent
-      onChange={handleChange}
-      formData={values}
-      onSubmit={handleSubmit}
-      errors={errors}
-      productError={productError}
-      loading={formLoading}
-    />
-  );
+  if (loading || formLoading) {
+    return <Spinner />;
+  } else {
+    return (
+      <Fragment>
+        <HeaderContainer />
+        <Navbar />
+        <EditProductPageComponent
+          product={product}
+          validate={validate}
+          callback={addProduct}
+          productError={productError}
+          loading={loading}
+        />
+        <Footer />
+      </Fragment>
+    );
+  }
 };
 
 export default EditProductPageContainer;

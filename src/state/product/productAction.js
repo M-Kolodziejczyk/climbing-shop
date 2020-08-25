@@ -3,7 +3,8 @@ import {
   PRODUCT_ERROR,
   GET_ALL_PRODUCTS,
   ADD_PRODUCT,
-  FORM_LOADING
+  FORM_LOADING,
+  GET_PRODUCT
 } from "../types";
 import axios from "axios";
 import config from "../../config";
@@ -27,10 +28,26 @@ export const getAllProduct = () => async dispatch => {
 export const addProduct = product => async dispatch => {
   dispatch(setFormLoading());
   try {
-    await axios.post(`${config.api.invokeUrl}/products/{id}`, product);
+    await axios.post(`${config.api.invokeUrl}/products/${product.id}`, product);
     dispatch({
       type: ADD_PRODUCT,
       pyload: product
+    });
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_ERROR,
+      payload: error
+    });
+  }
+};
+
+export const getProduct = id => async dispatch => {
+  dispatch(setLoading());
+  try {
+    const res = await axios.get(`${config.api.invokeUrl}/products/${id}/`);
+    dispatch({
+      type: GET_PRODUCT,
+      payload: res.data
     });
   } catch (error) {
     dispatch({

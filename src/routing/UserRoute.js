@@ -15,7 +15,6 @@ const UserRoute = ({ component: Component, ...rest }) => {
     }
 
     if (user) {
-      console.log(user);
       setIsAuth(true);
     }
   }, [user, loadingUser]);

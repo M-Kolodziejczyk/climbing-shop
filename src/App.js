@@ -59,7 +59,7 @@ const App = () => {
         />
         <AdminRoute
           exact
-          path="/product/add"
+          path="/products/add"
           component={ProductFormPageContainer}
         />
         {/* <Route exact path="/working" component={WorkingPageContainer} /> */}
