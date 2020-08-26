@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const EditProductPageComponent = props => {
-  const { product, validate, calback } = props;
+  const { product, validate, callback } = props;
 
   const initialState = {
     id: product.id || "",
@@ -41,7 +41,7 @@ const EditProductPageComponent = props => {
   const { handleChange, handleSubmit, values, errors } = useForm(
     initialState,
     validate,
-    calback
+    callback
   );
 
   const classes = useStyles();
@@ -103,7 +103,7 @@ const EditProductPageComponent = props => {
                   label="Price"
                   name="price"
                   autoComplete="lname"
-                  onChange={props.onChange}
+                  onChange={handleChange}
                   value={values.price}
                 />
               </Grid>
@@ -117,7 +117,7 @@ const EditProductPageComponent = props => {
                   label="Discount"
                   name="discount"
                   autoComplete="lname"
-                  onChange={props.onChange}
+                  onChange={handleChange}
                   value={values.discount}
                 />
               </Grid>
@@ -131,7 +131,7 @@ const EditProductPageComponent = props => {
                   label="Description"
                   name="description"
                   autoComplete="lname"
-                  onChange={props.onChange}
+                  onChange={handleChange}
                   value={values.description}
                 />
               </Grid>
@@ -145,7 +145,7 @@ const EditProductPageComponent = props => {
                   label="Quantity"
                   name="quantity"
                   autoComplete="lname"
-                  onChange={props.onChange}
+                  onChange={handleChange}
                   value={values.quantity}
                 />
               </Grid>
@@ -159,7 +159,7 @@ const EditProductPageComponent = props => {
                   label="Properties"
                   name="properties"
                   autoComplete="lname"
-                  onChange={props.onChange}
+                  onChange={handleChange}
                   value={values.properties}
                 />
               </Grid>
@@ -171,7 +171,7 @@ const EditProductPageComponent = props => {
               color="primary"
               className={classes.submit}
             >
-              Add
+              Update
             </Button>
             {props.productError && (
               <Grid container>

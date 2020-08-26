@@ -4,7 +4,8 @@ import {
   GET_ALL_PRODUCTS,
   ADD_PRODUCT,
   FORM_LOADING,
-  GET_PRODUCT
+  GET_PRODUCT,
+  UPDATE_PRODUCT
 } from "../types";
 
 const initialState = {
@@ -44,6 +45,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        product: action.payload
+      };
+    case UPDATE_PRODUCT:
+      return {
+        ...state,
+        loading: false,
+        formLoading: false,
         product: action.payload
       };
     case FORM_LOADING:

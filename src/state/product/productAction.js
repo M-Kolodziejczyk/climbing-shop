@@ -4,7 +4,8 @@ import {
   GET_ALL_PRODUCTS,
   ADD_PRODUCT,
   FORM_LOADING,
-  GET_PRODUCT
+  GET_PRODUCT,
+  UPDATE_PRODUCT
 } from "../types";
 import axios from "axios";
 import config from "../../config";
@@ -48,6 +49,25 @@ export const getProduct = id => async dispatch => {
     dispatch({
       type: GET_PRODUCT,
       payload: res.data
+    });
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_ERROR,
+      payload: error
+    });
+  }
+};
+
+export const updateProduct = product => async dispatch => {
+  dispatch(setLoading());
+  try {
+    const res = await axios.patch(
+      `${config.api.invokeUrl}/products/${product.id}/`,
+      product
+    );
+    dispatch({
+      type: UPDATE_PRODUCT,
+      payload: product
     });
   } catch (error) {
     dispatch({

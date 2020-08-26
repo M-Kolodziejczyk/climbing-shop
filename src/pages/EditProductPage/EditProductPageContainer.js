@@ -5,7 +5,7 @@ import Spinner from "../../common/components/Spinner";
 import HeaderContainer from "../../common/containers/HeaderContainer";
 import Navbar from "../../common/components/Navbar";
 import Footer from "../../common/components/Footer";
-import { addProduct, getProduct } from "../../state/product/productAction";
+import { updateProduct, getProduct } from "../../state/product/productAction";
 import validate from "../../validators/AddProductValidationRules";
 
 const EditProductPageContainer = props => {
@@ -30,7 +30,7 @@ const EditProductPageContainer = props => {
         <EditProductPageComponent
           product={product}
           validate={validate}
-          callback={addProduct}
+          callback={updateProduct}
           productError={productError}
           loading={loading}
         />
