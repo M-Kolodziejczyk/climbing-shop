@@ -62,7 +62,7 @@ const App = () => {
           path="/products/add"
           component={ProductFormPageContainer}
         />
-        {/* <Route exact path="/working" component={WorkingPageContainer} /> */}
+        <Route exact path="/working" component={WorkingPageContainer} />
         <AdminRoute
           exact
           path="/product/edit/:id"

@@ -5,9 +5,11 @@ import {
   ADD_PRODUCT,
   FORM_LOADING,
   GET_PRODUCT,
-  UPDATE_PRODUCT
+  UPDATE_PRODUCT,
+  ADD_PRODUCT_IMAGE
 } from "../types";
 import axios from "axios";
+import { Storage } from "aws-amplify";
 import config from "../../config";
 
 export const getAllProduct = () => async dispatch => {
@@ -61,13 +63,29 @@ export const getProduct = id => async dispatch => {
 export const updateProduct = product => async dispatch => {
   dispatch(setLoading());
   try {
-    const res = await axios.patch(
+    await axios.patch(
       `${config.api.invokeUrl}/products/${product.id}/`,
       product
     );
     dispatch({
       type: UPDATE_PRODUCT,
       payload: product
+    });
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_ERROR,
+      payload: error
+    });
+  }
+};
+
+export const addProductImage = (id, image) => async dispatch => {
+  dispatch(setLoading());
+  try {
+    const res = await Storage.put(`product-image/${id}/1.jpg`, image);
+    dispatch({
+      type: ADD_PRODUCT_IMAGE,
+      payload: res
     });
   } catch (error) {
     dispatch({

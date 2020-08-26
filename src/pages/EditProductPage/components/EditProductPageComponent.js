@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import Spinner from "../../../common/components/Spinner";
 import useForm from "../../../customHooks/useForm";
+import { addProductImage } from "../../../state/product/productAction";
 import {
   Button,
   Box,
@@ -25,6 +27,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const EditProductPageComponent = props => {
+  const dispatch = useDispatch();
+  const [image, setImage] = useState("");
   const { product, validate, callback } = props;
 
   const initialState = {
@@ -44,6 +48,15 @@ const EditProductPageComponent = props => {
     callback
   );
 
+  const handleImageSubmit = e => {
+    e.preventDefault();
+    dispatch(addProductImage(product.id, image));
+  };
+
+  const handleImageChange = e => {
+    setImage(e.target.files[0]);
+  };
+
   const classes = useStyles();
   return (
     <Container>
@@ -58,7 +71,15 @@ const EditProductPageComponent = props => {
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={6}>
-          Hello
+          <form onSubmit={handleImageSubmit}>
+            <input
+              type="file"
+              placeholder="image"
+              name="file"
+              onChange={handleImageChange}
+            />
+            <button type="submit">Submit</button>
+          </form>
         </Grid>
         <Grid item xs={6}>
           <form className={classes.form} noValidate onSubmit={handleSubmit}>
