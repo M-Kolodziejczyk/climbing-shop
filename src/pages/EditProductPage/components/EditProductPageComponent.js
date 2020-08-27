@@ -5,6 +5,7 @@ import Spinner from "../../../common/components/Spinner";
 import useForm from "../../../customHooks/useForm";
 import { addProductImage } from "../../../state/product/productAction";
 import {
+  MenuItem,
   Button,
   Box,
   TextField,
@@ -12,6 +13,29 @@ import {
   Typography,
   Container
 } from "@material-ui/core";
+
+const categories = [
+  {
+    value: "clothes",
+    label: "Clothes"
+  },
+  {
+    value: "shoes",
+    label: "Shoes"
+  },
+  {
+    value: "backpacks",
+    label: "Backpacks"
+  },
+  {
+    value: "climbing",
+    label: "Climbing"
+  },
+  {
+    value: "tourist",
+    label: "Tourist"
+  }
+];
 
 const useStyles = makeStyles(theme => ({
   form: {
@@ -33,6 +57,7 @@ const EditProductPageComponent = props => {
 
   const initialState = {
     id: product.id || "",
+    category: product.category || "",
     productName: product.productName || "",
     manufacturer: product.manufacturer || "",
     price: product.price || "",
@@ -84,6 +109,28 @@ const EditProductPageComponent = props => {
         <Grid item xs={6}>
           <form className={classes.form} noValidate onSubmit={handleSubmit}>
             <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  error={errors.category ? true : false}
+                  helperText={"" || errors.category}
+                  variant="outlined"
+                  select
+                  // id="outlined-select-currency"
+                  defaultValue="clothes"
+                  required
+                  fullWidth
+                  label="Category"
+                  name="category"
+                  onChange={handleChange}
+                  value={values.category}
+                >
+                  {categories.map(option => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
               <Grid item xs={12}>
                 <TextField
                   error={errors.productName ? true : false}

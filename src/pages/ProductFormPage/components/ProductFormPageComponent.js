@@ -2,7 +2,6 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Spinner from "../../../common/components/Spinner";
 import {
-  FormControl,
   MenuItem,
   Button,
   Box,
