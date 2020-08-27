@@ -3,6 +3,9 @@ import ProductListPageComponent from "./components/ProductListPageComponent";
 import ProductItem from "./components/ProductItem";
 import { getAllProduct, setLoading } from "../../state/product/productAction";
 import { useSelector, useDispatch } from "react-redux";
+import HeaderContainer from "../../common/containers/HeaderContainer";
+import Navbar from "../../common/components/Navbar";
+import Footer from "../../common/components/Footer";
 import Spinner from "../../common/components/Spinner";
 
 const ProductListPageContainer = () => {
@@ -17,20 +20,26 @@ const ProductListPageContainer = () => {
   }, []);
 
   return (
-    <ProductListPageComponent>
-      {loading ? (
-        <Spinner />
-      ) : (
-        <Fragment>
-          {products &&
-            products.length > 0 &&
-            !loading &&
-            products.map(product => (
-              <ProductItem key={product.id} product={product} />
-            ))}
-        </Fragment>
-      )}
-    </ProductListPageComponent>
+    <Fragment>
+      <HeaderContainer />
+      <Navbar />
+
+      <ProductListPageComponent>
+        {loading ? (
+          <Spinner />
+        ) : (
+          <Fragment>
+            {products &&
+              products.length > 0 &&
+              !loading &&
+              products.map(product => (
+                <ProductItem key={product.id} product={product} />
+              ))}
+          </Fragment>
+        )}
+      </ProductListPageComponent>
+      <Footer />
+    </Fragment>
   );
 };
 
