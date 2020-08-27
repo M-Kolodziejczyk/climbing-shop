@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import {
@@ -32,6 +32,7 @@ const useStyles = makeStyles(theme => ({
     top: "0",
     right: "0"
   },
+  fakeLabel: {},
   productManufacturer: {
     fontSize: "14px",
     margin: "10px 0",
@@ -69,26 +70,45 @@ const ProductItem = ({ product }) => {
   return (
     <Card className={classes.productBox}>
       <CardContent>
-        <Typography className={classes.label}>-20%</Typography>
+        {product.discount !== "0" ? (
+          <Typography className={classes.label}>
+            -{product.discount}%
+          </Typography>
+        ) : (
+          <Typography className={classes.fakeLabel} />
+        )}
       </CardContent>
+
       <CardMedia
         component="img"
         src="https://climbing-shop.s3-eu-west-1.amazonaws.com/black_diamond_helmet.jpg"
       />
       <CardContent>
         <Typography className={classes.productManufacturer}>
-          {product.producent}
+          {product.manufacturer}
         </Typography>
         <Typography className={classes.productName}>
-          KASK WSPINACZKOWY BLACK DIAMOND HALF DOME - SLATE
+          {product.productName}
         </Typography>
         <Grid container direction="row" alignItems="center">
-          <Grid item container xs={4}>
-            <Typography className={classes.currentPrice}>210 zl</Typography>
-          </Grid>
-          <Grid item container xs={4}>
-            <Typography className={classes.oldPrice}>240zl</Typography>
-          </Grid>
+          {product.discount == "0" ? (
+            <Grid item container xs={4}>
+              <Typography className={classes.currentPrice}>
+                {product.price} zł
+              </Typography>
+            </Grid>
+          ) : (
+            <Fragment>
+              <Grid item container xs={4}>
+                <Typography className={classes.currentPrice}>
+                  {product.price} zł
+                </Typography>
+              </Grid>
+              <Grid item container xs={4}>
+                <Typography className={classes.oldPrice}>240zl</Typography>
+              </Grid>
+            </Fragment>
+          )}
           <Grid item container xs={4}></Grid>
         </Grid>
       </CardContent>
