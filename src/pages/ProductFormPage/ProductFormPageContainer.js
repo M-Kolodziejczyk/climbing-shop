@@ -18,7 +18,8 @@ const ProductFormPageContainer = () => {
     discount: "",
     description: "",
     quantity: "",
-    properties: ""
+    properties: "",
+    category: ""
   };
 
   const { handleChange, handleSubmit, values, errors } = useForm(

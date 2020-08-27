@@ -2,6 +2,8 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Spinner from "../../../common/components/Spinner";
 import {
+  FormControl,
+  MenuItem,
   Button,
   Box,
   TextField,
@@ -9,6 +11,29 @@ import {
   Typography,
   Container
 } from "@material-ui/core";
+
+const categories = [
+  {
+    value: "clothes",
+    label: "Clothes"
+  },
+  {
+    value: "shoes",
+    label: "Shoes"
+  },
+  {
+    value: "backpacks",
+    label: "Backpacks"
+  },
+  {
+    value: "climbing",
+    label: "Climbing"
+  },
+  {
+    value: "tourist",
+    label: "Tourist"
+  }
+];
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -34,7 +59,6 @@ const ProductFormPageComponent = props => {
   const handleChange = e => {
     props.onChange(e);
   };
-
   const classes = useStyles();
 
   return (
@@ -145,6 +169,28 @@ const ProductFormPageComponent = props => {
                 onChange={props.onChange}
                 value={props.formData.properties}
               />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                error={props.errors.categories ? true : false}
+                helperText={"" || props.errors.categories}
+                variant="outlined"
+                select
+                // id="outlined-select-currency"
+                defaultValue="clothes"
+                required
+                fullWidth
+                label="Category"
+                name="category"
+                onChange={props.onChange}
+                value={props.formData.category}
+              >
+                {categories.map(option => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
             </Grid>
           </Grid>
           <Button
