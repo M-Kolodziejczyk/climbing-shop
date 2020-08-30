@@ -20,11 +20,7 @@ const ProductFormPageContainer = () => {
     longDescription: "",
     quantity: "",
     features: [],
-    properties: {
-      Material: "aluminium",
-      waga: "135g",
-      kolor: "czerwony"
-    },
+    properties: {},
     category: ""
   };
 

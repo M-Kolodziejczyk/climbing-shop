@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Spinner from "../../../common/components/Spinner";
 import AddIcon from "@material-ui/icons/Add";
@@ -57,6 +57,46 @@ function FeatureInput(props) {
     </Grid>
   );
 }
+function PropertiesInput(props) {
+  return (
+    <Grid container spacing={2} className={props.classes.propertiesContainer}>
+      <Grid item xs={6} className={props.classes.features}>
+        <TextField
+          error={props.errors.properties ? true : false}
+          helperText={"" || props.errors.properties}
+          autoComplete="fname"
+          name="name"
+          variant="outlined"
+          required
+          fullWidth
+          label="Properties Name"
+          autoFocus
+          onChange={props.handleChange}
+          value={props.value.id}
+          id={`${props.id}`}
+          disabled={props.id === props.counter.length ? false : true}
+        />
+      </Grid>
+      <Grid item xs={6} className={props.classes.features}>
+        <TextField
+          error={props.errors.properties ? true : false}
+          helperText={"" || props.errors.properties}
+          autoComplete="fname"
+          name="value"
+          variant="outlined"
+          required
+          fullWidth
+          label="Properties Value"
+          autoFocus
+          onChange={props.handleChange}
+          value={props.value.id}
+          id={`${props.id}`}
+          disabled={props.id === props.counter.length ? false : true}
+        />
+      </Grid>
+    </Grid>
+  );
+}
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -79,6 +119,9 @@ const useStyles = makeStyles(theme => ({
   featuresContainer: {
     margin: "-8px"
   },
+  propertiesContainer: {
+    padding: "8px"
+  },
   features: {
     padding: "8px"
   },
@@ -91,6 +134,8 @@ const ProductFormPageComponent = props => {
   const classes = useStyles();
   const [counter, setCounter] = useState([1]);
   const [features, setFeatures] = useState([]);
+  const [properties, setProperties] = useState({});
+  const [propertiesCounter, setPropertiesCounter] = useState([1]);
 
   const handleChange = e => {
     props.onChange(e);
@@ -107,6 +152,32 @@ const ProductFormPageComponent = props => {
     const value = Object.values(features);
     props.onChange({ name, value });
   };
+
+  const propertiesChange = e => {
+    const { id, name, value } = e.target;
+    if (name === "name") {
+      setProperties({
+        ...properties,
+        [id]: { ...properties[id], [name]: value }
+      });
+    } else {
+      setProperties({
+        ...properties,
+        [id]: { ...properties[id], [name]: value }
+      });
+    }
+  };
+
+  const createPropertiesInput = e => {
+    let value = new Object();
+    const name = "properties";
+    setPropertiesCounter(state => [...state, state.length + 1]);
+    const propertiesArray = Object.entries(properties);
+    propertiesArray.map(n => (value[n[1].name] = n[1].value));
+    props.onChange({ name, value });
+  };
+
+  console.log(props.formData);
 
   return (
     <Container component="main" maxWidth="lg">
@@ -132,6 +203,27 @@ const ProductFormPageComponent = props => {
                 ))}
               <Fab
                 onClick={createFeatureInput}
+                size="small"
+                color="secondary"
+                aria-label="add"
+                className={classes.fabIcon}
+              >
+                <AddIcon />
+              </Fab>
+              {propertiesCounter.length > 0 &&
+                propertiesCounter.map(n => (
+                  <PropertiesInput
+                    id={n}
+                    key={n}
+                    classes={classes}
+                    errors={props.errors}
+                    handleChange={propertiesChange}
+                    value={properties}
+                    counter={propertiesCounter}
+                  />
+                ))}
+              <Fab
+                onClick={createPropertiesInput}
                 size="small"
                 color="secondary"
                 aria-label="add"
@@ -239,20 +331,6 @@ const ProductFormPageComponent = props => {
                   autoComplete="lname"
                   onChange={props.onChange}
                   value={props.formData.quantity}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  error={props.errors.properties ? true : false}
-                  helperText={"" || props.errors.properties}
-                  variant="outlined"
-                  required
-                  fullWidth
-                  label="Properties"
-                  name="properties"
-                  autoComplete="lname"
-                  onChange={props.onChange}
-                  value={props.formData.properties}
                 />
               </Grid>
               <Grid item xs={12}>
