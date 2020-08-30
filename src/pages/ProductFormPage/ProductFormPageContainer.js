@@ -17,8 +17,14 @@ const ProductFormPageContainer = () => {
     price: "",
     discount: "",
     description: "",
+    longDescription: "",
     quantity: "",
-    properties: "",
+    features: [],
+    properties: {
+      Material: "aluminium",
+      waga: "135g",
+      kolor: "czerwony"
+    },
     category: ""
   };
 

@@ -16,11 +16,19 @@ const useForm = (initialState, validate, callback) => {
   }, [errors]);
 
   const handleChange = e => {
-    const { name, value } = e.target;
-    setValues({
-      ...values,
-      [name]: value
-    });
+    if (e.target) {
+      const { name, value } = e.target;
+      setValues({
+        ...values,
+        [name]: value
+      });
+    } else {
+      const { name, value } = e;
+      setValues({
+        ...values,
+        [name]: value
+      });
+    }
   };
 
   const handleSubmit = e => {
