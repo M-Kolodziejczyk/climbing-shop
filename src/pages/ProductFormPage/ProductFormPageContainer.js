@@ -19,8 +19,13 @@ const ProductFormPageContainer = () => {
     description: "",
     longDescription: "",
     quantity: "",
-    features: {},
-    properties: {},
+    features: { 1: "" },
+    properties: {
+      1: {
+        name: "",
+        value: ""
+      }
+    },
     category: ""
   };
 

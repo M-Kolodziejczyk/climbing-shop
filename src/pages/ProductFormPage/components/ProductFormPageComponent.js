@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Spinner from "../../../common/components/Spinner";
 import AddIcon from "@material-ui/icons/Add";
@@ -50,7 +50,7 @@ function FeatureInput(props) {
         label="Features"
         autoFocus
         onChange={props.handleChange}
-        value={props.value.id}
+        value={props.value[props.id]}
         id={`${props.id}`}
       />
     </Grid>
@@ -71,7 +71,7 @@ function PropertiesInput(props) {
           label="Properties Name"
           autoFocus
           onChange={props.handleChange}
-          value={props.value.id}
+          value={props.value[props.id].name}
           id={`${props.id}`}
         />
       </Grid>
@@ -87,7 +87,7 @@ function PropertiesInput(props) {
           label="Properties Value"
           autoFocus
           onChange={props.handleChange}
-          value={props.value.id}
+          value={props.value[props.id].value}
           id={`${props.id}`}
         />
       </Grid>
@@ -129,16 +129,34 @@ const useStyles = makeStyles(theme => ({
 
 const ProductFormPageComponent = props => {
   const classes = useStyles();
+  const [isSubmit, setIsSubmit] = useState(false);
   const [features, setFeatures] = useState([1]);
-  const [propertiesCounter, setPropertiesCounter] = useState([1]);
+  const [properties, setProperties] = useState([1]);
 
   const createFeatureInput = () => {
+    props.onChange({ name: "features", value: features.length });
     setFeatures(state => [...state, state.length + 1]);
   };
 
   const createPropertiesInput = () => {
-    setPropertiesCounter(state => [...state, state.length + 1]);
+    props.onChange({ name: "properties", value: properties.length });
+    setProperties(state => [...state, state.length + 1]);
   };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    props.onSubmit(e);
+    setIsSubmit(true);
+  };
+
+  useEffect(() => {
+    if (isSubmit === true && Object.keys(props.errors).length === 0) {
+      setFeatures([1]);
+      setProperties([1]);
+      setIsSubmit(false);
+    }
+    // eslint-disable-next-line
+  }, [isSubmit]);
 
   return (
     <Container component="main" maxWidth="lg">
@@ -147,7 +165,7 @@ const ProductFormPageComponent = props => {
         <Typography component="h1" variant="h5">
           Add Product
         </Typography>
-        <form className={classes.form} noValidate onSubmit={props.onSubmit}>
+        <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={6} className={classes.featuresContainer}>
               {features.length > 0 &&
@@ -170,8 +188,8 @@ const ProductFormPageComponent = props => {
               >
                 <AddIcon />
               </Fab>
-              {propertiesCounter.length > 0 &&
-                propertiesCounter.map(n => (
+              {properties.length > 0 &&
+                properties.map(n => (
                   <PropertiesInput
                     id={n}
                     key={n}

@@ -16,7 +16,26 @@ const useProductForm = (initialState, validate, callback) => {
   }, [errors]);
 
   const handleChange = e => {
-    if (e.target.name === "features") {
+    if (e.name === "features") {
+      setValues({
+        ...values,
+        features: {
+          ...values.features,
+          [e.value + 1]: ""
+        }
+      });
+    } else if (e.name === "properties") {
+      setValues({
+        ...values,
+        properties: {
+          ...values.properties,
+          [e.value + 1]: {
+            name: "",
+            value: ""
+          }
+        }
+      });
+    } else if (e.target.name === "features") {
       const { name, value, id } = e.target;
       setValues({
         ...values,

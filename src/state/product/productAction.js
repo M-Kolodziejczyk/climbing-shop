@@ -34,7 +34,7 @@ export const addProduct = product => async dispatch => {
     await axios.post(`${config.api.invokeUrl}/products/${product.id}`, product);
     dispatch({
       type: ADD_PRODUCT,
-      pyload: product
+      payload: product
     });
   } catch (error) {
     dispatch({
