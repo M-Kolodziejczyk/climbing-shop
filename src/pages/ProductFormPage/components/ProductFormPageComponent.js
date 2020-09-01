@@ -40,8 +40,18 @@ function FeatureInput(props) {
   return (
     <Grid item xs={12} className={props.classes.features}>
       <TextField
-        error={props.errors.features ? true : false}
-        helperText={"" || props.errors.features}
+        error={
+          Object.keys(props.errors).includes("features") &&
+          Object.keys(props.errors.features).includes(`${props.id}`)
+            ? true
+            : false
+        }
+        helperText={
+          Object.keys(props.errors).includes("features") &&
+          Object.keys(props.errors.features).includes(`${props.id}`)
+            ? props.errors.features[props.id]
+            : ""
+        }
         autoComplete="fname"
         name="features"
         variant="outlined"
@@ -61,8 +71,18 @@ function PropertiesInput(props) {
     <Grid container spacing={2} className={props.classes.propertiesContainer}>
       <Grid item xs={6} className={props.classes.features}>
         <TextField
-          error={props.errors.properties ? true : false}
-          helperText={"" || props.errors.properties}
+          error={
+            Object.keys(props.errors).includes("propertiesName") &&
+            Object.keys(props.errors.propertiesName).includes(`${props.id}`)
+              ? true
+              : false
+          }
+          helperText={
+            Object.keys(props.errors).includes("propertiesName") &&
+            Object.keys(props.errors.propertiesName).includes(`${props.id}`)
+              ? props.errors.propertiesName[props.id]
+              : ""
+          }
           autoComplete="fname"
           name="propertiesName"
           variant="outlined"
@@ -77,8 +97,18 @@ function PropertiesInput(props) {
       </Grid>
       <Grid item xs={6} className={props.classes.features}>
         <TextField
-          error={props.errors.properties ? true : false}
-          helperText={"" || props.errors.properties}
+          error={
+            Object.keys(props.errors).includes("propertiesValue") &&
+            Object.keys(props.errors.propertiesValue).includes(`${props.id}`)
+              ? true
+              : false
+          }
+          helperText={
+            Object.keys(props.errors).includes("propertiesValue") &&
+            Object.keys(props.errors.propertiesValue).includes(`${props.id}`)
+              ? props.errors.propertiesValue[props.id]
+              : ""
+          }
           autoComplete="fname"
           name="propertiesValue"
           variant="outlined"
@@ -151,12 +181,12 @@ const ProductFormPageComponent = props => {
 
   useEffect(() => {
     if (isSubmit === true && Object.keys(props.errors).length === 0) {
+      console.log("work");
       setFeatures([1]);
       setProperties([1]);
       setIsSubmit(false);
     }
-    // eslint-disable-next-line
-  }, [isSubmit]);
+  }, [isSubmit, props.errors]);
 
   return (
     <Container component="main" maxWidth="lg">
@@ -312,8 +342,8 @@ const ProductFormPageComponent = props => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  error={props.errors.categories ? true : false}
-                  helperText={"" || props.errors.categories}
+                  error={props.errors.category ? true : false}
+                  helperText={"" || props.errors.category}
                   variant="outlined"
                   select
                   defaultValue="clothes"
