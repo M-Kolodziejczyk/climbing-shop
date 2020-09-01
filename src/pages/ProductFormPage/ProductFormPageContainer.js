@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import ProductFormPageComponent from "./components/ProductFormPageComponent";
 import { addProduct } from "../../state/product/productAction";
 import validate from "../../validators/AddProductValidationRules";
-import useForm from "../../customHooks/useForm";
+import useProductForm from "../../customHooks/useProductForm";
 import { v4 } from "uuid";
 
 const ProductFormPageContainer = () => {
@@ -19,12 +19,12 @@ const ProductFormPageContainer = () => {
     description: "",
     longDescription: "",
     quantity: "",
-    features: [],
+    features: {},
     properties: {},
     category: ""
   };
 
-  const { handleChange, handleSubmit, values, errors } = useForm(
+  const { handleChange, handleSubmit, values, errors } = useProductForm(
     initialState,
     validate,
     addProduct

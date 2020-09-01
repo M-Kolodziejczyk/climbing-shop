@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Spinner from "../../../common/components/Spinner";
 import AddIcon from "@material-ui/icons/Add";
@@ -52,7 +52,6 @@ function FeatureInput(props) {
         onChange={props.handleChange}
         value={props.value.id}
         id={`${props.id}`}
-        disabled={props.id === props.counter.length ? false : true}
       />
     </Grid>
   );
@@ -65,7 +64,7 @@ function PropertiesInput(props) {
           error={props.errors.properties ? true : false}
           helperText={"" || props.errors.properties}
           autoComplete="fname"
-          name="name"
+          name="propertiesName"
           variant="outlined"
           required
           fullWidth
@@ -74,7 +73,6 @@ function PropertiesInput(props) {
           onChange={props.handleChange}
           value={props.value.id}
           id={`${props.id}`}
-          disabled={props.id === props.counter.length ? false : true}
         />
       </Grid>
       <Grid item xs={6} className={props.classes.features}>
@@ -82,7 +80,7 @@ function PropertiesInput(props) {
           error={props.errors.properties ? true : false}
           helperText={"" || props.errors.properties}
           autoComplete="fname"
-          name="value"
+          name="propertiesValue"
           variant="outlined"
           required
           fullWidth
@@ -91,7 +89,6 @@ function PropertiesInput(props) {
           onChange={props.handleChange}
           value={props.value.id}
           id={`${props.id}`}
-          disabled={props.id === props.counter.length ? false : true}
         />
       </Grid>
     </Grid>
@@ -132,52 +129,16 @@ const useStyles = makeStyles(theme => ({
 
 const ProductFormPageComponent = props => {
   const classes = useStyles();
-  const [counter, setCounter] = useState([1]);
-  const [features, setFeatures] = useState([]);
-  const [properties, setProperties] = useState({});
+  const [features, setFeatures] = useState([1]);
   const [propertiesCounter, setPropertiesCounter] = useState([1]);
 
-  const handleChange = e => {
-    props.onChange(e);
+  const createFeatureInput = () => {
+    setFeatures(state => [...state, state.length + 1]);
   };
 
-  const featuresChange = e => {
-    const { id, value } = e.target;
-    setFeatures({ ...features, [id]: value });
-  };
-
-  const createFeatureInput = e => {
-    setCounter(state => [...state, state.length + 1]);
-    const name = "features";
-    const value = Object.values(features);
-    props.onChange({ name, value });
-  };
-
-  const propertiesChange = e => {
-    const { id, name, value } = e.target;
-    if (name === "name") {
-      setProperties({
-        ...properties,
-        [id]: { ...properties[id], [name]: value }
-      });
-    } else {
-      setProperties({
-        ...properties,
-        [id]: { ...properties[id], [name]: value }
-      });
-    }
-  };
-
-  const createPropertiesInput = e => {
-    let value = new Object();
-    const name = "properties";
+  const createPropertiesInput = () => {
     setPropertiesCounter(state => [...state, state.length + 1]);
-    const propertiesArray = Object.entries(properties);
-    propertiesArray.map(n => (value[n[1].name] = n[1].value));
-    props.onChange({ name, value });
   };
-
-  console.log(props.formData);
 
   return (
     <Container component="main" maxWidth="lg">
@@ -189,16 +150,15 @@ const ProductFormPageComponent = props => {
         <form className={classes.form} noValidate onSubmit={props.onSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={6} className={classes.featuresContainer}>
-              {counter.length > 0 &&
-                counter.map(n => (
+              {features.length > 0 &&
+                features.map(n => (
                   <FeatureInput
                     id={n}
                     key={n}
                     classes={classes}
                     errors={props.errors}
-                    handleChange={featuresChange}
-                    value={features}
-                    counter={counter}
+                    handleChange={props.onChange}
+                    value={props.formData.features}
                   />
                 ))}
               <Fab
@@ -217,9 +177,8 @@ const ProductFormPageComponent = props => {
                     key={n}
                     classes={classes}
                     errors={props.errors}
-                    handleChange={propertiesChange}
-                    value={properties}
-                    counter={propertiesCounter}
+                    handleChange={props.onChange}
+                    value={props.formData.properties}
                   />
                 ))}
               <Fab
@@ -244,7 +203,7 @@ const ProductFormPageComponent = props => {
                   fullWidth
                   label="Product Name"
                   autoFocus
-                  onChange={handleChange}
+                  onChange={props.onChange}
                   value={props.formData.productName}
                 />
               </Grid>
@@ -259,7 +218,7 @@ const ProductFormPageComponent = props => {
                   fullWidth
                   label="Manufacturer"
                   autoFocus
-                  onChange={handleChange}
+                  onChange={props.onChange}
                   value={props.formData.manufacturer}
                 />
               </Grid>
