@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Spinner from "../../../common/components/Spinner";
 import AddIcon from "@material-ui/icons/Add";
+import CloseIcon from "@material-ui/icons/Close";
 import {
   MenuItem,
   Button,
@@ -38,38 +39,58 @@ const categories = [
 
 function FeatureInput(props) {
   return (
-    <Grid item xs={12} className={props.classes.features}>
-      <TextField
-        error={
-          Object.keys(props.errors).includes("features") &&
-          Object.keys(props.errors.features).includes(`${props.id}`)
-            ? true
-            : false
-        }
-        helperText={
-          Object.keys(props.errors).includes("features") &&
-          Object.keys(props.errors.features).includes(`${props.id}`)
-            ? props.errors.features[props.id]
-            : ""
-        }
-        autoComplete="fname"
-        name="features"
-        variant="outlined"
-        required
-        fullWidth
-        label="Features"
-        autoFocus
-        onChange={props.handleChange}
-        value={props.value[props.id]}
-        id={`${props.id}`}
-      />
+    <Grid container spacing={2} className={props.classes.propertiesContainer}>
+      <Grid item xs={11} className={props.classes.features}>
+        <TextField
+          error={
+            Object.keys(props.errors).includes("features") &&
+            Object.keys(props.errors.features).includes(`${props.id}`)
+              ? true
+              : false
+          }
+          helperText={
+            Object.keys(props.errors).includes("features") &&
+            Object.keys(props.errors.features).includes(`${props.id}`)
+              ? props.errors.features[props.id]
+              : ""
+          }
+          autoComplete="fname"
+          name="features"
+          variant="outlined"
+          required
+          fullWidth
+          label="Features"
+          autoFocus
+          onChange={props.handleChange}
+          value={props.value[props.id]}
+          id={`${props.id}`}
+        />
+      </Grid>
+      {props.id > 1 && (
+        <Grid item xs={1}>
+          <Fab
+            onClick={() => props.remove(props.id)}
+            size="small"
+            color="secondary"
+            aria-label="add"
+            className={props.classes.removeBtn}
+          >
+            <CloseIcon />
+          </Fab>
+        </Grid>
+      )}
     </Grid>
   );
 }
 function PropertiesInput(props) {
   return (
-    <Grid container spacing={2} className={props.classes.propertiesContainer}>
-      <Grid item xs={6} className={props.classes.features}>
+    <Grid
+      container
+      spacing={2}
+      alignItems="center"
+      className={props.classes.propertiesContainer}
+    >
+      <Grid item xs={5} className={props.classes.features}>
         <TextField
           error={
             Object.keys(props.errors).includes("propertiesName") &&
@@ -121,6 +142,19 @@ function PropertiesInput(props) {
           id={`${props.id}`}
         />
       </Grid>
+      {props.id > 1 && (
+        <Grid item xs={1}>
+          <Fab
+            onClick={() => props.remove(props.id)}
+            size="small"
+            color="secondary"
+            aria-label="add"
+            className={props.classes.removeBtn}
+          >
+            <CloseIcon />
+          </Fab>
+        </Grid>
+      )}
     </Grid>
   );
 }
@@ -150,10 +184,16 @@ const useStyles = makeStyles(theme => ({
     padding: "8px"
   },
   features: {
+    display: "flex",
+    alignItems: "center",
     padding: "8px"
   },
   fabIcon: {
-    marginLeft: "10px"
+    marginLeft: "10px",
+    marginBottom: "4px"
+  },
+  removeBtn: {
+    marginTop: "8px"
   }
 }));
 
@@ -164,13 +204,33 @@ const ProductFormPageComponent = props => {
   const [properties, setProperties] = useState([1]);
 
   const createFeatureInput = () => {
-    props.onChange({ name: "features", value: features.length });
-    setFeatures(state => [...state, state.length + 1]);
+    props.onChange({
+      name: "features",
+      value: features[features.length - 1]
+    });
+    setFeatures(state => [...state, state[state.length - 1] + 1]);
+  };
+
+  const removeFeatureInput = e => {
+    if (e > 1) {
+      setFeatures(features.filter(x => x !== e));
+      props.onChange({ name: "featureDelete", value: e });
+    }
   };
 
   const createPropertiesInput = () => {
-    props.onChange({ name: "properties", value: properties.length });
-    setProperties(state => [...state, state.length + 1]);
+    props.onChange({
+      name: "properties",
+      value: properties[properties.length - 1]
+    });
+    setProperties(state => [...state, state[state.length - 1] + 1]);
+  };
+
+  const removePropertiesInput = e => {
+    if (e > 1) {
+      setProperties(properties.filter(x => x !== e));
+      props.onChange({ name: "propertiesDelete", value: e });
+    }
   };
 
   const handleSubmit = e => {
@@ -181,7 +241,6 @@ const ProductFormPageComponent = props => {
 
   useEffect(() => {
     if (isSubmit === true && Object.keys(props.errors).length === 0) {
-      console.log("work");
       setFeatures([1]);
       setProperties([1]);
       setIsSubmit(false);
@@ -207,6 +266,7 @@ const ProductFormPageComponent = props => {
                     errors={props.errors}
                     handleChange={props.onChange}
                     value={props.formData.features}
+                    remove={removeFeatureInput}
                   />
                 ))}
               <Fab
@@ -227,6 +287,7 @@ const ProductFormPageComponent = props => {
                     errors={props.errors}
                     handleChange={props.onChange}
                     value={props.formData.properties}
+                    remove={removePropertiesInput}
                   />
                 ))}
               <Fab

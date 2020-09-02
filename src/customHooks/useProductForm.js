@@ -24,6 +24,8 @@ const useProductForm = (initialState, validate, callback) => {
           [e.value + 1]: ""
         }
       });
+    } else if (e.name === "featureDelete") {
+      delete values.features[e.value];
     } else if (e.name === "properties") {
       setValues({
         ...values,
@@ -35,6 +37,8 @@ const useProductForm = (initialState, validate, callback) => {
           }
         }
       });
+    } else if (e.name === "propertiesDelete") {
+      delete values.properties[e.value];
     } else if (e.target.name === "features") {
       const { name, value, id } = e.target;
       setValues({
