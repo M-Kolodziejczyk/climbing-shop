@@ -1,6 +1,9 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { useSelector } from "react-redux";
 import ProductFormPageComponent from "./components/ProductFormPageComponent";
+import HeaderContainer from "../../common/containers/HeaderContainer";
+import Navbar from "../../common/components/Navbar";
+import Footer from "../../common/components/Footer";
 import { addProduct } from "../../state/product/productAction";
 import validate from "../../validators/AddProductValidationRules";
 import useProductForm from "../../customHooks/useProductForm";
@@ -36,7 +39,9 @@ const ProductFormPageContainer = () => {
   );
 
   return (
-    <div>
+    <Fragment>
+      <HeaderContainer />
+      <Navbar />
       <ProductFormPageComponent
         onChange={handleChange}
         formData={values}
@@ -45,7 +50,8 @@ const ProductFormPageContainer = () => {
         productError={productError}
         loading={formLoading}
       />
-    </div>
+      <Footer />
+    </Fragment>
   );
 };
 

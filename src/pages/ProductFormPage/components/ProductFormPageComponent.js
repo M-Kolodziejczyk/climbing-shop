@@ -160,6 +160,9 @@ function PropertiesInput(props) {
 }
 
 const useStyles = makeStyles(theme => ({
+  header: {
+    marginBottom: "30px"
+  },
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
@@ -173,9 +176,6 @@ const useStyles = makeStyles(theme => ({
   form: {
     width: "100%",
     marginTop: theme.spacing(3)
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2)
   },
   featuresContainer: {
     margin: "-8px"
@@ -194,6 +194,10 @@ const useStyles = makeStyles(theme => ({
   },
   removeBtn: {
     marginTop: "8px"
+  },
+  submit: {
+    display: "flex",
+    margin: "20px auto"
   }
 }));
 
@@ -251,56 +255,12 @@ const ProductFormPageComponent = props => {
     <Container component="main" maxWidth="lg">
       {props.loading && <Spinner />}
       <div className={classes.paper}>
-        <Typography component="h1" variant="h5">
-          Add Product
+        <Typography component="h1" variant="h3" className={classes.header}>
+          Create Product
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Grid container spacing={2}>
-            <Grid item xs={6} className={classes.featuresContainer}>
-              {features.length > 0 &&
-                features.map(n => (
-                  <FeatureInput
-                    id={n}
-                    key={n}
-                    classes={classes}
-                    errors={props.errors}
-                    handleChange={props.onChange}
-                    value={props.formData.features}
-                    remove={removeFeatureInput}
-                  />
-                ))}
-              <Fab
-                onClick={createFeatureInput}
-                size="small"
-                color="secondary"
-                aria-label="add"
-                className={classes.fabIcon}
-              >
-                <AddIcon />
-              </Fab>
-              {properties.length > 0 &&
-                properties.map(n => (
-                  <PropertiesInput
-                    id={n}
-                    key={n}
-                    classes={classes}
-                    errors={props.errors}
-                    handleChange={props.onChange}
-                    value={props.formData.properties}
-                    remove={removePropertiesInput}
-                  />
-                ))}
-              <Fab
-                onClick={createPropertiesInput}
-                size="small"
-                color="secondary"
-                aria-label="add"
-                className={classes.fabIcon}
-              >
-                <AddIcon />
-              </Fab>
-            </Grid>
-            <Grid container item xs={6} spacing={2}>
+            <Grid container item xs={6} spacing={2} alignContent="flex-start">
               <Grid item xs={12}>
                 <TextField
                   error={props.errors.productName ? true : false}
@@ -423,15 +383,59 @@ const ProductFormPageComponent = props => {
                 </TextField>
               </Grid>
             </Grid>
+            <Grid item xs={6} className={classes.featuresContainer}>
+              {features.length > 0 &&
+                features.map(n => (
+                  <FeatureInput
+                    id={n}
+                    key={n}
+                    classes={classes}
+                    errors={props.errors}
+                    handleChange={props.onChange}
+                    value={props.formData.features}
+                    remove={removeFeatureInput}
+                  />
+                ))}
+              <Fab
+                onClick={createFeatureInput}
+                size="small"
+                color="secondary"
+                aria-label="add"
+                className={classes.fabIcon}
+              >
+                <AddIcon />
+              </Fab>
+              {properties.length > 0 &&
+                properties.map(n => (
+                  <PropertiesInput
+                    id={n}
+                    key={n}
+                    classes={classes}
+                    errors={props.errors}
+                    handleChange={props.onChange}
+                    value={props.formData.properties}
+                    remove={removePropertiesInput}
+                  />
+                ))}
+              <Fab
+                onClick={createPropertiesInput}
+                size="small"
+                color="secondary"
+                aria-label="add"
+                className={classes.fabIcon}
+              >
+                <AddIcon />
+              </Fab>
+            </Grid>
           </Grid>
           <Button
             type="submit"
-            fullWidth
+            size="large"
             variant="contained"
-            color="primary"
+            color="secondary"
             className={classes.submit}
           >
-            Add
+            Create
           </Button>
           {props.productError && (
             <Grid container>
