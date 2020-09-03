@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import useProductForm from "../../customHooks/useProductForm";
 import EditProductPageComponent from "./components/EditProductPageComponent";
 import Spinner from "../../common/components/Spinner";
 import HeaderContainer from "../../common/containers/HeaderContainer";
@@ -20,7 +21,41 @@ const EditProductPageContainer = props => {
     // eslint-disable-next-line
   }, []);
 
-  if (loading || formLoading) {
+  const initialState = {
+    id: "",
+    productName: "",
+    manufacturer: "",
+    price: "",
+    discount: "",
+    description: "",
+    longDescription: "",
+    quantity: "",
+    features: { 1: "" },
+    properties: {
+      1: {
+        name: "",
+        value: ""
+      }
+    },
+    category: ""
+  };
+
+  const {
+    handleChange,
+    handleSubmit,
+    handleImage,
+    values,
+    errors
+  } = useProductForm(initialState, validate, updateProduct);
+
+  useEffect(() => {
+    if (product) {
+      handleChange({ name: "product", value: product });
+    }
+    // eslint-disable-next-line
+  }, [product]);
+
+  if (loading || formLoading || values.id === "") {
     return <Spinner />;
   } else {
     return (
@@ -28,9 +63,11 @@ const EditProductPageContainer = props => {
         <HeaderContainer />
         <Navbar />
         <EditProductPageComponent
-          product={product}
-          validate={validate}
-          callback={updateProduct}
+          formData={values}
+          errors={errors}
+          onChange={handleChange}
+          onSubmit={handleSubmit}
+          handleImage={handleImage}
           productError={productError}
           loading={loading}
         />

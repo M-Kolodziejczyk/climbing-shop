@@ -1,9 +1,8 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Spinner from "../../../common/components/Spinner";
-import useForm from "../../../customHooks/useForm";
-import { addProductImage } from "../../../state/product/productAction";
+import AddIcon from "@material-ui/icons/Add";
+import CloseIcon from "@material-ui/icons/Close";
 import {
   MenuItem,
   Button,
@@ -11,7 +10,10 @@ import {
   TextField,
   Grid,
   Typography,
-  Container
+  Container,
+  Fab,
+  Card,
+  CardMedia
 } from "@material-ui/core";
 
 const categories = [
@@ -37,92 +39,379 @@ const categories = [
   }
 ];
 
+function FeatureInput(props) {
+  return (
+    <Grid container spacing={2} className={props.classes.propertiesContainer}>
+      <Grid item xs={11} className={props.classes.features}>
+        <TextField
+          error={
+            Object.keys(props.errors).includes("features") &&
+            Object.keys(props.errors.features).includes(`${props.id}`)
+              ? true
+              : false
+          }
+          helperText={
+            Object.keys(props.errors).includes("features") &&
+            Object.keys(props.errors.features).includes(`${props.id}`)
+              ? props.errors.features[props.id]
+              : ""
+          }
+          autoComplete="fname"
+          name="features"
+          variant="outlined"
+          required
+          fullWidth
+          label="Features"
+          autoFocus
+          onChange={props.handleChange}
+          value={props.value[props.id]}
+          id={`${props.id}`}
+        />
+      </Grid>
+      {props.id > 1 && (
+        <Grid item xs={1}>
+          <Fab
+            onClick={() => props.remove(props.id)}
+            size="small"
+            color="secondary"
+            aria-label="add"
+            className={props.classes.removeBtn}
+          >
+            <CloseIcon />
+          </Fab>
+        </Grid>
+      )}
+    </Grid>
+  );
+}
+function PropertiesInput(props) {
+  return (
+    <Grid
+      container
+      spacing={2}
+      alignItems="center"
+      className={props.classes.propertiesContainer}
+    >
+      <Grid item xs={5} className={props.classes.features}>
+        <TextField
+          error={
+            Object.keys(props.errors).includes("propertiesName") &&
+            Object.keys(props.errors.propertiesName).includes(`${props.id}`)
+              ? true
+              : false
+          }
+          helperText={
+            Object.keys(props.errors).includes("propertiesName") &&
+            Object.keys(props.errors.propertiesName).includes(`${props.id}`)
+              ? props.errors.propertiesName[props.id]
+              : ""
+          }
+          autoComplete="fname"
+          name="propertiesName"
+          variant="outlined"
+          required
+          fullWidth
+          label="Properties Name"
+          autoFocus
+          onChange={props.handleChange}
+          value={props.value[props.id].name}
+          id={`${props.id}`}
+        />
+      </Grid>
+      <Grid item xs={6} className={props.classes.features}>
+        <TextField
+          error={
+            Object.keys(props.errors).includes("propertiesValue") &&
+            Object.keys(props.errors.propertiesValue).includes(`${props.id}`)
+              ? true
+              : false
+          }
+          helperText={
+            Object.keys(props.errors).includes("propertiesValue") &&
+            Object.keys(props.errors.propertiesValue).includes(`${props.id}`)
+              ? props.errors.propertiesValue[props.id]
+              : ""
+          }
+          autoComplete="fname"
+          name="propertiesValue"
+          variant="outlined"
+          required
+          fullWidth
+          label="Properties Value"
+          autoFocus
+          onChange={props.handleChange}
+          value={props.value[props.id].value}
+          id={`${props.id}`}
+        />
+      </Grid>
+      {props.id > 1 && (
+        <Grid item xs={1}>
+          <Fab
+            onClick={() => props.remove(props.id)}
+            size="small"
+            color="secondary"
+            aria-label="add"
+            className={props.classes.removeBtn}
+          >
+            <CloseIcon />
+          </Fab>
+        </Grid>
+      )}
+    </Grid>
+  );
+}
+
 const useStyles = makeStyles(theme => ({
+  header: {
+    marginBottom: "30px"
+  },
+  paper: {
+    marginTop: theme.spacing(8),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main
+  },
   form: {
     width: "100%",
     marginTop: theme.spacing(3)
   },
-  submit: {
-    margin: theme.spacing(3, 0, 2)
+  featuresContainer: {
+    margin: "-8px"
   },
-  header: {
-    margin: "50px 0"
+  propertiesContainer: {
+    padding: "8px"
+  },
+  features: {
+    display: "flex",
+    alignItems: "center",
+    padding: "8px"
+  },
+  fabIcon: {
+    marginLeft: "10px",
+    marginBottom: "4px"
+  },
+  removeBtn: {
+    marginTop: "8px"
+  },
+  submit: {
+    display: "flex",
+    margin: "20px auto"
+  },
+
+  uploadInput: {
+    position: "absolute",
+    zIndex: "-1",
+    top: "10px",
+    left: "8px",
+    fontSize: "2px",
+    color: "#b8b8b8"
+  },
+  btnWrap: {
+    position: "relative"
+  },
+  uploadBtn: {
+    display: "inline-block",
+    padding: "12px 18px",
+    cursor: "pointer",
+    borderRadius: "5px",
+    backgroundColor: "#8ebf42",
+    fontSize: "16px",
+    fontWeight: "bold",
+    color: "#fff"
   }
 }));
 
 const EditProductPageComponent = props => {
-  const dispatch = useDispatch();
-  const [image, setImage] = useState("");
-  const { product, validate, callback } = props;
+  const classes = useStyles();
+  const [isSubmit, setIsSubmit] = useState(false);
+  const [features, setFeatures] = useState(
+    Object.keys(props.formData.features)
+  );
+  const [properties, setProperties] = useState(
+    Object.keys(props.formData.properties)
+  );
+  const [readers, setReaders] = useState(null);
 
-  const initialState = {
-    id: product.id || "",
-    category: product.category || "",
-    productName: product.productName || "",
-    manufacturer: product.manufacturer || "",
-    price: product.price || "",
-    discount: product.discount || "",
-    description: product.description || "",
-    quantity: product.quantity || "",
-    properties: product.properties || ""
+  const createFeatureInput = () => {
+    props.onChange({
+      name: "features",
+      value: features[features.length - 1]
+    });
+    setFeatures(state => [...state, state[state.length - 1] + 1]);
   };
 
-  const { handleChange, handleSubmit, values, errors } = useForm(
-    initialState,
-    validate,
-    callback
-  );
+  const removeFeatureInput = e => {
+    if (e > 1) {
+      setFeatures(features.filter(x => x !== e));
+      props.onChange({ name: "featureDelete", value: e });
+    }
+  };
 
-  const handleImageSubmit = e => {
-    e.preventDefault();
-    dispatch(addProductImage(product.id, image));
+  const createPropertiesInput = () => {
+    props.onChange({
+      name: "properties",
+      value: properties[properties.length - 1]
+    });
+    setProperties(state => [...state, state[state.length - 1] + 1]);
+  };
+
+  const removePropertiesInput = e => {
+    if (e > 1) {
+      setProperties(properties.filter(x => x !== e));
+      props.onChange({ name: "propertiesDelete", value: e });
+    }
   };
 
   const handleImageChange = e => {
-    setImage(e.target.files[0]);
+    const file = e.target.files[0];
+    if (file) {
+      props.handleImage(file);
+      setReaders(URL.createObjectURL(file));
+    }
   };
 
-  const classes = useStyles();
+  const handleSubmit = e => {
+    e.preventDefault();
+    props.onSubmit(e);
+    setIsSubmit(true);
+  };
+
+  useEffect(() => {
+    if (isSubmit === true && Object.keys(props.errors).length === 0) {
+      setFeatures([1]);
+      setProperties([1]);
+      setReaders(null);
+      setIsSubmit(false);
+    }
+  }, [isSubmit, props.errors]);
+
   return (
-    <Container>
+    <Container component="main" maxWidth="lg">
       {props.loading && <Spinner />}
-      <Typography
-        className={classes.header}
-        variant="h2"
-        component="h1"
-        align="center"
-      >
-        Edit Product
-      </Typography>
-      <Grid container spacing={3}>
-        <Grid item xs={6}>
-          <form onSubmit={handleImageSubmit}>
-            <input
-              type="file"
-              placeholder="image"
-              name="file"
-              onChange={handleImageChange}
-            />
-            <button type="submit">Submit</button>
-          </form>
-        </Grid>
-        <Grid item xs={6}>
-          <form className={classes.form} noValidate onSubmit={handleSubmit}>
-            <Grid container spacing={2}>
+      <div className={classes.paper}>
+        <Typography component="h1" variant="h3" className={classes.header}>
+          Update Product
+        </Typography>
+        <form className={classes.form} noValidate onSubmit={handleSubmit}>
+          <Grid container spacing={2}>
+            <Grid container item xs={6} spacing={2} alignContent="flex-start">
               <Grid item xs={12}>
                 <TextField
-                  error={errors.category ? true : false}
-                  helperText={"" || errors.category}
+                  error={props.errors.productName ? true : false}
+                  helperText={"" || props.errors.productName}
+                  autoComplete="fname"
+                  name="productName"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  label="Product Name"
+                  autoFocus
+                  onChange={props.onChange}
+                  value={props.formData.productName}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  error={props.errors.manufacturer ? true : false}
+                  helperText={"" || props.errors.manufacturer}
+                  autoComplete="fname"
+                  name="manufacturer"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  label="Manufacturer"
+                  autoFocus
+                  onChange={props.onChange}
+                  value={props.formData.manufacturer}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  error={props.errors.price ? true : false}
+                  helperText={"" || props.errors.price}
+                  variant="outlined"
+                  required
+                  fullWidth
+                  label="Price"
+                  name="price"
+                  autoComplete="lname"
+                  onChange={props.onChange}
+                  value={props.formData.price}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  error={props.errors.discount ? true : false}
+                  helperText={"" || props.errors.discount}
+                  variant="outlined"
+                  required
+                  fullWidth
+                  label="Discount"
+                  name="discount"
+                  autoComplete="lname"
+                  onChange={props.onChange}
+                  value={props.formData.discount}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  error={props.errors.description ? true : false}
+                  helperText={"" || props.errors.description}
+                  variant="outlined"
+                  required
+                  fullWidth
+                  label="Description"
+                  name="description"
+                  autoComplete="lname"
+                  onChange={props.onChange}
+                  value={props.formData.description}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  error={props.errors.longDescription ? true : false}
+                  helperText={"" || props.errors.longDescription}
+                  variant="outlined"
+                  required
+                  fullWidth
+                  label="Long Description"
+                  name="longDescription"
+                  autoComplete="lname"
+                  onChange={props.onChange}
+                  value={props.formData.longDescription}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  error={props.errors.quantity ? true : false}
+                  helperText={"" || props.errors.quantity}
+                  variant="outlined"
+                  required
+                  fullWidth
+                  label="Quantity"
+                  name="quantity"
+                  autoComplete="lname"
+                  onChange={props.onChange}
+                  value={props.formData.quantity}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  error={props.errors.category ? true : false}
+                  helperText={"" || props.errors.category}
                   variant="outlined"
                   select
-                  // id="outlined-select-currency"
                   defaultValue="clothes"
                   required
                   fullWidth
                   label="Category"
                   name="category"
-                  onChange={handleChange}
-                  value={values.category}
+                  onChange={props.onChange}
+                  value={props.formData.category}
                 >
                   {categories.map(option => (
                     <MenuItem key={option.value} value={option.value}>
@@ -132,127 +421,91 @@ const EditProductPageComponent = props => {
                 </TextField>
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  error={errors.productName ? true : false}
-                  helperText={"" || errors.productName}
-                  autoComplete="fname"
-                  name="productName"
-                  variant="outlined"
-                  required
-                  fullWidth
-                  label="Product Name"
-                  autoFocus
-                  onChange={handleChange}
-                  value={values.productName}
-                />
+                <div className={classes.btnWrap}>
+                  <label className={classes.uploadBtn} htmlFor="upload">
+                    Upload File
+                  </label>
+                  <input
+                    className={classes.uploadInput}
+                    type="file"
+                    id="upload"
+                    onChange={handleImageChange}
+                  />
+                </div>
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  error={errors.manufacturer ? true : false}
-                  helperText={"" || errors.manufacturer}
-                  autoComplete="fname"
-                  name="manufacturer"
-                  variant="outlined"
-                  required
-                  fullWidth
-                  label="Manufacturer"
-                  autoFocus
-                  onChange={handleChange}
-                  value={values.manufacturer}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  error={errors.price ? true : false}
-                  helperText={"" || errors.price}
-                  variant="outlined"
-                  required
-                  fullWidth
-                  label="Price"
-                  name="price"
-                  autoComplete="lname"
-                  onChange={handleChange}
-                  value={values.price}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  error={errors.discount ? true : false}
-                  helperText={"" || errors.discount}
-                  variant="outlined"
-                  required
-                  fullWidth
-                  label="Discount"
-                  name="discount"
-                  autoComplete="lname"
-                  onChange={handleChange}
-                  value={values.discount}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  error={errors.description ? true : false}
-                  helperText={"" || errors.description}
-                  variant="outlined"
-                  required
-                  fullWidth
-                  label="Description"
-                  name="description"
-                  autoComplete="lname"
-                  onChange={handleChange}
-                  value={values.description}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  error={errors.quantity ? true : false}
-                  helperText={"" || errors.quantity}
-                  variant="outlined"
-                  required
-                  fullWidth
-                  label="Quantity"
-                  name="quantity"
-                  autoComplete="lname"
-                  onChange={handleChange}
-                  value={values.quantity}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  error={errors.properties ? true : false}
-                  helperText={"" || errors.properties}
-                  variant="outlined"
-                  required
-                  fullWidth
-                  label="Properties"
-                  name="properties"
-                  autoComplete="lname"
-                  onChange={handleChange}
-                  value={values.properties}
-                />
-              </Grid>
+              {readers && (
+                <Grid item xs={6}>
+                  <Card>
+                    <CardMedia id="hello" component="img" src={readers} />
+                  </Card>
+                </Grid>
+              )}
             </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              Update
-            </Button>
-            {props.productError && (
-              <Grid container>
-                <Box mt={2}>
-                  <Typography component="p" variant="subtitle2" color="error">
-                    {props.productError.message}
-                  </Typography>
-                </Box>
-              </Grid>
-            )}
-          </form>
-        </Grid>
-      </Grid>
+            <Grid item xs={6} className={classes.featuresContainer}>
+              {features.length > 0 &&
+                features.map(n => (
+                  <FeatureInput
+                    id={n}
+                    key={n}
+                    classes={classes}
+                    errors={props.errors}
+                    handleChange={props.onChange}
+                    value={props.formData.features}
+                    remove={removeFeatureInput}
+                  />
+                ))}
+              <Fab
+                onClick={createFeatureInput}
+                size="small"
+                color="secondary"
+                aria-label="add"
+                className={classes.fabIcon}
+              >
+                <AddIcon />
+              </Fab>
+              {properties.length > 0 &&
+                properties.map(n => (
+                  <PropertiesInput
+                    id={n}
+                    key={n}
+                    classes={classes}
+                    errors={props.errors}
+                    handleChange={props.onChange}
+                    value={props.formData.properties}
+                    remove={removePropertiesInput}
+                  />
+                ))}
+              <Fab
+                onClick={createPropertiesInput}
+                size="small"
+                color="secondary"
+                aria-label="add"
+                className={classes.fabIcon}
+              >
+                <AddIcon />
+              </Fab>
+            </Grid>
+          </Grid>
+          <Button
+            type="submit"
+            size="large"
+            variant="contained"
+            color="secondary"
+            className={classes.submit}
+          >
+            Update
+          </Button>
+          {props.productError && (
+            <Grid container>
+              <Box mt={2}>
+                <Typography component="p" variant="subtitle2" color="error">
+                  {props.productError.message}
+                </Typography>
+              </Box>
+            </Grid>
+          )}
+        </form>
+      </div>
     </Container>
   );
 };

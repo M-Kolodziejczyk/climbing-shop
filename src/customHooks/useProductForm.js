@@ -22,7 +22,9 @@ const useProductForm = (initialState, validate, callback) => {
   }, [errors]);
 
   const handleChange = e => {
-    if (e.name === "features") {
+    if (e.name === "product") {
+      setValues(e.value);
+    } else if (e.name === "features") {
       setValues({
         ...values,
         features: {
