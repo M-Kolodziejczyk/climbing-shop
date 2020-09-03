@@ -1,15 +1,21 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { addProductImage } from "../state/product/productAction";
 
 const useProductForm = (initialState, validate, callback) => {
   const dispatch = useDispatch();
   const [values, setValues] = useState(initialState);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [image, setImage] = useState(null);
 
   useEffect(() => {
     if (Object.keys(errors).length === 0 && isSubmitting) {
       dispatch(callback(values));
+      if (image) {
+        dispatch(addProductImage(values.id, image));
+        setImage(null);
+      }
       setValues(initialState);
     }
     // eslint-disable-next-line
@@ -81,6 +87,10 @@ const useProductForm = (initialState, validate, callback) => {
     }
   };
 
+  const handleImage = e => {
+    setImage(e);
+  };
+
   const handleSubmit = e => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -90,6 +100,7 @@ const useProductForm = (initialState, validate, callback) => {
   return {
     handleChange,
     handleSubmit,
+    handleImage,
     values,
     errors
   };

@@ -32,11 +32,13 @@ const ProductFormPageContainer = () => {
     category: ""
   };
 
-  const { handleChange, handleSubmit, values, errors } = useProductForm(
-    initialState,
-    validate,
-    addProduct
-  );
+  const {
+    handleChange,
+    handleSubmit,
+    handleImage,
+    values,
+    errors
+  } = useProductForm(initialState, validate, addProduct);
 
   return (
     <Fragment>
@@ -49,6 +51,7 @@ const ProductFormPageContainer = () => {
         errors={errors}
         productError={productError}
         loading={formLoading}
+        handleImage={handleImage}
       />
       <Footer />
     </Fragment>

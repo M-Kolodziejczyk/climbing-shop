@@ -11,7 +11,9 @@ import {
   Grid,
   Typography,
   Container,
-  Fab
+  Fab,
+  Card,
+  CardMedia
 } from "@material-ui/core";
 
 const categories = [
@@ -198,6 +200,28 @@ const useStyles = makeStyles(theme => ({
   submit: {
     display: "flex",
     margin: "20px auto"
+  },
+
+  uploadInput: {
+    position: "absolute",
+    zIndex: "-1",
+    top: "10px",
+    left: "8px",
+    fontSize: "2px",
+    color: "#b8b8b8"
+  },
+  btnWrap: {
+    position: "relative"
+  },
+  uploadBtn: {
+    display: "inline-block",
+    padding: "12px 18px",
+    cursor: "pointer",
+    borderRadius: "5px",
+    backgroundColor: "#8ebf42",
+    fontSize: "16px",
+    fontWeight: "bold",
+    color: "#fff"
   }
 }));
 
@@ -206,6 +230,7 @@ const ProductFormPageComponent = props => {
   const [isSubmit, setIsSubmit] = useState(false);
   const [features, setFeatures] = useState([1]);
   const [properties, setProperties] = useState([1]);
+  const [readers, setReaders] = useState(null);
 
   const createFeatureInput = () => {
     props.onChange({
@@ -237,6 +262,14 @@ const ProductFormPageComponent = props => {
     }
   };
 
+  const handleImageChange = e => {
+    const file = e.target.files[0];
+    if (file) {
+      props.handleImage(file);
+      setReaders(URL.createObjectURL(file));
+    }
+  };
+
   const handleSubmit = e => {
     e.preventDefault();
     props.onSubmit(e);
@@ -247,6 +280,7 @@ const ProductFormPageComponent = props => {
     if (isSubmit === true && Object.keys(props.errors).length === 0) {
       setFeatures([1]);
       setProperties([1]);
+      setReaders(null);
       setIsSubmit(false);
     }
   }, [isSubmit, props.errors]);
@@ -382,6 +416,26 @@ const ProductFormPageComponent = props => {
                   ))}
                 </TextField>
               </Grid>
+              <Grid item xs={12}>
+                <div className={classes.btnWrap}>
+                  <label className={classes.uploadBtn} htmlFor="upload">
+                    Upload File
+                  </label>
+                  <input
+                    className={classes.uploadInput}
+                    type="file"
+                    id="upload"
+                    onChange={handleImageChange}
+                  />
+                </div>
+              </Grid>
+              {readers && (
+                <Grid item xs={6}>
+                  <Card>
+                    <CardMedia id="hello" component="img" src={readers} />
+                  </Card>
+                </Grid>
+              )}
             </Grid>
             <Grid item xs={6} className={classes.featuresContainer}>
               {features.length > 0 &&
