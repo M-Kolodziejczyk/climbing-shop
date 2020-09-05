@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import discountPrice from "../../../helpers/discountPrice";
 import PropTypes from "prop-types";
 import {
   Grid,
@@ -88,13 +89,7 @@ const useStyles = makeStyles(theme => ({
 
 const ProductItem = ({ product }) => {
   const classes = useStyles();
-
-  const price = parseFloat(
-    parseInt(product.price) +
-      "." +
-      product.price[product.price.length - 2] +
-      product.price[product.price.length - 1]
-  );
+  const discPrice = discountPrice(product.price, product.discount);
 
   return (
     <Grid item xs={3} className={classes.productBox}>
@@ -133,7 +128,7 @@ const ProductItem = ({ product }) => {
                 <Fragment>
                   <Grid item container xs={12} alignItems="baseline">
                     <Typography className={classes.currentPrice}>
-                      {(price * (1 - product.discount / 100)).toFixed(2)} zł
+                      {discPrice} zł
                     </Typography>
                     <Typography className={classes.oldPrice}>
                       {product.price} zł
