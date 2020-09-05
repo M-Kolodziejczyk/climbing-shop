@@ -1,13 +1,22 @@
 import React, { Fragment } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import discountPrice from "../../../helpers/discountPrice";
-
+import DoneIcon from "@material-ui/icons/Done";
 import {
   Grid,
   Container,
   Typography,
   Button,
-  CardMedia
+  CardMedia,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  TableContainer,
+  Table,
+  TableBody,
+  TableRow,
+  TableCell
 } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
@@ -25,6 +34,7 @@ const useStyles = makeStyles(theme => ({
     fontWeight: "400"
   },
   oldPrice: {
+    marginLeft: "15px",
     textDecoration: "line-through"
   },
   save: {
@@ -40,10 +50,34 @@ const useStyles = makeStyles(theme => ({
       backgroundColor: "#e10d1b"
     }
   },
+  longDescription: {
+    borderBottom: "solid 1px #212529",
+    paddingBottom: "20px"
+  },
   featuresContainer: {
     marginTop: "30px"
   }
 }));
+
+function FeatureDisplay({ feature }) {
+  return (
+    <ListItem disableGutters>
+      <ListItemIcon>
+        <DoneIcon style={{ color: "#f32836" }} />
+      </ListItemIcon>
+      <ListItemText primary={feature} />
+    </ListItem>
+  );
+}
+
+function PropertiesDisplay({ properties }) {
+  return (
+    <TableRow>
+      <TableCell>{properties.name}</TableCell>
+      <TableCell>{properties.value}</TableCell>
+    </TableRow>
+  );
+}
 
 const ProductItemPageComponent = ({ product }) => {
   const classes = useStyles();
@@ -68,19 +102,17 @@ const ProductItemPageComponent = ({ product }) => {
           </Typography>
           <Grid container direction="row" alignItems="baseline">
             {product.discount === "0" ? (
-              <Grid item container xs={4}>
+              <Grid item container xs={12}>
                 <Typography className={classes.currentPrice} variant="h2">
                   {product.price} zł
                 </Typography>
               </Grid>
             ) : (
               <Fragment>
-                <Grid item container xs={4}>
+                <Grid item container xs={12} alignItems="baseline">
                   <Typography variant="h2" className={classes.currentPrice}>
                     {discPrice}zł
                   </Typography>
-                </Grid>
-                <Grid item container xs={8}>
                   <Typography variant="h4" className={classes.oldPrice}>
                     {product.price} zł
                   </Typography>
@@ -113,31 +145,39 @@ const ProductItemPageComponent = ({ product }) => {
         </Grid>
       </Grid>
       <Grid container className="">
-        <Grid item xs={12}>
+        <Grid item xs={12} className={classes.longDescription}>
           <Typography variant="h4" gutterBottom>
             Description:
           </Typography>
-          <Typography variant="body1">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Error
-            praesentium, laboriosam nemo quae dignissimos laudantium officiis
-            minus quo animi dolorum eum facilis asperiores possimus porro sit
-            perferendis assumenda soluta quasi! Lorem ipsum dolor sit amet
-            consectetur adipisicing elit. Error praesentium, laboriosam nemo
-            quae dignissimos laudantium officiis minus quo animi dolorum eum
-            facilis asperiores possimus porro sit perferendis assumenda soluta
-            quasi!
-          </Typography>
+          <Typography variant="body1">{product.longDescription}</Typography>
         </Grid>
         <Grid container item className={classes.featuresContainer}>
           <Grid item xs={6}>
             <Typography variant="h5" gutterBottom>
               Features:
             </Typography>
+            <List>
+              {Object.keys(product.features).map(id => (
+                <FeatureDisplay feature={product.features[id]} key={id} />
+              ))}
+            </List>
           </Grid>
           <Grid item xs={6}>
             <Typography variant="h5" gutterBottom>
               Tech:
             </Typography>
+            <TableContainer>
+              <Table>
+                <TableBody>
+                  {Object.keys(product.properties).map(id => (
+                    <PropertiesDisplay
+                      properties={product.properties[id]}
+                      key={id}
+                    />
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
           </Grid>
         </Grid>
       </Grid>
