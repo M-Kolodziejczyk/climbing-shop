@@ -1,5 +1,7 @@
 import React, { Fragment } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import discountPrice from "../../../helpers/discountPrice";
+
 import {
   Grid,
   Container,
@@ -45,6 +47,8 @@ const useStyles = makeStyles(theme => ({
 
 const ProductItemPageComponent = ({ product }) => {
   const classes = useStyles();
+  const discPrice = discountPrice(product.price, product.discount);
+
   return (
     <Container>
       <Grid container className={classes.container} spacing={2}>
@@ -73,7 +77,7 @@ const ProductItemPageComponent = ({ product }) => {
               <Fragment>
                 <Grid item container xs={4}>
                   <Typography variant="h2" className={classes.currentPrice}>
-                    {product.price * (1 - product.discount / 100)} zł
+                    {discPrice}zł
                   </Typography>
                 </Grid>
                 <Grid item container xs={8}>
@@ -83,10 +87,7 @@ const ProductItemPageComponent = ({ product }) => {
                 </Grid>
                 <Grid item container xs={12}>
                   <Typography variant="h6" className={classes.save}>
-                    you save{" "}
-                    {product.price -
-                      product.price * (1 - product.discount / 100)}{" "}
-                    zł
+                    you save {product.discount}%
                   </Typography>
                 </Grid>
               </Fragment>
