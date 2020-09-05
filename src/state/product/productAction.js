@@ -1,7 +1,7 @@
 import {
   SET_LOADING,
   PRODUCT_ERROR,
-  GET_ALL_PRODUCTS,
+  GET_PRODUCTS_BY_CATEGORY,
   ADD_PRODUCT,
   FORM_LOADING,
   GET_PRODUCT,
@@ -12,13 +12,13 @@ import axios from "axios";
 import { Storage } from "aws-amplify";
 import config from "../../config";
 
-export const getAllProduct = () => async dispatch => {
+export const getProductsByCategory = category => async dispatch => {
   dispatch(setLoading());
   try {
     const res = await axios.get(`${config.api.invokeUrl}/products`);
     dispatch({
-      type: GET_ALL_PRODUCTS,
-      payload: res.data
+      type: GET_PRODUCTS_BY_CATEGORY,
+      payload: [category, res.data]
     });
   } catch (error) {
     dispatch({

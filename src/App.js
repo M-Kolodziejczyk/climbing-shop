@@ -36,7 +36,6 @@ const App = () => {
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/about" component={About} />
-        <Route exact path="/products" component={Products} />
         <Route exact path="/signup" component={SignUp} />
         <Route exact path="/signin" component={SignIn} />
         <Route exact path="/forgot-password" component={ForgotPassword} />
@@ -58,16 +57,17 @@ const App = () => {
           path="/change-password-confirm"
           component={ChangePasswordConfirmationPageComponent}
         />
-        <AdminRoute
-          exact
-          path="/products/add"
-          component={ProductFormPageContainer}
-        />
+        <Route exact path="/products/category/:category" component={Products} />
         <Route exact path="/working" component={WorkingPageContainer} />
         <Route
           exact
           path="/products/:id"
           component={ProductItemPageContainer}
+        />
+        <AdminRoute
+          exact
+          path="/product/add"
+          component={ProductFormPageContainer}
         />
         <AdminRoute
           exact

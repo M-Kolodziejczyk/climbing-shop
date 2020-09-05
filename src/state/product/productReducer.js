@@ -1,7 +1,7 @@
 import {
   SET_LOADING,
   PRODUCT_ERROR,
-  GET_ALL_PRODUCTS,
+  GET_PRODUCTS_BY_CATEGORY,
   ADD_PRODUCT,
   FORM_LOADING,
   GET_PRODUCT,
@@ -30,11 +30,13 @@ export default (state = initialState, action) => {
         loading: false,
         productError: action.payload
       };
-    case GET_ALL_PRODUCTS:
+    case GET_PRODUCTS_BY_CATEGORY:
       return {
         ...state,
         loading: false,
-        products: action.payload
+        products: action.payload[1].filter(
+          product => product.category === action.payload[0]
+        )
       };
     case ADD_PRODUCT:
       return {

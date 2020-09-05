@@ -18,10 +18,18 @@ const useStyles = makeStyles(theme => ({
     marginBottom: "40px",
     transition: "box-shadow .3s ease-in-out",
     position: "relative",
+    margin: "0 5px",
     textDecoration: "none",
     "&:hover": {
       textDecoration: "none",
       boxShadow: "0 0 12px 0 rgba(0, 0, 0, 0.8)"
+    }
+  },
+
+  link: {
+    textDecoration: "none",
+    "&:hover": {
+      textDecoration: "none"
     }
   },
 
@@ -53,6 +61,7 @@ const useStyles = makeStyles(theme => ({
     fontSize: "21px"
   },
   oldPrice: {
+    marginLeft: "10px",
     fontSize: "16px",
     textDecoration: "line-through"
   },
@@ -60,8 +69,15 @@ const useStyles = makeStyles(theme => ({
     padding: "0 16px 16px 16px"
   },
   button: {
-    color: "white",
+    color: "!important white",
     backgroundColor: "#f32836"
+  },
+  formBtn: {
+    color: "#ffffff",
+    backgroundColor: "#f32836",
+    "&:hover": {
+      backgroundColor: "#e10d1b"
+    }
   },
   img: {
     minHeight: "240px",
@@ -73,60 +89,73 @@ const useStyles = makeStyles(theme => ({
 const ProductItem = ({ product }) => {
   const classes = useStyles();
 
-  return (
-    <a href={`/products/${product.id}`} className={classes.productBox}>
-      <Card>
-        <CardContent>
-          {product.discount !== "0" ? (
-            <Typography className={classes.label}>
-              -{product.discount}%
-            </Typography>
-          ) : (
-            <Typography />
-          )}
-        </CardContent>
+  const price = parseFloat(
+    parseInt(product.price) +
+      "." +
+      product.price[product.price.length - 2] +
+      product.price[product.price.length - 1]
+  );
 
-        <CardMedia
-          className={classes.img}
-          component="img"
-          src={`https://climbing-shop.s3-eu-west-1.amazonaws.com/public/product-image/${product.id}/1.jpg`}
-        />
-        <CardContent>
-          <Typography className={classes.productManufacturer}>
-            {product.manufacturer}
-          </Typography>
-          <Typography className={classes.productName}>
-            {product.productName}
-          </Typography>
-          <Grid container direction="row" alignItems="center">
-            {product.discount === "0" ? (
-              <Grid item container xs={4}>
-                <Typography className={classes.currentPrice}>
-                  {product.price} zł
-                </Typography>
-              </Grid>
+  return (
+    <Grid item xs={3} className={classes.productBox}>
+      <a href={`/products/${product.id}`} className={classes.link}>
+        <Card>
+          <CardContent>
+            {product.discount !== "0" ? (
+              <Typography className={classes.label}>
+                -{product.discount}%
+              </Typography>
             ) : (
-              <Fragment>
-                <Grid item container xs={4}>
+              <Typography />
+            )}
+          </CardContent>
+
+          <CardMedia
+            className={classes.img}
+            component="img"
+            src={`https://climbing-shop.s3-eu-west-1.amazonaws.com/public/product-image/${product.id}/1.jpg`}
+          />
+          <CardContent>
+            <Typography className={classes.productManufacturer}>
+              {product.manufacturer}
+            </Typography>
+            <Typography className={classes.productName}>
+              {product.productName}
+            </Typography>
+            <Grid container direction="row" alignItems="center">
+              {product.discount === "0" ? (
+                <Grid item container xs={12}>
                   <Typography className={classes.currentPrice}>
-                    {product.price * (1 - product.discount / 100)} zł
-                  </Typography>
-                </Grid>
-                <Grid item container xs={4}>
-                  <Typography className={classes.oldPrice}>
                     {product.price} zł
                   </Typography>
                 </Grid>
-              </Fragment>
-            )}
-            <Grid item container xs={4}></Grid>
-          </Grid>
-        </CardContent>
-        <CardActions className={classes.buttonContainer}>
-          <Button className={classes.button}>BUY</Button>
-        </CardActions>
-      </Card>
-    </a>
+              ) : (
+                <Fragment>
+                  <Grid item container xs={12} alignItems="baseline">
+                    <Typography className={classes.currentPrice}>
+                      {(price * (1 - product.discount / 100)).toFixed(2)} zł
+                    </Typography>
+                    <Typography className={classes.oldPrice}>
+                      {product.price} zł
+                    </Typography>
+                  </Grid>
+                </Fragment>
+              )}
+              <Grid item container xs={4}></Grid>
+            </Grid>
+          </CardContent>
+          <CardActions className={classes.buttonContainer}>
+            <Button
+              variant="contained"
+              size="medium"
+              className={classes.formBtn}
+            >
+              Buy
+            </Button>
+          </CardActions>
+        </Card>
+      </a>
+    </Grid>
   );
 };
 

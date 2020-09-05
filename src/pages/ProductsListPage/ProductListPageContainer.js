@@ -1,21 +1,39 @@
 import React, { useEffect, Fragment } from "react";
-import ProductListPageComponent from "./components/ProductListPageComponent";
-import ProductItem from "./components/ProductItem";
-import { getAllProduct, setLoading } from "../../state/product/productAction";
 import { useSelector, useDispatch } from "react-redux";
+import { makeStyles } from "@material-ui/core/styles";
+import {
+  getProductsByCategory,
+  setLoading
+} from "../../state/product/productAction";
+import ProductItem from "./components/ProductItem";
 import HeaderContainer from "../../common/containers/HeaderContainer";
 import Navbar from "../../common/components/Navbar";
 import Footer from "../../common/components/Footer";
 import Spinner from "../../common/components/Spinner";
+import { Typography, Container, Grid } from "@material-ui/core";
 
-const ProductListPageContainer = () => {
+const useStyles = makeStyles(theme => ({
+  header: {
+    margin: "30px auto",
+    textAlign: "center"
+  }
+}));
+
+const ProductListPageContainer = props => {
+  const classes = useStyles();
   const dispatch = useDispatch();
   const products = useSelector(state => state.product.products);
   const loading = useSelector(state => state.product.loading);
+  const categories = ["clothing", "shoes", "climbing", "backpacks"];
+  const category = props.match.params.category;
+
+  if (!categories.includes(category)) {
+    props.history.push("/");
+  }
 
   useEffect(() => {
     dispatch(setLoading());
-    dispatch(getAllProduct());
+    dispatch(getProductsByCategory(category));
     // eslint-disable-next-line
   }, []);
 
@@ -23,21 +41,23 @@ const ProductListPageContainer = () => {
     <Fragment>
       <HeaderContainer />
       <Navbar />
-
-      <ProductListPageComponent>
+      <Container maxWidth="lg">
+        <Typography variant="h2" component="h1" className={classes.header}>
+          {category.toUpperCase()}
+        </Typography>
         {loading ? (
           <Spinner />
         ) : (
-          <Fragment>
+          <Grid container>
             {products &&
               products.length > 0 &&
               !loading &&
               products.map(product => (
                 <ProductItem key={product.id} product={product} />
               ))}
-          </Fragment>
+          </Grid>
         )}
-      </ProductListPageComponent>
+      </Container>
       <Footer />
     </Fragment>
   );
