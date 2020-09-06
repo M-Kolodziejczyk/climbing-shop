@@ -1,7 +1,10 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import discountPrice from "../../../helpers/discountPrice";
 import DoneIcon from "@material-ui/icons/Done";
+import ExpandLessIcon from "@material-ui/icons/ExpandLess";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import {
   Grid,
   Container,
@@ -43,19 +46,55 @@ const useStyles = makeStyles(theme => ({
   formContainer: {
     marginTop: "30px"
   },
-  formBtn: {
-    color: "#ffffff",
-    backgroundColor: "#f32836",
-    "&:hover": {
-      backgroundColor: "#e10d1b"
-    }
-  },
   longDescription: {
     borderBottom: "solid 1px #212529",
     paddingBottom: "20px"
   },
   featuresContainer: {
     marginTop: "30px"
+  },
+  fieldset: {
+    display: "flex"
+  },
+  control: {
+    border: "1px solid #dadada",
+    display: "flex",
+    maxWidth: "120px",
+    position: "relative",
+    marginRight: "20px"
+  },
+  controlInput: {
+    outline: "none",
+    fontSize: "30px",
+    border: "none",
+    width: "100%",
+    textAlign: "center",
+    padding: "0 24px 0  0",
+    height: "58px",
+    color: "#212529"
+  },
+  more: {
+    padding: "2px 0",
+    position: "absolute",
+    top: "0",
+    right: "0",
+    borderLeft: "1px solid #dadada"
+  },
+  less: {
+    padding: "2px 0",
+    position: "absolute",
+    bottom: "0",
+    right: "0",
+    borderLeft: "1px solid #dadada",
+    borderTop: "1px solid #dadada"
+  },
+  formBtn: {
+    width: "100%",
+    color: "#ffffff",
+    backgroundColor: "#f32836",
+    "&:hover": {
+      backgroundColor: "#e10d1b"
+    }
   }
 }));
 
@@ -82,6 +121,21 @@ function PropertiesDisplay({ properties }) {
 const ProductItemPageComponent = ({ product }) => {
   const classes = useStyles();
   const discPrice = discountPrice(product.price, product.discount);
+  const [amount, setAmount] = useState(1);
+
+  const handleClickMore = () => {
+    setAmount(amount + 1);
+  };
+
+  const handleClickLess = () => {
+    setAmount(amount - 1);
+  };
+
+  const handleChange = e => {
+    setAmount(parseInt(e.target.value));
+  };
+
+  console.log(amount);
 
   return (
     <Container>
@@ -127,15 +181,28 @@ const ProductItemPageComponent = ({ product }) => {
           </Grid>
           <Typography variant="body1">{product.description}</Typography>
           <form>
-            <Grid container className={classes.formContainer}>
-              <Grid item xs={4}>
-                quantity // ToDo
-              </Grid>
-              <Grid item xs={8}>
+            <Grid container className={classes.formContainer} spacing={2}>
+              <Grid item xs={12} className={classes.fieldset}>
+                <div className={classes.control}>
+                  <input
+                    type="number"
+                    className={classes.controlInput}
+                    value={amount}
+                    name="amount"
+                    onChange={handleChange}
+                  />
+                  <div className={classes.more} onClick={handleClickMore}>
+                    <ExpandLessIcon />
+                  </div>
+                  <div className={classes.less} onClick={handleClickLess}>
+                    <ExpandMoreIcon />
+                  </div>
+                </div>
                 <Button
                   variant="contained"
                   size="large"
                   className={classes.formBtn}
+                  endIcon={<ShoppingBasketIcon />}
                 >
                   Add to Cart
                 </Button>
