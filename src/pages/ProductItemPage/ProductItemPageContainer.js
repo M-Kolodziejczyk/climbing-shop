@@ -5,7 +5,6 @@ import ProductItemPageComponent from "./components/ProductItemPageComponent";
 import HeaderContainer from "../../common/containers/HeaderContainer";
 import Navbar from "../../common/components/Navbar";
 import Footer from "../../common/components/Footer";
-import Spinner from "../../common/components/Spinner";
 
 const ProductItemPageContainer = props => {
   const dispatch = useDispatch();
@@ -16,14 +15,13 @@ const ProductItemPageContainer = props => {
     dispatch(setLoading());
     dispatch(getProduct(props.match.params.id));
     // eslint-disable-next-line
-  }, []);
+  }, [props.match.params.id]);
 
   return (
     <Fragment>
       <HeaderContainer />
       <Navbar />
-      {loading ? <Spinner /> : <ProductItemPageComponent product={product} />}
-
+      {product && <ProductItemPageComponent product={product} />}
       <Footer />
     </Fragment>
   );

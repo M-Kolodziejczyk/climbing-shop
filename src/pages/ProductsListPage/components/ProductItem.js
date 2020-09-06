@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import discountPrice from "../../../helpers/discountPrice";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import {
   Grid,
@@ -93,7 +94,7 @@ const ProductItem = ({ product }) => {
 
   return (
     <Grid item xs={3} className={classes.productBox}>
-      <a href={`/products/${product.id}`} className={classes.link}>
+      <Link to={`/products/${product.id}`} className={classes.link}>
         <Card>
           <CardContent>
             {product.discount !== "0" ? (
@@ -149,7 +150,7 @@ const ProductItem = ({ product }) => {
             </Button>
           </CardActions>
         </Card>
-      </a>
+      </Link>
     </Grid>
   );
 };

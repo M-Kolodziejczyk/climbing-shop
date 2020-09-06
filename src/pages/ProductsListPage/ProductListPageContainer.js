@@ -9,7 +9,6 @@ import ProductItem from "./components/ProductItem";
 import HeaderContainer from "../../common/containers/HeaderContainer";
 import Navbar from "../../common/components/Navbar";
 import Footer from "../../common/components/Footer";
-import Spinner from "../../common/components/Spinner";
 import { Typography, Container, Grid } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
@@ -35,7 +34,7 @@ const ProductListPageContainer = props => {
     dispatch(setLoading());
     dispatch(getProductsByCategory(category));
     // eslint-disable-next-line
-  }, []);
+  }, [category]);
 
   return (
     <Fragment>
@@ -45,18 +44,14 @@ const ProductListPageContainer = props => {
         <Typography variant="h2" component="h1" className={classes.header}>
           {category.toUpperCase()}
         </Typography>
-        {loading ? (
-          <Spinner />
-        ) : (
-          <Grid container>
-            {products &&
-              products.length > 0 &&
-              !loading &&
-              products.map(product => (
-                <ProductItem key={product.id} product={product} />
-              ))}
-          </Grid>
-        )}
+        <Grid container>
+          {products &&
+            products.length > 0 &&
+            !loading &&
+            products.map(product => (
+              <ProductItem key={product.id} product={product} />
+            ))}
+        </Grid>
       </Container>
       <Footer />
     </Fragment>
