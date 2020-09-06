@@ -20,3 +20,9 @@ export const FORM_LOADING = "FORM_LOADING";
 export const GET_PRODUCT = "GET_PRODUCT";
 export const UPDATE_PRODUCT = "UPDATE_PRODUCT";
 export const ADD_PRODUCT_IMAGE = "ADD_PRODUCT_IMAGE";
+
+// Basket Types
+export const ADD_TO_BASKET = "ADD_TO_BASKET";
+export const REMOVE_FROM_BASKET = "REMOVE_FROM_BASKET";
+export const GET_BASKET = "GET_BASKET";
+export const REMOVE_BASKET = "REMOVE_BASKET";

@@ -9,7 +9,6 @@ import Footer from "../../common/components/Footer";
 const ProductItemPageContainer = props => {
   const dispatch = useDispatch();
   const product = useSelector(state => state.product.product);
-  const loading = useSelector(state => state.product.loading);
 
   useEffect(() => {
     dispatch(setLoading());

@@ -6,7 +6,11 @@ import {
   FORM_LOADING,
   GET_PRODUCT,
   UPDATE_PRODUCT,
-  ADD_PRODUCT_IMAGE
+  ADD_PRODUCT_IMAGE,
+  ADD_TO_BASKET,
+  REMOVE_FROM_BASKET,
+  GET_BASKET,
+  REMOVE_BASKET
 } from "../types";
 import axios from "axios";
 import { Storage } from "aws-amplify";
@@ -93,6 +97,33 @@ export const addProductImage = (id, image) => async dispatch => {
       payload: error
     });
   }
+};
+
+export const addToBasket = e => dispatch => {
+  dispatch({
+    type: ADD_TO_BASKET,
+    payload: "add to basket"
+  });
+};
+
+export const removeFromBasket = e => dispatch => {
+  dispatch({
+    type: REMOVE_FROM_BASKET,
+    payload: "remove from basket"
+  });
+};
+
+export const getBasket = id => dispatch => {
+  dispatch({
+    type: GET_BASKET,
+    payload: "Get basket"
+  });
+};
+export const removeBasket = id => dispatch => {
+  dispatch({
+    type: REMOVE_BASKET,
+    payload: "remove  basket"
+  });
 };
 
 export const setLoading = () => {

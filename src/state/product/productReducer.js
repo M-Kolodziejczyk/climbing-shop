@@ -6,7 +6,11 @@ import {
   FORM_LOADING,
   GET_PRODUCT,
   UPDATE_PRODUCT,
-  ADD_PRODUCT_IMAGE
+  ADD_PRODUCT_IMAGE,
+  ADD_TO_BASKET,
+  REMOVE_FROM_BASKET,
+  GET_BASKET,
+  REMOVE_BASKET
 } from "../types";
 
 const initialState = {
@@ -14,7 +18,8 @@ const initialState = {
   product: null,
   loading: true,
   productError: null,
-  formLoading: false
+  formLoading: false,
+  basket: []
 };
 
 export default (state = initialState, action) => {
@@ -68,6 +73,23 @@ export default (state = initialState, action) => {
         ...state,
         formLoading: true
       };
+    case ADD_TO_BASKET:
+      return {
+        ...state
+      };
+    case REMOVE_FROM_BASKET:
+      return {
+        ...state
+      };
+    case GET_BASKET:
+      return {
+        ...state
+      };
+    case REMOVE_BASKET: {
+      return {
+        ...state
+      };
+    }
     default:
       return state;
   }
