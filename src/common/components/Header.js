@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { Link } from "react-router-dom";
+import Avatar from "@material-ui/core/Avatar";
 
 const Header = props => {
   const logoContainer = {
@@ -11,6 +12,22 @@ const Header = props => {
     right: "5px",
     color: "#!495057",
     fontSize: "22px"
+  };
+
+  const basketLink = {
+    textDecoration: "none",
+    color: "#212529",
+    display: "flex",
+    alignItems: "center"
+  };
+
+  const basketIcon = {
+    fontSize: "25px"
+  };
+
+  const basketSpan = {
+    backgroundColor: "#f32836",
+    marginLeft: "5px"
   };
 
   const [user, setUser] = useState(null);
@@ -89,7 +106,10 @@ const Header = props => {
           </div>
         </div>
         <div className="col-1">
-          <i className="fas fa-shopping-cart"></i>
+          <Link to="/" style={basketLink}>
+            <i className="fas fa-shopping-cart" style={basketIcon}></i>
+            <Avatar style={basketSpan}>1</Avatar>
+          </Link>
         </div>
       </div>
     </div>
