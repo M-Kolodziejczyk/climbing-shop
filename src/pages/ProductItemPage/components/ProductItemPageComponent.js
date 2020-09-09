@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import discountPrice from "../../../helpers/discountPrice";
 import DoneIcon from "@material-ui/icons/Done";
@@ -118,24 +118,23 @@ function PropertiesDisplay({ properties }) {
   );
 }
 
-const ProductItemPageComponent = ({ product }) => {
+const ProductItemPageComponent = props => {
+  const { product, amountChange, amount, handleSubmit } = props;
   const classes = useStyles();
   const discPrice = discountPrice(product.price, product.discount);
-  const [amount, setAmount] = useState(1);
+  // const [amount, setAmount] = useState(1);
 
   const handleClickMore = () => {
-    setAmount(amount + 1);
+    amountChange(amount + 1);
   };
 
   const handleClickLess = () => {
-    setAmount(amount - 1);
+    amountChange(amount - 1);
   };
 
   const handleChange = e => {
-    setAmount(parseInt(e.target.value));
+    handleChange(parseInt(e.target.value));
   };
-
-  console.log(amount);
 
   return (
     <Container>
@@ -180,7 +179,7 @@ const ProductItemPageComponent = ({ product }) => {
             )}
           </Grid>
           <Typography variant="body1">{product.description}</Typography>
-          <form>
+          <form onSubmit={handleSubmit}>
             <Grid container className={classes.formContainer} spacing={2}>
               <Grid item xs={12} className={classes.fieldset}>
                 <div className={classes.control}>
@@ -199,6 +198,7 @@ const ProductItemPageComponent = ({ product }) => {
                   </div>
                 </div>
                 <Button
+                  type="submit"
                   variant="contained"
                   size="large"
                   className={classes.formBtn}

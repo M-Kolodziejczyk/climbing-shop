@@ -26,3 +26,5 @@ export const ADD_TO_BASKET = "ADD_TO_BASKET";
 export const REMOVE_FROM_BASKET = "REMOVE_FROM_BASKET";
 export const GET_BASKET = "GET_BASKET";
 export const REMOVE_BASKET = "REMOVE_BASKET";
+export const BASKET_LOADING = "BASKET_LOADING";
+export const BASKET_ERROR = "BASKET_ERROR";

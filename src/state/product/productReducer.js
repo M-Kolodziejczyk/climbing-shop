@@ -10,7 +10,9 @@ import {
   ADD_TO_BASKET,
   REMOVE_FROM_BASKET,
   GET_BASKET,
-  REMOVE_BASKET
+  REMOVE_BASKET,
+  BASKET_LOADING,
+  BASKET_ERROR
 } from "../types";
 
 const initialState = {
@@ -19,7 +21,9 @@ const initialState = {
   loading: true,
   productError: null,
   formLoading: false,
-  basket: []
+  basketLoading: false,
+  basketError: null,
+  basket: null
 };
 
 export default (state = initialState, action) => {
@@ -75,7 +79,9 @@ export default (state = initialState, action) => {
       };
     case ADD_TO_BASKET:
       return {
-        ...state
+        ...state,
+        basketLoading: false,
+        basket: action.payload
       };
     case REMOVE_FROM_BASKET:
       return {
@@ -90,6 +96,18 @@ export default (state = initialState, action) => {
         ...state
       };
     }
+    case BASKET_LOADING: {
+      return {
+        ...state,
+        basketLoading: true
+      };
+    }
+    case BASKET_ERROR:
+      return {
+        ...state,
+        basketLoading: false,
+        basketError: action.payload
+      };
     default:
       return state;
   }
