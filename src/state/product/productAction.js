@@ -125,11 +125,21 @@ export const removeFromBasket = e => dispatch => {
   });
 };
 
-export const getBasket = id => dispatch => {
-  dispatch({
-    type: GET_BASKET,
-    payload: "Get basket"
-  });
+export const getBasket = id => async dispatch => {
+  dispatch(setBasketLoading());
+
+  try {
+    const res = await axios.get(`${config.api.invokeUrl}/basket/${id}/`);
+    dispatch({
+      type: GET_BASKET,
+      payload: res.data
+    });
+  } catch (error) {
+    dispatch({
+      type: BASKET_ERROR,
+      payload: error
+    });
+  }
 };
 export const removeBasket = id => dispatch => {
   dispatch({

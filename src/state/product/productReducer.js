@@ -89,7 +89,8 @@ export default (state = initialState, action) => {
       };
     case GET_BASKET:
       return {
-        ...state
+        ...state,
+        basket: action.payload.basket
       };
     case REMOVE_BASKET: {
       return {

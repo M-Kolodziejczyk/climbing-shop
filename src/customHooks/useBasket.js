@@ -10,6 +10,10 @@ const useForm = (basket, product, email) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
+    setValues(basket);
+  }, [basket]);
+
+  useEffect(() => {
     if (Object.keys(errors).length === 0 && isSubmitting) {
       const data = {
         email: email,
@@ -39,7 +43,7 @@ const useForm = (basket, product, email) => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    if (basket === null) {
+    if (basket === null || basket === "") {
       setValues({
         0: {
           productId: product.id,
@@ -54,7 +58,7 @@ const useForm = (basket, product, email) => {
     } else {
       const err = validate(basket, product);
       setErrors(err);
-      if (Object.keys(errors).length === 0) {
+      if (Object.keys(err).length === 0) {
         const key = Object.keys(values).length;
         setValues({
           ...values,
