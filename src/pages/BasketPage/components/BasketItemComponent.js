@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -16,10 +17,18 @@ const useStyles = makeStyles(theme => ({
     maxHeight: "80px",
     objectFit: "scale-down"
   },
+  link: {
+    textDecoration: "none",
+    "&:hover": {
+      textDecoration: "none"
+    }
+  },
   productName: {
+    color: "#212529",
     fontSize: "18px"
   },
   manufacturer: {
+    color: "#212529",
     fontSize: "20px",
     fontWeight: "500"
   },
@@ -113,17 +122,21 @@ const BasketItemComponent = () => {
       alignItems="center"
     >
       <Grid item xs={2}>
-        <CardMedia
-          className={classes.img}
-          component="img"
-          src={`https://climbing-shop.s3-eu-west-1.amazonaws.com/public/product-image/676326cd-4fec-44bf-af63-65db37d611ce/1.jpg`}
-        />
+        <Link to="/">
+          <CardMedia
+            className={classes.img}
+            component="img"
+            src={`https://climbing-shop.s3-eu-west-1.amazonaws.com/public/product-image/676326cd-4fec-44bf-af63-65db37d611ce/1.jpg`}
+          />
+        </Link>
       </Grid>
       <Grid item xs={4}>
-        <Typography className={classes.manufacturer}>Black Diamon</Typography>
-        <Typography className={classes.productName}>
-          Climbing backpack
-        </Typography>
+        <Link to="/" className={classes.link}>
+          <Typography className={classes.manufacturer}>Black Diamon</Typography>
+          <Typography className={classes.productName}>
+            Climbing backpack
+          </Typography>
+        </Link>
       </Grid>
       <Grid item xs={2}>
         <Typography className={classes.price}>855,00zł</Typography>
