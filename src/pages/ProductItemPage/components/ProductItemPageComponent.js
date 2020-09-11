@@ -1,10 +1,11 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import discountPrice from "../../../helpers/discountPrice";
 import DoneIcon from "@material-ui/icons/Done";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
+import Alert from "@material-ui/lab/Alert";
 import {
   Grid,
   Container,
@@ -95,6 +96,10 @@ const useStyles = makeStyles(theme => ({
     "&:hover": {
       backgroundColor: "#e10d1b"
     }
+  },
+  alert: {
+    width: "100%",
+    margin: "0 8px"
   }
 }));
 
@@ -119,10 +124,19 @@ function PropertiesDisplay({ properties }) {
 }
 
 const ProductItemPageComponent = props => {
-  const { product, amountChange, amount, handleSubmit } = props;
+  const { product, amountChange, amount, handleSubmit, errors } = props;
   const classes = useStyles();
+  const [basketError, setBasketError] = useState(errors);
+
   const discPrice = discountPrice(product.price, product.discount);
-  // const [amount, setAmount] = useState(1);
+
+  useEffect(() => {
+    setBasketError(errors);
+    const timer = setTimeout(() => {
+      setBasketError({});
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [errors]);
 
   const handleClickMore = () => {
     amountChange(amount + 1);
@@ -207,6 +221,11 @@ const ProductItemPageComponent = props => {
                   Add to Cart
                 </Button>
               </Grid>
+              {Object.keys(basketError).length > 0 && (
+                <Alert className={classes.alert} severity="warning">
+                  {basketError.basket}
+                </Alert>
+              )}
             </Grid>
           </form>
         </Grid>

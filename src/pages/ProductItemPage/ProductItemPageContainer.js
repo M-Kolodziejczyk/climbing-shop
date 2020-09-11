@@ -42,6 +42,7 @@ const ProductItemPageContainer = props => {
           amountChange={amountChange}
           amount={amount}
           handleSubmit={handleSubmit}
+          errors={errors}
         />
       )}
       <Footer />
