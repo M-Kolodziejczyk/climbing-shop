@@ -18,6 +18,7 @@ import EditProductPageContainer from "./pages/EditProductPage/EditProductPageCon
 import ProductItemPageContainer from "./pages/ProductItemPage/ProductItemPageContainer";
 import WorkingPageContainer from "./pages/workingPage/WorkingPageContainer";
 import NotFoundPageContainer from "./pages/NotFoundPage/NotFoundPageContainer";
+import BasketPageContainer from "./pages/BasketPage/BasketPageContainer";
 
 import AdminRoute from "./routing/AdminRoute";
 import UserRoute from "./routing/UserRoute";
@@ -41,6 +42,7 @@ const App = () => {
         <Route exact path="/forgot-password" component={ForgotPassword} />
         <Route exact path="/welcome" component={WelcomePageContainer} />
         <UserRoute exact path="/admin" component={UserPageContainer} />
+        <UserRoute exact path="/user/basket" component={BasketPageContainer} />
         {/* <Route exact path="/products" component={ProductsPageContainer} /> */}
         <Route
           exact

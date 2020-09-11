@@ -106,7 +106,7 @@ const Header = props => {
           </div>
         </div>
         <div className="col-1">
-          <Link to="/" style={basketLink}>
+          <Link to="/user/basket" style={basketLink}>
             <i className="fas fa-shopping-cart" style={basketIcon}></i>
             <Avatar style={basketSpan}>{props.basketAmount}</Avatar>
           </Link>
