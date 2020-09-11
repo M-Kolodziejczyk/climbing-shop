@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import discountPrice from "../../../helpers/discountPrice";
 import BasketItemComponent from "./BasketItemComponent";
 import { makeStyles } from "@material-ui/core/styles";
@@ -18,8 +18,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const BasketPageComponent = () => {
+const BasketPageComponent = ({ basket }) => {
   const classes = useStyles();
+
   return (
     <Container>
       <Grid container className={classes.container} spacing={2}>
@@ -41,8 +42,15 @@ const BasketPageComponent = () => {
               <Typography variant="h5">Total:</Typography>
             </Grid>
           </Grid>
-          <BasketItemComponent />
-          <BasketItemComponent />
+          {basket === null || basket === "" ? (
+            <h1>Empty basket</h1>
+          ) : (
+            <Fragment>
+              {Object.keys(basket).map(key => (
+                <BasketItemComponent key={key} product={basket[key]} />
+              ))}
+            </Fragment>
+          )}
         </Grid>
         <Grid item container xs={4}>
           <Typography>Summary</Typography>

@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
+import discountPrice from "../../../helpers/discountPrice";
+import totalPrice from "../../../helpers/totalPrice";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -10,11 +12,13 @@ const useStyles = makeStyles(theme => ({
   container: {
     borderBottom: "1px solid #e6e6e6",
     paddingBottom: "10px",
-    position: "relative"
+    paddingTop: "10px",
+    position: "relative",
+    margin: "0px"
   },
   img: {
-    minHeight: "120px",
-    maxHeight: "80px",
+    minHeight: "80px",
+    maxHeight: "120px",
     objectFit: "scale-down"
   },
   link: {
@@ -96,9 +100,16 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const BasketItemComponent = () => {
+const BasketItemComponent = ({ product }) => {
   const classes = useStyles();
   const [amount, setAmount] = useState(0);
+  let discPrice;
+
+  const total = totalPrice(product.price, product.discount, product.amount);
+
+  if (product.discount !== "0") {
+    discPrice = discountPrice(product.price, product.discount);
+  }
 
   const handleClickMore = () => {
     // amountChange(amount + 1);
@@ -126,21 +137,31 @@ const BasketItemComponent = () => {
           <CardMedia
             className={classes.img}
             component="img"
-            src={`https://climbing-shop.s3-eu-west-1.amazonaws.com/public/product-image/676326cd-4fec-44bf-af63-65db37d611ce/1.jpg`}
+            src={`https://climbing-shop.s3-eu-west-1.amazonaws.com/public/product-image/${product.productId}/1.jpg`}
           />
         </Link>
       </Grid>
       <Grid item xs={4}>
         <Link to="/" className={classes.link}>
-          <Typography className={classes.manufacturer}>Black Diamon</Typography>
+          <Typography className={classes.manufacturer}>
+            {product.manufacturer}
+          </Typography>
           <Typography className={classes.productName}>
-            Climbing backpack
+            {product.productName}
           </Typography>
         </Link>
       </Grid>
       <Grid item xs={2}>
-        <Typography className={classes.price}>855,00zł</Typography>
-        <Typography className={classes.oldPrice}>900,00zł</Typography>
+        {product.discount === "0" ? (
+          <Typography className={classes.price}>{product.price} zl</Typography>
+        ) : (
+          <Fragment>
+            <Typography className={classes.price}>{discPrice} zl</Typography>
+            <Typography className={classes.oldPrice}>
+              {product.price} zl
+            </Typography>
+          </Fragment>
+        )}
       </Grid>
       <Grid item xs={2}>
         <div className={classes.control}>
@@ -160,7 +181,7 @@ const BasketItemComponent = () => {
         </div>
       </Grid>
       <Grid item xs={2}>
-        <Typography className={classes.total}>1200 zl</Typography>
+        <Typography className={classes.total}>{total} zl</Typography>
       </Grid>
       <IconButton aria-label="delete" className={classes.deleteBtn}>
         <DeleteIcon />
