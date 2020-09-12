@@ -8,6 +8,7 @@ const useForm = (basket, product, email) => {
   const [amount, setAmount] = useState(1);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isAmountChange, setIsAmountChange] = useState(false);
 
   useEffect(() => {
     setValues(basket);
@@ -24,6 +25,19 @@ const useForm = (basket, product, email) => {
     // eslint-disable-next-line
   }, [errors]);
 
+  useEffect(() => {
+    if (isAmountChange) {
+      const timer = setTimeout(() => {
+        const data = {
+          email: email,
+          basket: values
+        };
+        dispatch(addToBasket(data));
+      }, 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [amount]);
+
   const validate = (basket, product) => {
     const keys = Object.keys(basket);
     let error = {};
@@ -35,9 +49,21 @@ const useForm = (basket, product, email) => {
     return error;
   };
 
-  const amountChange = e => {
+  const amountChange = (e, condition, id) => {
     if (e > 0) {
       setAmount(e);
+    }
+
+    if (condition === "basket") {
+      setValues({
+        ...values,
+        [id]: {
+          ...values[id],
+          amount: e
+        }
+      });
+
+      setIsAmountChange(true);
     }
   };
 
@@ -64,7 +90,7 @@ const useForm = (basket, product, email) => {
           ...values,
           [key]: {
             productId: product.id,
-            productName: product.name,
+            productName: product.productName,
             manufacturer: product.manufacturer,
             price: product.price,
             discount: product.discount,

@@ -1,12 +1,21 @@
-import React, { useState, Fragment } from "react";
+import React, { useEffect, useState, Fragment } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
+import useBasket from "../../../customHooks/useBasket";
 import discountPrice from "../../../helpers/discountPrice";
 import totalPrice from "../../../helpers/totalPrice";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { Grid, Typography, CardMedia, IconButton } from "@material-ui/core";
+import {
+  Grid,
+  Typography,
+  CardMedia,
+  IconButton,
+  Backdrop,
+  CircularProgress
+} from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -16,9 +25,14 @@ const useStyles = makeStyles(theme => ({
     position: "relative",
     margin: "0px"
   },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: "#fff",
+    backgroundColor: "rgba(0,0,0, 0.2)"
+  },
   img: {
-    minHeight: "80px",
-    maxHeight: "120px",
+    minHeight: "100px",
+    maxHeight: "100px",
     objectFit: "scale-down"
   },
   link: {
@@ -100,9 +114,10 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const BasketItemComponent = ({ product }) => {
+const BasketItemComponent = ({ product, basket, id }) => {
+  const user = useSelector(state => state.auth.user);
+  const basketLoading = useSelector(state => state.product.basketLoading);
   const classes = useStyles();
-  const [amount, setAmount] = useState(0);
   let discPrice;
 
   const total = totalPrice(product.price, product.discount, product.amount);
@@ -111,13 +126,15 @@ const BasketItemComponent = ({ product }) => {
     discPrice = discountPrice(product.price, product.discount);
   }
 
-  const handleClickMore = () => {
-    // amountChange(amount + 1);
-  };
+  const { amountChange, handleSubmit, values, errors, amount } = useBasket(
+    basket,
+    product,
+    user.email
+  );
 
-  const handleClickLess = () => {
-    // amountChange(amount - 1);
-  };
+  useEffect(() => {
+    amountChange(product.amount);
+  }, []);
 
   const handleChange = e => {
     handleChange(parseInt(e.target.value));
@@ -132,6 +149,9 @@ const BasketItemComponent = ({ product }) => {
       className={classes.container}
       alignItems="center"
     >
+      <Backdrop className={classes.backdrop} open={basketLoading}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
       <Grid item xs={2}>
         <Link to="/">
           <CardMedia
@@ -172,10 +192,16 @@ const BasketItemComponent = ({ product }) => {
             name="amount"
             onChange={handleChange}
           />
-          <div className={classes.more} onClick={handleClickMore}>
+          <div
+            className={classes.more}
+            onClick={() => amountChange(amount + 1, "basket", id)}
+          >
             <ExpandLessIcon />
           </div>
-          <div className={classes.less} onClick={handleClickLess}>
+          <div
+            className={classes.less}
+            onClick={() => amountChange(amount - 1, "basket", id)}
+          >
             <ExpandMoreIcon />
           </div>
         </div>

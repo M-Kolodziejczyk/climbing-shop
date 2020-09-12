@@ -47,7 +47,12 @@ const BasketPageComponent = ({ basket }) => {
           ) : (
             <Fragment>
               {Object.keys(basket).map(key => (
-                <BasketItemComponent key={key} product={basket[key]} />
+                <BasketItemComponent
+                  key={key}
+                  product={basket[key]}
+                  basket={basket}
+                  id={key}
+                />
               ))}
             </Fragment>
           )}
