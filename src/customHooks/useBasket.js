@@ -36,6 +36,8 @@ const useForm = (basket, product, email) => {
       }, 1500);
       return () => clearTimeout(timer);
     }
+
+    // eslint-disable-next-line
   }, [amount]);
 
   const validate = (basket, product) => {
@@ -85,7 +87,8 @@ const useForm = (basket, product, email) => {
       const err = validate(basket, product);
       setErrors(err);
       if (Object.keys(err).length === 0) {
-        const key = Object.keys(values).length;
+        const key =
+          parseInt(Object.keys(values)[Object.keys(values).length - 1]) + 1;
         setValues({
           ...values,
           [key]: {

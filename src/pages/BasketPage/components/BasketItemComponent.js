@@ -1,5 +1,6 @@
-import React, { useEffect, useState, Fragment } from "react";
+import React, { useEffect, Fragment } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { removeFromBasket } from "../../../state/product/productAction";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import useBasket from "../../../customHooks/useBasket";
@@ -115,6 +116,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const BasketItemComponent = ({ product, basket, id }) => {
+  const dispatch = useDispatch();
   const user = useSelector(state => state.auth.user);
   const basketLoading = useSelector(state => state.product.basketLoading);
   const classes = useStyles();
@@ -134,10 +136,23 @@ const BasketItemComponent = ({ product, basket, id }) => {
 
   useEffect(() => {
     amountChange(product.amount);
+
+    //eslint-disable-next-line
   }, []);
 
   const handleChange = e => {
     handleChange(parseInt(e.target.value));
+  };
+
+  const handleDelete = e => {
+    const data = Object.keys(basket).reduce((object, key) => {
+      if (key !== id) {
+        object[key] = basket[key];
+      }
+      return object;
+    }, {});
+
+    dispatch(removeFromBasket(user.email, data));
   };
 
   return (
@@ -209,7 +224,11 @@ const BasketItemComponent = ({ product, basket, id }) => {
       <Grid item xs={2}>
         <Typography className={classes.total}>{total} zl</Typography>
       </Grid>
-      <IconButton aria-label="delete" className={classes.deleteBtn}>
+      <IconButton
+        aria-label="delete"
+        className={classes.deleteBtn}
+        onClick={handleDelete}
+      >
         <DeleteIcon />
       </IconButton>
     </Grid>

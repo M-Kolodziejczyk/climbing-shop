@@ -1,5 +1,4 @@
 import React, { Fragment } from "react";
-import discountPrice from "../../../helpers/discountPrice";
 import BasketItemComponent from "./BasketItemComponent";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Container, Typography } from "@material-ui/core";

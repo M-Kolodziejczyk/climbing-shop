@@ -118,11 +118,25 @@ export const addToBasket = data => async dispatch => {
   }
 };
 
-export const removeFromBasket = e => dispatch => {
-  dispatch({
-    type: REMOVE_FROM_BASKET,
-    payload: "remove from basket"
-  });
+export const removeFromBasket = (email, basket) => async dispatch => {
+  dispatch(setBasketLoading());
+
+  try {
+    await axios.patch(`${config.api.invokeUrl}/basket/${email}/`, {
+      email,
+      basket
+    });
+
+    dispatch({
+      type: REMOVE_FROM_BASKET,
+      payload: basket
+    });
+  } catch (error) {
+    dispatch({
+      type: BASKET_ERROR,
+      payload: error
+    });
+  }
 };
 
 export const getBasket = id => async dispatch => {
