@@ -146,10 +146,6 @@ const ProductItemPageComponent = props => {
     amountChange(amount - 1);
   };
 
-  const handleChange = e => {
-    handleChange(parseInt(e.target.value));
-  };
-
   return (
     <Container>
       <Grid container className={classes.container} spacing={2}>
@@ -202,7 +198,6 @@ const ProductItemPageComponent = props => {
                     className={classes.controlInput}
                     value={amount}
                     name="amount"
-                    onChange={handleChange}
                   />
                   <div className={classes.more} onClick={handleClickMore}>
                     <ExpandLessIcon />

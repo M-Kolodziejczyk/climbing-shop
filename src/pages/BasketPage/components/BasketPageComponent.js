@@ -1,7 +1,9 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import BasketItemComponent from "./BasketItemComponent";
+import basketTotalPrice from "../../../helpers/basketTotalPrice";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Container, Typography } from "@material-ui/core";
+import { Grid, Container, Typography, Button } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -14,11 +16,62 @@ const useStyles = makeStyles(theme => ({
   },
   basketBody: {
     marginTop: "5px"
+  },
+  summaryContainer: {
+    // background: "red",
+    margin: "60px 10px 0px",
+    width: "100%",
+    border: "2px solid #e6e6e6",
+    borderRadius: "5px",
+    padding: "30px 30px"
+  },
+  summaryHeader: {
+    borderBottom: "1px solid #e6e6e6",
+    paddingBottom: "10px"
+  },
+  subTotal: {
+    marginTop: "30px",
+    borderBottom: "1px solid #e6e6e6",
+    paddingBottom: "10px",
+    display: "flex",
+    justifyContent: "space-between"
+  },
+  subtotalSpan: {},
+  total: {
+    display: "flex",
+    justifyContent: "space-between",
+    marginTop: "10px",
+    fontSize: "24px"
+  },
+  totalSpan: {
+    fontSize: "24px"
+  },
+
+  checkoutLink: {
+    textDecoration: "none",
+    "&:hover": {
+      textDecoration: "none"
+    }
+  },
+  checkoutBtn: {
+    marginTop: "10px",
+    width: "100%",
+    color: "#ffffff",
+    backgroundColor: "#f32836",
+    "&:hover": {
+      backgroundColor: "#e10d1b"
+    }
   }
 }));
 
 const BasketPageComponent = ({ basket }) => {
   const classes = useStyles();
+
+  let totalPrice = 0;
+
+  if (basket !== null) {
+    totalPrice = basketTotalPrice(basket);
+  }
 
   return (
     <Container>
@@ -56,8 +109,28 @@ const BasketPageComponent = ({ basket }) => {
             </Fragment>
           )}
         </Grid>
-        <Grid item container xs={4}>
-          <Typography>Summary</Typography>
+        <Grid item container xs={4} alignContent="flex-start">
+          <div className={classes.summaryContainer}>
+            <Typography variant="h5" className={classes.summaryHeader}>
+              Summary:
+            </Typography>
+            <Typography variant="h6" className={classes.subTotal}>
+              Subtotal: <span className={classes.subtotalSpan}>500 zl</span>
+            </Typography>
+            <Typography variant="h6" className={classes.total}>
+              Total: <span className={classes.totalSpan}>{totalPrice} zl</span>
+            </Typography>
+            <Link to="/" className={classes.checkoutLink}>
+              <Button
+                type="submit"
+                variant="contained"
+                size="large"
+                className={classes.checkoutBtn}
+              >
+                Checkout
+              </Button>
+            </Link>
+          </div>
         </Grid>
       </Grid>
     </Container>

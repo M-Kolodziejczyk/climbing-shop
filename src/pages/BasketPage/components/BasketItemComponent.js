@@ -140,10 +140,6 @@ const BasketItemComponent = ({ product, basket, id }) => {
     //eslint-disable-next-line
   }, []);
 
-  const handleChange = e => {
-    handleChange(parseInt(e.target.value));
-  };
-
   const handleDelete = e => {
     const data = Object.keys(basket).reduce((object, key) => {
       if (key !== id) {
@@ -205,7 +201,6 @@ const BasketItemComponent = ({ product, basket, id }) => {
             className={classes.controlInput}
             value={amount}
             name="amount"
-            onChange={handleChange}
           />
           <div
             className={classes.more}
