@@ -1,38 +1,45 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+import { Container, Grid } from "@material-ui/core";
+
+const useStyles = makeStyles(theme => ({
+  container: {
+    backgroundColor: "#f8f9fa"
+  },
+  link: {
+    color: "#343a40",
+    fontSize: "20px",
+    padding: "20px 10px",
+    textDecoration: "none",
+    "&:hover": {
+      color: "#121416",
+      textDecoration: "none"
+    }
+  }
+}));
 
 const Navbar = () => {
+  const classes = useStyles();
   return (
-    <nav
-      className="navbar  navbar-dark bg-light"
-      style={{ backgroundColor: "#e3f2fd" }}
-    >
-      <ul className="nav navbar_nav container">
-        <li className="nav-item ">
-          <Link className="nav-link text-dark" to="/products/category/clothing">
+    <Container maxWidth={false} className={classes.container}>
+      <Container maxWidth="lg">
+        <Grid container justifyContent="space-between">
+          <Link className={classes.link} to="/products/category/clothing">
             Clothing
           </Link>
-        </li>
-        <li className="nav-item">
-          <Link className="nav-link text-dark" to="/products/category/shoes">
+          <Link className={classes.link} to="/products/category/shoes">
             Shoes
           </Link>
-        </li>
-        <li className="nav-item">
-          <Link
-            className="nav-link text-dark"
-            to="/products/category/backpacks"
-          >
+          <Link className={classes.link} to="/products/category/backpacks">
             Backpacks
           </Link>
-        </li>
-        <li className="nav-item">
-          <Link className="nav-link text-dark" to="/products/category/climbing">
+          <Link className={classes.link} to="/products/category/climbing">
             Climbing
           </Link>
-        </li>
-      </ul>
-    </nav>
+        </Grid>
+      </Container>
+    </Container>
   );
 };
 

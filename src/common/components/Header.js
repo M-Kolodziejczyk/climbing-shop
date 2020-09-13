@@ -29,13 +29,16 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     alignItems: "center",
     color: "#212529",
+    textDecoration: "none",
     "&:hover": {
       textDecoration: "none",
       color: "#212529"
     }
   },
   accountContainer: {
-    display: "flex"
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
   },
   accountLink: {
     color: "#212529",
@@ -113,7 +116,7 @@ const Header = props => {
             </Typography>
           </Link>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={5}>
           <form>
             <TextField
               variant="outlined"
@@ -123,13 +126,7 @@ const Header = props => {
             />
           </form>
         </Grid>
-        <Grid
-          item
-          xs={2}
-          className={classes.accountContainer}
-          alignItems="center"
-          justifyContent="center"
-        >
+        <Grid item xs={2} className={classes.accountContainer}>
           <PersonIcon fontSize="large" />
           {isAuthenticated ? (
             <div>
@@ -166,7 +163,7 @@ const Header = props => {
             </Link>
           )}
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={1}>
           <Link to="/user/basket" className={classes.basketLink}>
             <ShoppingCartIcon fontSize="large" />
             <Avatar className={classes.basketSpan}>{props.basketAmount}</Avatar>
