@@ -198,6 +198,7 @@ const ProductItemPageComponent = props => {
                     className={classes.controlInput}
                     value={amount}
                     name="amount"
+                    readOnly
                   />
                   <div className={classes.more} onClick={handleClickMore}>
                     <ExpandLessIcon />

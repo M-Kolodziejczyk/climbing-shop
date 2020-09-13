@@ -201,6 +201,7 @@ const BasketItemComponent = ({ product, basket, id }) => {
             className={classes.controlInput}
             value={amount}
             name="amount"
+            readOnly
           />
           <div
             className={classes.more}
