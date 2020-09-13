@@ -74,7 +74,7 @@ const BasketPageComponent = ({ basket }) => {
   }
 
   return (
-    <Container>
+    <Container className="beforeFooter">
       <Grid container className={classes.container} spacing={2}>
         <Grid item container xs={8}>
           <Grid item xs={12}>

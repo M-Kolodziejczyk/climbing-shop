@@ -10,6 +10,7 @@ const HomePageComponent = () => {
       <HeaderContainer />
       <Navbar />
       <Slider />
+      <div className="beforeFooterElement"></div>
       <Footer />
     </div>
   );

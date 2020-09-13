@@ -40,7 +40,7 @@ const ProductListPageContainer = props => {
     <Fragment>
       <HeaderContainer />
       <Navbar />
-      <Container maxWidth="lg">
+      <Container maxWidth="lg" className="beforeFooter">
         <Typography variant="h2" component="h1" className={classes.header}>
           {category.toUpperCase()}
         </Typography>

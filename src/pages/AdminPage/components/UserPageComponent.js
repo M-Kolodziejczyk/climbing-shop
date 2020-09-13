@@ -77,7 +77,7 @@ const UserPageComponent = props => {
     <div className={classes.root}>
       <HeaderContainer />
       <Navbar />
-      <Container component="main">
+      <Container component="main" className="beforeFooter">
         <Box mt="20px">
           <Grid container spacing={2}>
             <Grid item xs={2}>

@@ -286,7 +286,7 @@ const ProductFormPageComponent = props => {
   }, [isSubmit, props.errors]);
 
   return (
-    <Container component="main" maxWidth="lg">
+    <Container component="main" maxWidth="lg" className="beforeFooter">
       {props.loading && <Spinner />}
       <div className={classes.paper}>
         <Typography component="h1" variant="h3" className={classes.header}>
