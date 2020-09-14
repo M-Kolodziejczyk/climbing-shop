@@ -32,7 +32,6 @@ const SignInPageContainer = props => {
   }, [isAuthenticated, props.history]);
 
   const handleGoogleLogin = () => {
-    console.log("1");
     dispatch(googleLogin());
   };
 

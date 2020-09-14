@@ -5,7 +5,7 @@ import { Button, TextField, Container, Typography } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: "160px",
     display: "flex",
     flexDirection: "column",
     alignItems: "center"
@@ -20,7 +20,11 @@ const useStyles = makeStyles(theme => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
-    textTransform: "uppercase"
+    textTransform: "uppercase",
+    backgroundColor: "#f32836",
+    "&:hover": {
+      backgroundColor: "#e40606"
+    }
   }
 }));
 
@@ -28,13 +32,13 @@ const ForgotPasswordComponent = props => {
   const classes = useStyles();
 
   return (
-    <Container component="main">
+    <Container component="main" className="beforeFooter">
       <CssBaseline />
       <div className={classes.paper}>
-        <Typography component="h1" variant="h4">
+        <Typography component="h1" variant="h4" align="center">
           HAVE YOU FORGOTTEN YOUR PASSWORD?
         </Typography>
-        <Typography component="h2" variant="h5">
+        <Typography component="h2" variant="h5" align="center">
           If you've forgotten your password, enter your e-mail address and we'll
           send you an e-mail telling you how to recover it.
         </Typography>

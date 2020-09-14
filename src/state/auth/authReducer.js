@@ -11,7 +11,8 @@ import {
   CHANGE_USER_PASSWORD,
   FORGOT_PASSWORD,
   FORGOT_PASSWORD_VERIFICATION,
-  GOOGLE_LOGIN
+  GOOGLE_LOGIN,
+  CLEAN_FORGOT_PASSWORD
 } from "../types";
 
 const initialState = {
@@ -112,6 +113,11 @@ export default (state = initialState, action) => {
         ...state,
         changePassword: true,
         loading: false
+      };
+    case CLEAN_FORGOT_PASSWORD:
+      return {
+        ...state,
+        forgotPasswordSuccess: false
       };
     default:
       return state;

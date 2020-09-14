@@ -21,6 +21,9 @@ const useStyles = makeStyles(() => ({
       height: "100%",
       backgroundColor: "rgba(0,0,0,0.3)"
     }
+  },
+  icon: {
+    margin: "0 auto"
   }
 }));
 
@@ -35,7 +38,7 @@ const Spinner = () => {
       alignItems="center"
       className={classes.spinner}
     >
-      <CircularProgress size="80px" />
+      <CircularProgress className={classes.icon} size="80px" />
     </Grid>
   );
 };

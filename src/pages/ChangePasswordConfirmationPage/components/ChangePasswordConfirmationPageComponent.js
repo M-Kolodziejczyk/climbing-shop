@@ -20,7 +20,7 @@ const ChangePasswordConfirmationPageComponent = () => {
     <Fragment>
       <HeaderContainer />
       <Navbar />
-      <Container component="main" maxWidth="sm">
+      <Container component="main" maxWidth="sm" className="beforeFooter">
         <div className={classes.paper}>
           <Typography component="h1" variant="h4">
             Change Password

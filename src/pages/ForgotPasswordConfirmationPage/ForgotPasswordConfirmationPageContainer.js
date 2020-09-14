@@ -1,4 +1,6 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { cleanForgotPassword } from "../../state/auth/authActions";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Container } from "@material-ui/core";
 import HeaderContainer from "../../common/containers/HeaderContainer";
@@ -15,6 +17,11 @@ const useStyles = makeStyles(theme => ({
 
 const ForgotPasswordConfirmationPageContainer = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(cleanForgotPassword);
+  }, []);
 
   return (
     <Fragment>

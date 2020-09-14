@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { forgotPasswordVerification } from "../../state/auth/authActions";
 import { PasswordValidation } from "../../validators/ForgotPasswordValidationRules";
@@ -8,6 +9,7 @@ import Spinner from "../../common/components/Spinner";
 
 const ForgotPasswordVerificationPageContainer = props => {
   const { email, code } = props.match.params;
+  let history = useHistory();
   const authError = useSelector(state => state.auth.authError);
   const loading = useSelector(state => state.auth.loading);
   const changePassword = useSelector(state => state.auth.changePassword);
@@ -27,9 +29,9 @@ const ForgotPasswordVerificationPageContainer = props => {
 
   useEffect(() => {
     if (!loading && changePassword) {
-      props.history.push("/change-password-confirm");
+      history.push("/change-password-confirm");
     }
-  }, [loading, changePassword, props]);
+  }, [loading, changePassword, history]);
 
   return (
     <Fragment>

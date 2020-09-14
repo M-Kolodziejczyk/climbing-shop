@@ -11,7 +11,8 @@ import {
   CHANGE_USER_PASSWORD,
   FORGOT_PASSWORD,
   FORGOT_PASSWORD_VERIFICATION,
-  GOOGLE_LOGIN
+  GOOGLE_LOGIN,
+  CLEAN_FORGOT_PASSWORD
 } from "../types";
 import { Auth } from "aws-amplify";
 
@@ -212,6 +213,12 @@ export const forgotPasswordVerification = data => async dispatch => {
       payload: error
     });
   }
+};
+
+export const cleanForgotPassword = dispatch => {
+  dispatch({
+    type: CLEAN_FORGOT_PASSWORD
+  });
 };
 
 export const setLoading = () => {
