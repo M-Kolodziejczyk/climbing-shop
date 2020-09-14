@@ -10,7 +10,8 @@ import {
   UPDATE_ADDRESS,
   CHANGE_USER_PASSWORD,
   FORGOT_PASSWORD,
-  FORGOT_PASSWORD_VERIFICATION
+  FORGOT_PASSWORD_VERIFICATION,
+  GOOGLE_LOGIN
 } from "../types";
 
 const initialState = {
@@ -37,6 +38,7 @@ export default (state = initialState, action) => {
         authError: null
       };
     case LOGIN_SUCCESS:
+    case GOOGLE_LOGIN:
       return {
         ...state,
         user: action.payload.attributes,

@@ -5,7 +5,7 @@ import { Container, Grid } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   container: {
-    backgroundColor: "#f8f9fa"
+    backgroundColor: "#f2f2f2"
   },
   link: {
     color: "#343a40",

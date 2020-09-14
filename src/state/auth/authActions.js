@@ -10,7 +10,8 @@ import {
   UPDATE_ADDRESS,
   CHANGE_USER_PASSWORD,
   FORGOT_PASSWORD,
-  FORGOT_PASSWORD_VERIFICATION
+  FORGOT_PASSWORD_VERIFICATION,
+  GOOGLE_LOGIN
 } from "../types";
 import { Auth } from "aws-amplify";
 
@@ -48,6 +49,24 @@ export const loginUser = user => async dispatch => {
     dispatch({
       type: LOGIN_SUCCESS,
       payload: data
+    });
+  } catch (error) {
+    dispatch({
+      type: AUTH_ERROR,
+      payload: error
+    });
+  }
+};
+
+export const googleLogin = () => async dispatch => {
+  try {
+    dispatch(setLoading());
+    await Auth.federatedSignIn({ provider: "Google" });
+    const res = await Auth.currentAuthenticatedUser();
+
+    dispatch({
+      type: GOOGLE_LOGIN,
+      payload: res
     });
   } catch (error) {
     dispatch({

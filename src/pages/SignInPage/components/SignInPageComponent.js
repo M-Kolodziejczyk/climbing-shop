@@ -9,8 +9,6 @@ import {
   Box,
   Button,
   TextField,
-  FormControlLabel,
-  Checkbox,
   Link,
   Grid,
   Container,
@@ -26,14 +24,30 @@ const useStyles = makeStyles(theme => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: "#f32836"
   },
   form: {
     width: "100%",
     marginTop: theme.spacing(1)
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
+    margin: "10px 0",
+    backgroundColor: "#f32836",
+    "&:hover": {
+      backgroundColor: "#e40606"
+    }
+  },
+  googleBtn: {
+    marginBottom: "10px",
+    backgroundColor: "#4285f4",
+    color: "#ffffff",
+    "&:hover": {
+      backgroundColor: "#007bff"
+    }
+  },
+  googleIcon: {
+    // backgroundColor: "#ffffff",
+    marginRight: "10px"
   }
 }));
 
@@ -44,7 +58,7 @@ const SignInPageComponent = props => {
   const classes = useStyles();
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" className="beforeFooter">
       {props.loading && <Spinner />}
       <CssBaseline />
       <div className={classes.paper}>
@@ -85,10 +99,6 @@ const SignInPageComponent = props => {
             onChange={handleChange}
             value={props.formData.password}
           />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
           <Button
             type="submit"
             fullWidth
@@ -97,6 +107,15 @@ const SignInPageComponent = props => {
             className={classes.submit}
           >
             Sign In
+          </Button>
+          <Button
+            variant="contained"
+            className={classes.googleBtn}
+            fullWidth
+            onClick={props.googleLogin}
+          >
+            <i className={`fab fa-google ${classes.googleIcon}`}></i>
+            Sign in with Google
           </Button>
           <Grid container>
             <Grid item xs>

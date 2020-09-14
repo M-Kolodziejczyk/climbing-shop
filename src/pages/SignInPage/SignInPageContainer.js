@@ -1,14 +1,18 @@
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, Fragment } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import SignInPageComponent from "./components/SignInPageComponent";
-import { loginUser } from "../../state/auth/authActions";
+import { loginUser, googleLogin } from "../../state/auth/authActions";
 import validate from "../../validators/SignInFormValidationRules";
 import useForm from "../../customHooks/useForm";
+import Header from "../../common/containers/HeaderContainer";
+import Footer from "../../common/components/Footer";
+import Navbar from "../../common/components/Navbar";
 
 const SignInPageContainer = props => {
   const authError = useSelector(state => state.auth.authError);
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
   const loading = useSelector(state => state.auth.loading);
+  const dispatch = useDispatch();
 
   const initialState = {
     email: "",
@@ -27,15 +31,26 @@ const SignInPageContainer = props => {
     }
   }, [isAuthenticated, props.history]);
 
+  const handleGoogleLogin = () => {
+    console.log("1");
+    dispatch(googleLogin());
+  };
+
   return (
-    <SignInPageComponent
-      onChange={handleChange}
-      formData={values}
-      onSubmit={handleSubmit}
-      errors={errors}
-      authError={authError}
-      loading={loading}
-    />
+    <Fragment>
+      <Header />
+      <Navbar />
+      <SignInPageComponent
+        onChange={handleChange}
+        formData={values}
+        onSubmit={handleSubmit}
+        errors={errors}
+        authError={authError}
+        loading={loading}
+        googleLogin={handleGoogleLogin}
+      />
+      <Footer />
+    </Fragment>
   );
 };
 
