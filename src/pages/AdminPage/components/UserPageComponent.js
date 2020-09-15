@@ -1,4 +1,5 @@
 import React, { useState, useEffect, Fragment } from "react";
+import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import HeaderContainer from "../../../common/containers/HeaderContainer";
 import Footer from "../../../common/components/Footer";
@@ -15,6 +16,7 @@ import {
 } from "../../../validators/AdminAccountValidationRules";
 import {
   Box,
+  Button,
   Grid,
   Typography,
   Container,
@@ -22,6 +24,7 @@ import {
   Tab,
   List
 } from "@material-ui/core";
+import { array } from "prop-types";
 
 function TabPanel(props) {
   const { children, value, index } = props;
@@ -57,7 +60,22 @@ const useStyles = makeStyles(theme => ({
   edit: {
     marginRight: "15px"
   },
-  form: {}
+  form: {},
+  addProductBtn: {
+    marginTop: "20px",
+    backgroundColor: "#f32836",
+    "&:hover": {
+      backgroundColor: "#e40606"
+    }
+  },
+  addProductLink: {
+    textDecoration: "none",
+    color: "#ffffff",
+    "&:hover": {
+      textDecoration: "none",
+      color: "#ffffff"
+    }
+  }
 }));
 
 const UserPageComponent = props => {
@@ -93,6 +111,9 @@ const UserPageComponent = props => {
                 <Tab label="My address" {...a11yProps(1)} />
                 <Tab label="Cart" {...a11yProps(2)} />
                 <Tab label="Shopping history" {...a11yProps(3)} />
+                {props.userGroups.includes("AdminGroup") && (
+                  <Tab label="Products" {...a11yProps(4)} />
+                )}
               </Tabs>
             </Grid>
             {props.loading ? (
@@ -144,6 +165,22 @@ const UserPageComponent = props => {
                 <TabPanel value={value} index={3}>
                   something
                 </TabPanel>
+                {props.userGroups.includes("AdminGroup") && (
+                  <TabPanel value={value} index={4}>
+                    <Typography variant="h4">Products</Typography>
+                    <Button
+                      variant="contained"
+                      className={classes.addProductBtn}
+                    >
+                      <Link
+                        to="/product/add"
+                        className={classes.addProductLink}
+                      >
+                        Create new product
+                      </Link>
+                    </Button>
+                  </TabPanel>
+                )}
               </Grid>
             )}
           </Grid>

@@ -37,6 +37,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+        product: null,
         productError: action.payload
       };
     case GET_PRODUCTS_BY_CATEGORY:

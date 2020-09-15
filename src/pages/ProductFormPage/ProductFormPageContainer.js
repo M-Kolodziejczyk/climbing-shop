@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import ProductFormPageComponent from "./components/ProductFormPageComponent";
 import HeaderContainer from "../../common/containers/HeaderContainer";
@@ -12,6 +12,9 @@ import { v4 } from "uuid";
 const ProductFormPageContainer = () => {
   const productError = useSelector(state => state.product.productError);
   const formLoading = useSelector(state => state.product.FormLoading);
+  const product = useSelector(state => state.product.product);
+
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const initialState = {
     id: v4(),
@@ -40,6 +43,21 @@ const ProductFormPageContainer = () => {
     errors
   } = useProductForm(initialState, validate, addProduct);
 
+  useEffect(() => {
+    if (!formLoading && product) {
+      setIsSuccess(true);
+    }
+  }, [product, formLoading]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      const timer = setTimeout(() => {
+        setIsSuccess(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [isSuccess]);
+
   return (
     <Fragment>
       <HeaderContainer />
@@ -52,6 +70,7 @@ const ProductFormPageContainer = () => {
         productError={productError}
         loading={formLoading}
         handleImage={handleImage}
+        isSuccess={isSuccess}
       />
       <Footer />
     </Fragment>
