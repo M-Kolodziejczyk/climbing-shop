@@ -25,10 +25,22 @@ const useStyles = makeStyles(theme => ({
     alignItems: "center"
   },
   link: {
+    display: "flex",
+    justifyContent: "center",
     fontSize: "20px",
     "&:hover": {
       textDecoration: "none"
     }
+  },
+  info: {
+    marginTop: "10px",
+    [theme.breakpoints.up("lg")]: {
+      marginTop: "0"
+    }
+  },
+  infoItem: {
+    display: "flex",
+    justifyContent: "center"
   }
 }));
 
@@ -40,7 +52,7 @@ export default function StickyFooter() {
       <footer className={classes.footer}>
         <Container className={classes.container} maxWidth="lg">
           <Grid container justify="space-between" alignItems="center">
-            <Grid item sm={6}>
+            <Grid item xs={12} lg={4}>
               <Link color="inherit" to="/" className={classes.link}>
                 <Typography variant="h6" color="textSecondary">
                   {"© "}
@@ -48,16 +60,23 @@ export default function StickyFooter() {
                 </Typography>
               </Link>
             </Grid>
-            <Grid container item sm={6}>
-              <Grid item container xs={4}>
+            <Grid
+              container
+              item
+              xs={12}
+              lg={8}
+              spacing={2}
+              className={classes.info}
+            >
+              <Grid item container xs={12} md={4} className={classes.infoItem}>
                 <CallIcon />
                 <Typography variant="body1">+48 123 123 123</Typography>
               </Grid>
-              <Grid item container xs={4}>
+              <Grid item container xs={12} md={4} className={classes.infoItem}>
                 <RoomIcon />
                 <Typography variant="body1">Kraków ul.Dluga 123</Typography>
               </Grid>
-              <Grid item container xs={4}>
+              <Grid item container xs={12} md={4} className={classes.infoItem}>
                 <MailIcon />
                 <Typography variant="body1">climbingshop@mail.com</Typography>
               </Grid>
