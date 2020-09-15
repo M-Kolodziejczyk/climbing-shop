@@ -21,6 +21,7 @@ const ForgotPasswordConfirmationPageContainer = () => {
 
   useEffect(() => {
     dispatch(cleanForgotPassword);
+    // eslint-disable-next-line
   }, []);
 
   return (

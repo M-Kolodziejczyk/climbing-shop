@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import useProductForm from "../../customHooks/useProductForm";
 import EditProductPageComponent from "./components/EditProductPageComponent";
@@ -15,6 +15,7 @@ const EditProductPageContainer = props => {
   const loading = useSelector(state => state.product.loading);
   const formLoading = useSelector(state => state.product.formLoading);
   const product = useSelector(state => state.product.product);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   useEffect(() => {
     dispatch(getProduct(props.match.params.id));
@@ -53,9 +54,18 @@ const EditProductPageContainer = props => {
       handleChange({ name: "product", value: product });
     }
     // eslint-disable-next-line
-  }, [product]);
+  }, [product, loading]);
 
-  if (loading || formLoading || values.id === "") {
+  useEffect(() => {
+    if (isSuccess) {
+      const timer = setTimeout(() => {
+        setIsSuccess(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [isSuccess]);
+
+  if (loading || formLoading) {
     return <Spinner />;
   } else {
     return (
@@ -70,6 +80,7 @@ const EditProductPageContainer = props => {
           handleImage={handleImage}
           productError={productError}
           loading={loading}
+          isSuccess={isSuccess}
         />
         <Footer />
       </Fragment>

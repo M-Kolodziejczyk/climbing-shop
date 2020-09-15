@@ -1,7 +1,7 @@
 const basketTotalPrice = basket => {
   let total = 0;
 
-  Object.keys(basket).map(key => {
+  Object.keys(basket).forEach(key => {
     const price = parseFloat(
       parseInt(basket[key].price) +
         "." +

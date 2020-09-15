@@ -24,7 +24,6 @@ import {
   Tab,
   List
 } from "@material-ui/core";
-import { array } from "prop-types";
 
 function TabPanel(props) {
   const { children, value, index } = props;

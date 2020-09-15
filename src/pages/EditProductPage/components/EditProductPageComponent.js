@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Spinner from "../../../common/components/Spinner";
+import Alert from "@material-ui/lab/Alert";
 import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
 import {
@@ -42,7 +44,7 @@ const categories = [
 function FeatureInput(props) {
   return (
     <Grid container spacing={2} className={props.classes.propertiesContainer}>
-      <Grid item xs={11} className={props.classes.features}>
+      <Grid item xs={10} sm={11} className={props.classes.features}>
         <TextField
           error={
             Object.keys(props.errors).includes("features") &&
@@ -69,7 +71,7 @@ function FeatureInput(props) {
         />
       </Grid>
       {props.id > 1 && (
-        <Grid item xs={1}>
+        <Grid item xs={2} sm={1}>
           <Fab
             onClick={() => props.remove(props.id)}
             size="small"
@@ -92,7 +94,7 @@ function PropertiesInput(props) {
       alignItems="center"
       className={props.classes.propertiesContainer}
     >
-      <Grid item xs={5} className={props.classes.features}>
+      <Grid item xs={10} sm={11} lg={5} className={props.classes.features}>
         <TextField
           error={
             Object.keys(props.errors).includes("propertiesName") &&
@@ -118,7 +120,7 @@ function PropertiesInput(props) {
           id={`${props.id}`}
         />
       </Grid>
-      <Grid item xs={6} className={props.classes.features}>
+      <Grid item xs={10} sm={11} lg={6} className={props.classes.features}>
         <TextField
           error={
             Object.keys(props.errors).includes("propertiesValue") &&
@@ -145,7 +147,7 @@ function PropertiesInput(props) {
         />
       </Grid>
       {props.id > 1 && (
-        <Grid item xs={1}>
+        <Grid item xs={2} sm={1}>
           <Fab
             onClick={() => props.remove(props.id)}
             size="small"
@@ -192,16 +194,27 @@ const useStyles = makeStyles(theme => ({
   },
   fabIcon: {
     marginLeft: "10px",
-    marginBottom: "4px"
+    marginBottom: "4px",
+    backgroundColor: "#f32836",
+    "&:hover": {
+      backgroundColor: "#e40606"
+    }
   },
   removeBtn: {
-    marginTop: "8px"
+    marginTop: "8px",
+    backgroundColor: "#f32836",
+    "&:hover": {
+      backgroundColor: "#e40606"
+    }
   },
   submit: {
     display: "flex",
-    margin: "20px auto"
+    margin: "20px auto",
+    backgroundColor: "#f32836",
+    "&:hover": {
+      backgroundColor: "#e40606"
+    }
   },
-
   uploadInput: {
     position: "absolute",
     zIndex: "-1",
@@ -218,10 +231,38 @@ const useStyles = makeStyles(theme => ({
     padding: "12px 18px",
     cursor: "pointer",
     borderRadius: "5px",
-    backgroundColor: "#8ebf42",
     fontSize: "16px",
     fontWeight: "bold",
-    color: "#fff"
+    color: "#fff",
+    backgroundColor: "#f32836",
+    "&:hover": {
+      backgroundColor: "#e40606"
+    }
+  },
+  updateProductBtn: {
+    marginBottom: "20px",
+    width: "100%",
+    marginTop: "20px",
+    padding: "0",
+    backgroundColor: "#f32836",
+    "&:hover": {
+      backgroundColor: "#e40606"
+    },
+    [theme.breakpoints.up("md")]: {
+      width: "200px",
+      alignSelf: "flex-start"
+    }
+  },
+  updateProductLink: {
+    textDecoration: "none",
+    padding: "6px 16px",
+    width: "100%",
+    textAlign: "center",
+    color: "#ffffff",
+    "&:hover": {
+      textDecoration: "none",
+      color: "#ffffff"
+    }
   }
 }));
 
@@ -290,15 +331,35 @@ const EditProductPageComponent = props => {
   }, [isSubmit, props.errors]);
 
   return (
-    <Container component="main" maxWidth="lg" className="beforeFooter">
+    <Container component="main" maxWidth="lg" className="beforeFooterHigh">
       {props.loading && <Spinner />}
       <div className={classes.paper}>
-        <Typography component="h1" variant="h3" className={classes.header}>
+        <Button variant="contained" className={classes.updateProductBtn}>
+          <Link
+            to={`/products/${props.formData.id}`}
+            className={classes.updateProductLink}
+          >
+            Back to Product
+          </Link>
+        </Button>
+        <Typography
+          component="h1"
+          variant="h3"
+          align="center"
+          className={classes.header}
+        >
           Update Product
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Grid container spacing={2}>
-            <Grid container item xs={6} spacing={2} alignContent="flex-start">
+            <Grid
+              container
+              item
+              xs={12}
+              lg={6}
+              spacing={2}
+              alignContent="flex-start"
+            >
               <Grid item xs={12}>
                 <TextField
                   error={props.errors.productName ? true : false}
@@ -441,7 +502,7 @@ const EditProductPageComponent = props => {
                 </Grid>
               )}
             </Grid>
-            <Grid item xs={6} className={classes.featuresContainer}>
+            <Grid item xs={12} lg={6} className={classes.featuresContainer}>
               {features.length > 0 &&
                 features.map(n => (
                   <FeatureInput
@@ -495,6 +556,11 @@ const EditProductPageComponent = props => {
           >
             Update
           </Button>
+          {props.isSuccess && (
+            <Box mt={2}>
+              <Alert severity="success">Product Created</Alert>
+            </Box>
+          )}
           {props.productError && (
             <Grid container>
               <Box mt={2}>

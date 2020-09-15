@@ -21,6 +21,9 @@ button {
 .beforeFooter {
   min-height: calc(100vh - 70px);
 }
+.beforeFooterHigh {
+  min-height: calc(150vh - 70px);
+}
 
 .beforeFooterElement {
   min-height: calc(50vh - 70px);

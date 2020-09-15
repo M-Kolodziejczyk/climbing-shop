@@ -12,6 +12,7 @@ const ProductItemPageContainer = props => {
   const [email, setEmail] = useState("");
   const product = useSelector(state => state.product.product);
   const user = useSelector(state => state.auth.user);
+  const userGroups = useSelector(state => state.auth.userGroups);
   const basket = useSelector(state => state.product.basket);
 
   useEffect(() => {
@@ -43,6 +44,7 @@ const ProductItemPageContainer = props => {
           amount={amount}
           handleSubmit={handleSubmit}
           errors={errors}
+          userGroups={userGroups}
         />
       )}
       <Footer />

@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import discountPrice from "../../../helpers/discountPrice";
 import DoneIcon from "@material-ui/icons/Done";
@@ -24,6 +25,9 @@ import {
 } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
+  main: {
+    marginBottom: "500px"
+  },
   container: {
     marginTop: "30px",
     marginBottom: "50px"
@@ -32,6 +36,26 @@ const useStyles = makeStyles(theme => ({
     minHeight: "240px",
     maxHeight: "240px",
     objectFit: "scale-down"
+  },
+  updateProductBtn: {
+    width: "50px",
+    marginTop: "20px",
+    padding: "0",
+    backgroundColor: "#f32836",
+    "&:hover": {
+      backgroundColor: "#e40606"
+    }
+  },
+  updateProductLink: {
+    textDecoration: "none",
+    padding: "6px 16px",
+    width: "100%",
+    textAlign: "center",
+    color: "#ffffff",
+    "&:hover": {
+      textDecoration: "none",
+      color: "#ffffff"
+    }
   },
   currentPrice: {
     color: "#f32836",
@@ -147,7 +171,7 @@ const ProductItemPageComponent = props => {
   };
 
   return (
-    <Container>
+    <Container className={classes.main}>
       <Grid container className={classes.container} spacing={2}>
         <Grid item xs={6}>
           <CardMedia
@@ -157,6 +181,16 @@ const ProductItemPageComponent = props => {
           />
         </Grid>
         <Grid item container direction="column" xs={6}>
+          {props.userGroups.includes("AdminGroup") && (
+            <Button variant="contained" className={classes.updateProductBtn}>
+              <Link
+                to={`/product/edit/${product.id}`}
+                className={classes.updateProductLink}
+              >
+                Edit
+              </Link>
+            </Button>
+          )}
           <Typography variant="h4" component="h2">
             {product.productName}
           </Typography>
