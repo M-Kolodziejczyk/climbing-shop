@@ -5,15 +5,21 @@ import { Container, Grid } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   container: {
-    backgroundColor: "#f2f2f2"
+    display: "flex",
+    backgroundColor: "#f2f2f2",
+    padding: "10px"
+  },
+  linkItem: {
+    textAlign: "center",
+    padding: "10px"
   },
   link: {
     color: "#343a40",
     fontSize: "20px",
-    padding: "20px 10px",
+    // padding: "20px 10px",
     textDecoration: "none",
     "&:hover": {
-      color: "#121416",
+      color: "#000000",
       textDecoration: "none"
     }
   }
@@ -25,18 +31,26 @@ const Navbar = () => {
     <Container maxWidth={false} className={classes.container}>
       <Container maxWidth="lg">
         <Grid container justifyContent="space-between">
-          <Link className={classes.link} to="/products/category/clothing">
-            Clothing
-          </Link>
-          <Link className={classes.link} to="/products/category/shoes">
-            Shoes
-          </Link>
-          <Link className={classes.link} to="/products/category/backpacks">
-            Backpacks
-          </Link>
-          <Link className={classes.link} to="/products/category/climbing">
-            Climbing
-          </Link>
+          <Grid item xs={12} sm={3} className={classes.linkItem}>
+            <Link className={classes.link} to="/products/category/clothing">
+              Clothing
+            </Link>
+          </Grid>
+          <Grid item xs={12} sm={3} className={classes.linkItem}>
+            <Link className={classes.link} to="/products/category/shoes">
+              Shoes
+            </Link>
+          </Grid>
+          <Grid item xs={12} sm={3} className={classes.linkItem}>
+            <Link className={classes.link} to="/products/category/backpacks">
+              Backpacks
+            </Link>
+          </Grid>
+          <Grid item xs={12} sm={3} className={classes.linkItem}>
+            <Link className={classes.link} to="/products/category/climbing">
+              Climbing
+            </Link>
+          </Grid>
         </Grid>
       </Container>
     </Container>
