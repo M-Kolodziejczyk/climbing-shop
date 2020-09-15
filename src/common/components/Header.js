@@ -18,6 +18,8 @@ import Avatar from "@material-ui/core/Avatar";
 const useStyles = makeStyles(theme => ({
   container: {},
   logoContainer: {
+    display: "flex",
+    justifyContent: "center",
     maxHeight: "150px"
   },
   img: {
@@ -35,10 +37,17 @@ const useStyles = makeStyles(theme => ({
       color: "#212529"
     }
   },
+  searchContainer: {
+    padding: "10px"
+  },
   accountContainer: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "flex-start",
+    padding: "20px 8px",
+    [theme.breakpoints.up("sm")]: {
+      justifyContent: "center"
+    }
   },
   accountLink: {
     color: "#212529",
@@ -50,12 +59,17 @@ const useStyles = makeStyles(theme => ({
   },
   basketLink: {
     textDecoration: "none",
+    padding: "20px 8px",
     color: "#212529",
     display: "flex",
     alignItems: "center",
+    justifyContent: "flex-end",
     "&:hover": {
       textDecoration: "none",
       color: "#212529"
+    },
+    [theme.breakpoints.up("sm")]: {
+      justifyContent: "center"
     }
   },
   basketSpan: {
@@ -98,13 +112,8 @@ const Header = props => {
 
   return (
     <Container>
-      <Grid
-        container
-        className={classes.container}
-        spacing={2}
-        alignItems="center"
-      >
-        <Grid item xs={4} className={classes.logoContainer}>
+      <Grid container className={classes.container} alignItems="center">
+        <Grid item xs={12} sm={6} md={4} className={classes.logoContainer}>
           <Link to="/" className={classes.logoLink}>
             <CardMedia
               className={classes.img}
@@ -116,7 +125,7 @@ const Header = props => {
             </Typography>
           </Link>
         </Grid>
-        <Grid item xs={5}>
+        <Grid item xs={12} sm={6} md={5} className={classes.searchContainer}>
           <form>
             <TextField
               variant="outlined"
@@ -126,7 +135,7 @@ const Header = props => {
             />
           </form>
         </Grid>
-        <Grid item xs={2} className={classes.accountContainer}>
+        <Grid item xs={6} sm={6} md={2} className={classes.accountContainer}>
           <PersonIcon fontSize="large" />
           {isAuthenticated ? (
             <div>
@@ -163,7 +172,7 @@ const Header = props => {
             </Link>
           )}
         </Grid>
-        <Grid item xs={1}>
+        <Grid item xs={6} sm={6} md={1}>
           <Link to="/user/basket" className={classes.basketLink}>
             <ShoppingCartIcon fontSize="large" />
             <Avatar className={classes.basketSpan}>{props.basketAmount}</Avatar>
