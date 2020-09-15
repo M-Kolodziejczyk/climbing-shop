@@ -12,12 +12,13 @@ import {
   FORGOT_PASSWORD,
   FORGOT_PASSWORD_VERIFICATION,
   GOOGLE_LOGIN,
-  CLEAN_FORGOT_PASSWORD
+  CLEAN_FORGOT_PASSWORD,
+  LOGIN_ERROR
 } from "../types";
 
 const initialState = {
   user: null,
-  registerUser: null,
+  registerName: null,
   isRegister: false,
   loading: false,
   loadingUser: true,
@@ -35,7 +36,7 @@ export default (state = initialState, action) => {
         ...state,
         isRegister: true,
         loading: false,
-        registerUser: action.payload,
+        registerName: action.payload.firstName,
         authError: null
       };
     case LOGIN_SUCCESS:
@@ -84,6 +85,7 @@ export default (state = initialState, action) => {
         loadingUser: false
       };
     case AUTH_ERROR:
+    case LOGIN_ERROR:
       return {
         ...state,
         authError: action.payload.message,

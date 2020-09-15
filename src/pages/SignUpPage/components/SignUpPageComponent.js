@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Spinner from "../../../common/components/Spinner";
@@ -7,7 +8,6 @@ import {
   Button,
   Box,
   TextField,
-  Link,
   Grid,
   Typography,
   Container
@@ -22,14 +22,18 @@ const useStyles = makeStyles(theme => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: "#f32836"
   },
   form: {
     width: "100%",
     marginTop: theme.spacing(3)
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
+    margin: theme.spacing(3, 0, 2),
+    backgroundColor: "#f32836",
+    "&:hover": {
+      backgroundColor: "#e40606"
+    }
   }
 }));
 
@@ -41,7 +45,7 @@ const SignUp = props => {
   const classes = useStyles();
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" className="beforeFooter">
       {props.loading && <Spinner />}
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -142,16 +146,18 @@ const SignUp = props => {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="/signin" variant="body2">
-                Already have an account? Sign in
+              <Link to="/signin">
+                <Typography variant="body1">
+                  Already have an account? Sign in
+                </Typography>
               </Link>
             </Grid>
           </Grid>
           {props.authError && (
             <Grid container>
               <Box mt={2}>
-                <Typography component="p" variant="subtitle2" color="error">
-                  {props.authError.message}
+                <Typography component="p" variant="subtitle1" color="error">
+                  {props.authError}
                 </Typography>
               </Box>
             </Grid>

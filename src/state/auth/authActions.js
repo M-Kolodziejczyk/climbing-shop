@@ -12,7 +12,8 @@ import {
   FORGOT_PASSWORD,
   FORGOT_PASSWORD_VERIFICATION,
   GOOGLE_LOGIN,
-  CLEAN_FORGOT_PASSWORD
+  CLEAN_FORGOT_PASSWORD,
+  LOGIN_ERROR
 } from "../types";
 import { Auth } from "aws-amplify";
 
@@ -53,7 +54,7 @@ export const loginUser = user => async dispatch => {
     });
   } catch (error) {
     dispatch({
-      type: AUTH_ERROR,
+      type: LOGIN_ERROR,
       payload: error
     });
   }

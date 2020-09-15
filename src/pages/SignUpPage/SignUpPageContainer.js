@@ -1,9 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, Fragment } from "react";
 import { useSelector } from "react-redux";
 import SignUpPageComponent from "./components/SignUpPageComponent";
 import { registerUser } from "../../state/auth/authActions";
 import validate from "../../validators/SignUpFormValidationRules";
 import useForm from "../../customHooks/useForm";
+import Header from "../../common/containers/HeaderContainer";
+import Footer from "../../common/components/Footer";
+import Navbar from "../../common/components/Navbar";
 
 const SignUpPageContainer = props => {
   const authError = useSelector(state => state.auth.authError);
@@ -31,14 +34,19 @@ const SignUpPageContainer = props => {
   }, [isRegister, props.history]);
 
   return (
-    <SignUpPageComponent
-      onChange={handleChange}
-      formData={values}
-      onSubmit={handleSubmit}
-      errors={errors}
-      authError={authError}
-      loading={loading}
-    />
+    <Fragment>
+      <Header />
+      <Navbar />
+      <SignUpPageComponent
+        onChange={handleChange}
+        formData={values}
+        onSubmit={handleSubmit}
+        errors={errors}
+        authError={authError}
+        loading={loading}
+      />
+      <Footer />
+    </Fragment>
   );
 };
 export default SignUpPageContainer;

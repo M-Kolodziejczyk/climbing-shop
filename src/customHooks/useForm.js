@@ -10,7 +10,7 @@ const useForm = (initialState, validate, callback) => {
   useEffect(() => {
     if (Object.keys(errors).length === 0 && isSubmitting) {
       dispatch(callback(values));
-      setValues(initialState);
+      // setValues(initialState);
     }
     // eslint-disable-next-line
   }, [errors]);

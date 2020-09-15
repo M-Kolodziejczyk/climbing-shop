@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { makeStyles } from "@material-ui/core/styles";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -9,7 +10,6 @@ import {
   Box,
   Button,
   TextField,
-  Link,
   Grid,
   Container,
   Typography
@@ -119,21 +119,23 @@ const SignInPageComponent = props => {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="/forgot-password" variant="body2">
-                Forgot password?
+              <Link to="/forgot-password">
+                <Typography variant="body1">Forgot password?</Typography>
               </Link>
             </Grid>
             <Grid item>
-              <Link href="/signup" variant="body2">
-                {"Don't have an account? Sign Up"}
+              <Link to="/signup">
+                <Typography variant="body1">
+                  Don't have an account? Sign Up
+                </Typography>
               </Link>
             </Grid>
           </Grid>
           {props.authError && (
             <Grid container>
               <Box mt={2}>
-                <Typography component="p" variant="subtitle2" color="error">
-                  {props.authError.message}
+                <Typography component="p" variant="subtitle1" color="error">
+                  {props.authError}
                 </Typography>
               </Box>
             </Grid>
