@@ -30,7 +30,10 @@ const useStyles = makeStyles(theme => ({
   },
   container: {
     marginTop: "30px",
-    marginBottom: "50px"
+    marginBottom: "16px",
+    [theme.breakpoints.up("md")]: {
+      marginBottom: "30px"
+    }
   },
   img: {
     minHeight: "240px",
@@ -39,7 +42,8 @@ const useStyles = makeStyles(theme => ({
   },
   updateProductBtn: {
     width: "50px",
-    marginTop: "20px",
+    marginTop: "10px",
+    marginBottom: "20px",
     padding: "0",
     backgroundColor: "#f32836",
     "&:hover": {
@@ -62,8 +66,10 @@ const useStyles = makeStyles(theme => ({
     fontWeight: "400"
   },
   oldPrice: {
-    marginLeft: "15px",
-    textDecoration: "line-through"
+    textDecoration: "line-through",
+    [theme.breakpoints.up("sm")]: {
+      marginLeft: "15px"
+    }
   },
   save: {
     color: "#ff0000"
@@ -121,9 +127,12 @@ const useStyles = makeStyles(theme => ({
       backgroundColor: "#e10d1b"
     }
   },
+  alertHandler: {
+    display: "block",
+    height: "48px"
+  },
   alert: {
-    width: "100%",
-    margin: "0 8px"
+    width: "100%"
   }
 }));
 
@@ -173,14 +182,14 @@ const ProductItemPageComponent = props => {
   return (
     <Container className={classes.main}>
       <Grid container className={classes.container} spacing={2}>
-        <Grid item xs={6}>
+        <Grid item xs={12} md={6}>
           <CardMedia
             className={classes.img}
             component="img"
             src={`https://climbing-shop.s3-eu-west-1.amazonaws.com/public/product-image/${product.id}/1.jpg`}
           />
         </Grid>
-        <Grid item container direction="column" xs={6}>
+        <Grid item container direction="column" xs={12} md={6}>
           {props.userGroups.includes("AdminGroup") && (
             <Button variant="contained" className={classes.updateProductBtn}>
               <Link
@@ -222,7 +231,9 @@ const ProductItemPageComponent = props => {
               </Fragment>
             )}
           </Grid>
-          <Typography variant="body1">{product.description}</Typography>
+          <Typography variant="body1" align="justify">
+            {product.description}
+          </Typography>
           <form onSubmit={handleSubmit}>
             <Grid container className={classes.formContainer} spacing={2}>
               <Grid item xs={12} className={classes.fieldset}>
@@ -241,6 +252,8 @@ const ProductItemPageComponent = props => {
                     <ExpandMoreIcon />
                   </div>
                 </div>
+              </Grid>
+              <Grid item xs={12}>
                 <Button
                   type="submit"
                   variant="contained"
@@ -251,11 +264,15 @@ const ProductItemPageComponent = props => {
                   Add to Cart
                 </Button>
               </Grid>
-              {Object.keys(basketError).length > 0 && (
-                <Alert className={classes.alert} severity="warning">
-                  {basketError.basket}
-                </Alert>
-              )}
+              <Grid item xs={12}>
+                {Object.keys(basketError).length > 0 ? (
+                  <Alert className={classes.alert} severity="warning">
+                    {basketError.basket}
+                  </Alert>
+                ) : (
+                  <div className={classes.alertHandler}></div>
+                )}
+              </Grid>
             </Grid>
           </form>
         </Grid>
@@ -265,10 +282,12 @@ const ProductItemPageComponent = props => {
           <Typography variant="h4" gutterBottom>
             Description:
           </Typography>
-          <Typography variant="body1">{product.longDescription}</Typography>
+          <Typography variant="body1" align="justify">
+            {product.longDescription}
+          </Typography>
         </Grid>
         <Grid container item className={classes.featuresContainer}>
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             <Typography variant="h5" gutterBottom>
               Features:
             </Typography>
@@ -278,7 +297,7 @@ const ProductItemPageComponent = props => {
               ))}
             </List>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             <Typography variant="h5" gutterBottom>
               Tech:
             </Typography>

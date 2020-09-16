@@ -30,6 +30,9 @@ const useStyles = makeStyles(theme => ({
     fontSize: "20px",
     "&:hover": {
       textDecoration: "none"
+    },
+    [theme.breakpoints.up("lg")]: {
+      justifyContent: "flex-start"
     }
   },
   info: {
@@ -40,7 +43,10 @@ const useStyles = makeStyles(theme => ({
   },
   infoItem: {
     display: "flex",
-    justifyContent: "center"
+    justifyContent: "center",
+    [theme.breakpoints.up("lg")]: {
+      justifyContent: "flex-end"
+    }
   }
 }));
 

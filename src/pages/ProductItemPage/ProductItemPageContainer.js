@@ -6,13 +6,14 @@ import ProductItemPageComponent from "./components/ProductItemPageComponent";
 import HeaderContainer from "../../common/containers/HeaderContainer";
 import Navbar from "../../common/components/Navbar";
 import Footer from "../../common/components/Footer";
+import Spinner from "../../common/components/Spinner";
 
 const ProductItemPageContainer = props => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
-  const product = useSelector(state => state.product.product);
   const user = useSelector(state => state.auth.user);
   const userGroups = useSelector(state => state.auth.userGroups);
+  const product = useSelector(state => state.product.product);
   const basket = useSelector(state => state.product.basket);
 
   useEffect(() => {
@@ -27,6 +28,7 @@ const ProductItemPageContainer = props => {
     }
   }, [user]);
 
+  // eslint-disable-next-line
   const { amountChange, handleSubmit, values, errors, amount } = useBasket(
     basket,
     product,
@@ -37,7 +39,7 @@ const ProductItemPageContainer = props => {
     <Fragment>
       <HeaderContainer />
       <Navbar />
-      {product && (
+      {product && product.id === props.match.params.id ? (
         <ProductItemPageComponent
           product={product}
           amountChange={amountChange}
@@ -46,6 +48,10 @@ const ProductItemPageContainer = props => {
           errors={errors}
           userGroups={userGroups}
         />
+      ) : (
+        <div className="beforeFooterHigh">
+          <Spinner />
+        </div>
       )}
       <Footer />
     </Fragment>
