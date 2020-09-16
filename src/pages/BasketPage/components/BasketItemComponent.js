@@ -60,14 +60,13 @@ const useStyles = makeStyles(theme => ({
     textDecoration: "line-through",
     fontWeight: "500"
   },
+
   total: {
+    padding: "8px",
     fontSize: "18px",
     fontWeight: "600"
   },
   deleteBtn: {
-    position: "absolute",
-    top: "20",
-    right: "0",
     color: "#212529"
   },
   fieldset: {
@@ -128,6 +127,7 @@ const BasketItemComponent = ({ product, basket, id }) => {
     discPrice = discountPrice(product.price, product.discount);
   }
 
+  // eslint-disable-next-line
   const { amountChange, handleSubmit, values, errors, amount } = useBasket(
     basket,
     product,
@@ -163,7 +163,7 @@ const BasketItemComponent = ({ product, basket, id }) => {
       <Backdrop className={classes.backdrop} open={basketLoading}>
         <CircularProgress color="inherit" />
       </Backdrop>
-      <Grid item xs={2}>
+      <Grid item xs={6} md={2}>
         <Link to="/">
           <CardMedia
             className={classes.img}
@@ -172,7 +172,7 @@ const BasketItemComponent = ({ product, basket, id }) => {
           />
         </Link>
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={6} md={4}>
         <Link to="/" className={classes.link}>
           <Typography className={classes.manufacturer}>
             {product.manufacturer}
@@ -182,7 +182,7 @@ const BasketItemComponent = ({ product, basket, id }) => {
           </Typography>
         </Link>
       </Grid>
-      <Grid item xs={2}>
+      <Grid item xs={6} md={2}>
         {product.discount === "0" ? (
           <Typography className={classes.price}>{product.price} zl</Typography>
         ) : (
@@ -194,7 +194,7 @@ const BasketItemComponent = ({ product, basket, id }) => {
           </Fragment>
         )}
       </Grid>
-      <Grid item xs={2}>
+      <Grid item xs={6} md={2}>
         <div className={classes.control}>
           <input
             type="number"
@@ -217,16 +217,20 @@ const BasketItemComponent = ({ product, basket, id }) => {
           </div>
         </div>
       </Grid>
-      <Grid item xs={2}>
-        <Typography className={classes.total}>{total} zl</Typography>
+      <Grid item container xs={12} md={2} alignItems="center">
+        <Grid item xs={6} md={12}>
+          <IconButton
+            aria-label="delete"
+            className={classes.deleteBtn}
+            onClick={handleDelete}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </Grid>
+        <Grid item xs={6} md={12}>
+          <Typography className={classes.total}>{total} zl</Typography>
+        </Grid>
       </Grid>
-      <IconButton
-        aria-label="delete"
-        className={classes.deleteBtn}
-        onClick={handleDelete}
-      >
-        <DeleteIcon />
-      </IconButton>
     </Grid>
   );
 };
