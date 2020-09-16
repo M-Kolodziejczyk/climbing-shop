@@ -145,7 +145,13 @@ const BasketPageComponent = ({ basket }) => {
             <Typography variant="h6" className={classes.total}>
               Total: <span className={classes.totalSpan}>{totalPrice} zl</span>
             </Typography>
-            <Link to="/" className={classes.checkoutLink}>
+            <Link
+              to={{
+                pathname: "/user/checkout",
+                state: basket
+              }}
+              className={classes.checkoutLink}
+            >
               <Button
                 type="submit"
                 variant="contained"

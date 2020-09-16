@@ -19,6 +19,7 @@ import ProductItemPageContainer from "./pages/ProductItemPage/ProductItemPageCon
 import WorkingPageContainer from "./pages/workingPage/WorkingPageContainer";
 import NotFoundPageContainer from "./pages/NotFoundPage/NotFoundPageContainer";
 import BasketPageContainer from "./pages/BasketPage/BasketPageContainer";
+import CheckoutPageContainer from "./pages/CheckoutPage/CheckoutPageContainer";
 
 import AdminRoute from "./routing/AdminRoute";
 import UserRoute from "./routing/UserRoute";
@@ -43,6 +44,11 @@ const App = () => {
         <Route exact path="/welcome" component={WelcomePageContainer} />
         <UserRoute exact path="/admin" component={UserPageContainer} />
         <UserRoute exact path="/user/basket" component={BasketPageContainer} />
+        <UserRoute
+          exact
+          path="/user/checkout"
+          component={CheckoutPageContainer}
+        />
         {/* <Route exact path="/products" component={ProductsPageContainer} /> */}
         <Route
           exact
