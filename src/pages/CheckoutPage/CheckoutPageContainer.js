@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useHistory } from "react-router-dom";
 import CheckoutPageComponent from "./components/CheckoutPageComponent";

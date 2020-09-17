@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import CheckoutItemComponent from "./CheckoutItemComponent";
 import basketTotalPrice from "../../../helpers/basketTotalPrice";
 import { makeStyles } from "@material-ui/core/styles";
+import useCheckout from "../../../customHooks/useCheckout";
+import EditIcon from "@material-ui/icons/Edit";
 import {
   Grid,
   Container,
   Typography,
   Button,
-  TextField
+  TextField,
+  ListItemText
 } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
@@ -42,21 +45,84 @@ const useStyles = makeStyles(theme => ({
 const CheckoutPageComponent = ({ basket, user }) => {
   const classes = useStyles();
   const [address, setAddress] = useState({});
+  const [editAddress, setEditAddress] = useState(false);
+  const [newAddress, setNewAddress] = useState(false);
+  const [submitAddress, setSubmitAddress] = useState(false);
+  const formRef = useRef(null);
+  const toggleBtnFormRef = useRef(null);
+
+  const initialAddress = {
+    firstName: "",
+    lastName: "",
+    address: "",
+    zipCode: "",
+    city: "",
+    phone: ""
+  };
 
   const totalPrice = basketTotalPrice(basket);
 
   useEffect(() => {
     setAddress({
-      firstName: basket["custom:firstName"],
-      lastName: basket["custom:lastName"],
-      address: basket["custom:address"],
-      zipCode: basket["custom:zipCode"],
-      city: basket["custom:city"],
-      phone: basket["custom:phone"]
+      firstName: user["custom:firstName"],
+      lastName: user["custom:lastName"],
+      address: user["custom:address"],
+      zipCode: user["custom:zipCode"],
+      city: user["custom:city"],
+      phone: user["custom:phone"]
     });
+    // eslint-disable-next-line
   }, []);
 
-  console.log(address);
+  const {
+    handleAddressSubmit,
+    handleChange,
+    handleSubmit,
+    values,
+    errors
+  } = useCheckout(user, basket, totalPrice);
+
+  useEffect(() => {
+    if (Object.keys(address).length > 0) {
+      handleChange(address);
+    }
+    // eslint-disable-next-line
+  }, [address]);
+
+  const toggleForm = e => {
+    if (formRef.current.hidden) {
+      setEditAddress(true);
+      formRef.current.removeAttribute("hidden");
+      toggleBtnFormRef.current.innerText = "CANCEL";
+      if (!newAddress) {
+        handleChange(initialAddress);
+      }
+      setSubmitAddress(false);
+    } else {
+      setEditAddress(false);
+      formRef.current.setAttribute("hidden", true);
+      toggleBtnFormRef.current.innerText = "EDIT";
+      handleChange(address);
+    }
+  };
+
+  const saveAddress = e => {
+    handleAddressSubmit();
+    setSubmitAddress(true);
+  };
+
+  useEffect(() => {
+    if (Object.keys(errors).length === 0 && submitAddress) {
+      setNewAddress(true);
+      if (!formRef.current.hidden) {
+        setEditAddress(false);
+        formRef.current.setAttribute("hidden", true);
+        toggleBtnFormRef.current.innerText = "EDIT";
+      }
+    }
+
+    // eslint-disable-next-line
+  }, [submitAddress]);
 
   return (
     <Container className="beforeFooter">
@@ -107,109 +173,151 @@ const CheckoutPageComponent = ({ basket, user }) => {
           <Grid item xs={12} className={classes.deliveryHeader}>
             <Typography variant="h3">Delivery Address:</Typography>
           </Grid>
+          {!newAddress ? (
+            <Grid item xs={6}>
+              <Typography gutterBottom variant="h4">
+                {user["custom:firstName"]}
+              </Typography>
+              <Typography gutterBottom variant="h4">
+                {user["custom:lastName"]}
+              </Typography>
+              <Typography gutterBottom variant="h4">
+                {user["custom:address"]}
+              </Typography>
+              <Typography gutterBottom variant="h4">
+                {user["custom:zipCode"]} {user["custom:city"]}
+              </Typography>
+              <Typography gutterBottom variant="h4">
+                {user["custom:phone"]}
+              </Typography>
+            </Grid>
+          ) : (
+            <Grid item xs={6}>
+              <Typography gutterBottom variant="h4">
+                {values.firstName}
+              </Typography>
+              <Typography gutterBottom variant="h4">
+                {values.lastName}
+              </Typography>
+              <Typography gutterBottom variant="h4">
+                {values.address}
+              </Typography>
+              <Typography gutterBottom variant="h4">
+                {values.zipCode} {values.city}
+              </Typography>
+              <Typography gutterBottom variant="h4">
+                {values.phone}
+              </Typography>
+            </Grid>
+          )}
           <Grid item xs={6}>
-            <Typography gutterBottom variant="h4">
-              {user["custom:firstName"]}
-            </Typography>
-            <Typography gutterBottom variant="h4">
-              {user["custom:lastName"]}
-            </Typography>
-            <Typography gutterBottom variant="h4">
-              {user["custom:address"]}
-            </Typography>
-            <Typography gutterBottom variant="h4">
-              {user["custom:zipCode"]} {user["custom:city"]}
-            </Typography>
-            <Typography gutterBottom variant="h4">
-              {user["custom:phone"]}
-            </Typography>
+            <form
+              noValidate
+              // onSubmit={handleSubmit}
+              ref={formRef}
+              hidden={true}
+            >
+              <Grid container spacing={2} item xs={12}>
+                <Grid item xs={12}>
+                  <TextField
+                    name="firstName"
+                    value={values.firstName || ""}
+                    error={errors.firstName ? true : false}
+                    helperText={"" || errors.firstName}
+                    onChange={handleChange}
+                    variant="outlined"
+                    required
+                    id="firstName"
+                    label="First Name"
+                    autoFocus
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    name="lastName"
+                    value={values.lastName || ""}
+                    error={errors.lastName ? true : false}
+                    helperText={"" || errors.lastName}
+                    onChange={handleChange}
+                    variant="outlined"
+                    required
+                    id="lastName"
+                    label="Last Name"
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    name="address"
+                    value={values.address || ""}
+                    error={errors.address ? true : false}
+                    helperText={"" || errors.address}
+                    onChange={handleChange}
+                    variant="outlined"
+                    required
+                    id="address"
+                    label="Address"
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={8}>
+                  <TextField
+                    name="city"
+                    value={values.city || ""}
+                    error={errors.city ? true : false}
+                    helperText={"" || errors.city}
+                    onChange={handleChange}
+                    variant="outlined"
+                    required
+                    id="city"
+                    label="City"
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <TextField
+                    name="zipCode"
+                    value={values.zipCode || ""}
+                    error={errors.zipCode ? true : false}
+                    helperText={"" || errors.zipCode}
+                    onChange={handleChange}
+                    variant="outlined"
+                    required
+                    id="zipCode"
+                    label="Zip Code"
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    name="phone"
+                    value={values.phone || ""}
+                    error={errors.phone ? true : false}
+                    helperText={"" || errors.phone}
+                    onChange={handleChange}
+                    variant="outlined"
+                    required
+                    id="phone"
+                    label="Phone"
+                    fullWidth
+                  />
+                </Grid>
+              </Grid>
+            </form>
+            <Button onClick={toggleForm}>
+              <EditIcon className={classes.editBtn} />
+              <ListItemText ref={toggleBtnFormRef}>Edit</ListItemText>
+            </Button>
+            {editAddress && (
+              <Button onClick={saveAddress}>
+                <EditIcon className={classes.editBtn} />
+                <ListItemText>save</ListItemText>
+              </Button>
+            )}
           </Grid>
-          <Grid item xs={6}>
-            {/* <Grid item xs={6}>
-              <TextField
-                name="custom:firstName"
-                value={values["custom:firstName"]}
-                error={errors["custom:firstName"] ? true : false}
-                helperText={"" || errors["custom:firstName"]}
-                onChange={handleChange}
-                variant="outlined"
-                required
-                id="firstName"
-                label="First Name"
-                autoFocus
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                name="custom:address"
-                value={values["custom:address"]}
-                error={errors["custom:address"] ? true : false}
-                helperText={"" || errors["custom:address"]}
-                onChange={handleChange}
-                variant="outlined"
-                required
-                id="address"
-                label="Address"
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                name="custom:lastName"
-                value={values["custom:lastName"]}
-                error={errors["custom:lastName"] ? true : false}
-                helperText={"" || errors["custom:lastName"]}
-                onChange={handleChange}
-                variant="outlined"
-                required
-                id="lastName"
-                label="Last Name"
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                name="custom:zipCode"
-                value={values["custom:zipCode"]}
-                error={errors["custom:zipCode"] ? true : false}
-                helperText={"" || errors["custom:zipCode"]}
-                onChange={handleChange}
-                variant="outlined"
-                required
-                id="zipCode"
-                label="Zip Code"
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                name="custom:phone"
-                value={values["custom:phone"]}
-                error={errors["custom:phone"] ? true : false}
-                helperText={"" || errors["custom:phone"]}
-                onChange={handleChange}
-                variant="outlined"
-                required
-                id="phone"
-                label="Phone"
-                fullWidth
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                name="custom:city"
-                value={values["custom:city"]}
-                error={errors["custom:city"] ? true : false}
-                helperText={"" || errors["custom:city"]}
-                onChange={handleChange}
-                variant="outlined"
-                required
-                id="city"
-                label="City"
-                fullWidth
-              />
-            </Grid> */}
+          <Grid item xs={12}>
+            <Button onClick={() => handleSubmit()}>Order</Button>
           </Grid>
         </Grid>
       </Grid>

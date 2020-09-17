@@ -4,14 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import discountPrice from "../../../helpers/discountPrice";
 import totalPrice from "../../../helpers/totalPrice";
 
-import {
-  Grid,
-  Typography,
-  CardMedia,
-  IconButton,
-  Backdrop,
-  CircularProgress
-} from "@material-ui/core";
+import { Grid, Typography, CardMedia } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   container: {
