@@ -12,7 +12,14 @@ import {
   GET_BASKET,
   REMOVE_BASKET,
   BASKET_ERROR,
-  BASKET_LOADING
+  BASKET_LOADING,
+  ORDER_ERROR,
+  ORDER_LOADING,
+  ADD_TO_ORDER,
+  GET_ORDER,
+  ADD_TO_USER,
+  USER_ERROR,
+  USER_LOADING
 } from "../types";
 import axios from "axios";
 import { Storage } from "aws-amplify";
@@ -155,11 +162,58 @@ export const getBasket = id => async dispatch => {
     });
   }
 };
-export const removeBasket = id => dispatch => {
-  dispatch({
-    type: REMOVE_BASKET,
-    payload: "remove  basket"
-  });
+
+export const removeBasket = email => async dispatch => {
+  dispatch(setBasketLoading());
+
+  try {
+    await axios.delete(`${config.api.invokeUrl}/basket/${email}/`);
+    dispatch({
+      type: REMOVE_BASKET
+    });
+  } catch (error) {
+    dispatch({
+      type: BASKET_ERROR,
+      payload: error
+    });
+  }
+};
+
+export const addToOrder = data => async dispatch => {
+  dispatch(setOrderLoading());
+
+  try {
+    await axios.post(`${config.api.invokeUrl}/orders/${data.id}/`, data);
+    dispatch(addToUser({ id: data.userId, orders: data.id }));
+    dispatch(removeBasket(data.email));
+    dispatch({
+      type: ADD_TO_ORDER,
+      payload: data
+    });
+  } catch (error) {
+    dispatch({
+      type: ORDER_ERROR,
+      payload: error
+    });
+  }
+};
+
+export const addToUser = data => async dispatch => {
+  dispatch(setUserLoading());
+
+  try {
+    await axios.post(`${config.api.invokeUrl}/user/`, data);
+    dispatch({
+      type: ADD_TO_USER,
+      payload: data
+    });
+  } catch (error) {
+    console.log("error");
+    dispatch({
+      type: USER_ERROR,
+      payload: error
+    });
+  }
 };
 
 export const setLoading = () => {
@@ -177,5 +231,17 @@ export const setFormLoading = () => {
 export const setBasketLoading = () => {
   return {
     type: BASKET_LOADING
+  };
+};
+
+export const setOrderLoading = () => {
+  return {
+    type: ORDER_LOADING
+  };
+};
+
+export const setUserLoading = () => {
+  return {
+    type: USER_LOADING
   };
 };

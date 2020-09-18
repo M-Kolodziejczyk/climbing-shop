@@ -13,11 +13,12 @@ const CheckoutPageContainer = () => {
   let history = useHistory();
   const user = useSelector(state => state.auth.user);
   const basket = location.state;
-  const values = useCheckBasketPrice(basket, user.email);
 
   if (!basket) {
     history.push("/");
   }
+
+  const values = useCheckBasketPrice(basket, user.email);
 
   return (
     <Fragment>

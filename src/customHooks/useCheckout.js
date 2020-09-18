@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { addToOrder } from "../state/product/productAction";
 import validate from "../validators/AddressCheckoutValidationRules";
+import { v4 } from "uuid";
 
 const useCheckout = (user, basket, totalPrice) => {
   const dispatch = useDispatch();
@@ -11,7 +13,7 @@ const useCheckout = (user, basket, totalPrice) => {
   useEffect(() => {
     if (Object.keys(errors).length === 0 && isSubmitting) {
       const data = {
-        id: "123",
+        id: v4(),
         date: new Date(),
         userId: user.sub,
         basket: basket,
@@ -20,9 +22,7 @@ const useCheckout = (user, basket, totalPrice) => {
         totalPrice: totalPrice,
         status: "new"
       };
-
-      console.log("send Data");
-      // dispatch(callback(values));
+      dispatch(addToOrder(data));
       // setValues(initialState);
     }
     // eslint-disable-next-line

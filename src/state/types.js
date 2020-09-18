@@ -31,3 +31,14 @@ export const GET_BASKET = "GET_BASKET";
 export const REMOVE_BASKET = "REMOVE_BASKET";
 export const BASKET_LOADING = "BASKET_LOADING";
 export const BASKET_ERROR = "BASKET_ERROR";
+
+// Order Types
+export const ADD_TO_ORDER = "ADD_TO_ORDER";
+export const ORDER_ERROR = "ORDER_ERROR";
+export const ORDER_LOADING = "ORDER_LOADING";
+export const GET_ORDER = "GET_ORDER";
+
+// USer Types
+export const ADD_TO_USER = "ADD_TO_USER";
+export const USER_LOADING = "USER_LOADING";
+export const USER_ERROR = "USER_ERROR";

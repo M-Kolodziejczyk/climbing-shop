@@ -12,7 +12,14 @@ import {
   GET_BASKET,
   REMOVE_BASKET,
   BASKET_LOADING,
-  BASKET_ERROR
+  BASKET_ERROR,
+  ORDER_ERROR,
+  ORDER_LOADING,
+  ADD_TO_ORDER,
+  GET_ORDER,
+  ADD_TO_USER,
+  USER_LOADING,
+  USER_ERROR
 } from "../types";
 
 const initialState = {
@@ -23,7 +30,14 @@ const initialState = {
   formLoading: false,
   basketLoading: false,
   basketError: null,
-  basket: null
+  basket: null,
+  order: null,
+  orderLoading: false,
+  orderError: null,
+  user: null,
+  userError: null,
+  userLoading: false,
+  orderSuccess: false
 };
 
 export default (state = initialState, action) => {
@@ -98,7 +112,9 @@ export default (state = initialState, action) => {
       };
     case REMOVE_BASKET: {
       return {
-        ...state
+        ...state,
+        basket: null,
+        basketLoading: false
       };
     }
     case BASKET_LOADING: {
@@ -112,6 +128,42 @@ export default (state = initialState, action) => {
         ...state,
         basketLoading: false,
         basketError: action.payload
+      };
+    case ADD_TO_ORDER:
+      return {
+        ...state,
+        order: action.payload,
+        orderSuccess: true
+      };
+    case ORDER_LOADING:
+      return {
+        ...state,
+        orderLoading: true
+      };
+    case ORDER_ERROR:
+      return {
+        ...state,
+        orderError: action.payload,
+        orderLoading: false,
+        orderSuccess: false
+      };
+    case ADD_TO_USER: {
+      return {
+        ...state,
+        user: action.payload,
+        userLoading: false
+      };
+    }
+    case USER_LOADING:
+      return {
+        ...state,
+        userLoading: true
+      };
+    case USER_ERROR:
+      return {
+        ...state,
+        userLoaing: false,
+        userError: action.payload
       };
     default:
       return state;
