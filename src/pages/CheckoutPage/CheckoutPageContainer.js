@@ -25,7 +25,7 @@ const CheckoutPageContainer = () => {
 
   useEffect(() => {
     if (orderSuccess && !orderLoading && !userLoading && !basketLoading) {
-      history.push("/");
+      history.push("/user/order-complete");
     }
   }, [orderSuccess, orderLoading, userLoading, basketLoading]);
 
