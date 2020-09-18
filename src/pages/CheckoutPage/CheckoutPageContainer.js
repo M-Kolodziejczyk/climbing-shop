@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useLocation, useHistory } from "react-router-dom";
 import CheckoutPageComponent from "./components/CheckoutPageComponent";
@@ -12,19 +12,29 @@ const CheckoutPageContainer = () => {
   let location = useLocation();
   let history = useHistory();
   const user = useSelector(state => state.auth.user);
+  const orderSuccess = useSelector(state => state.product.orderSuccess);
+  const orderLoading = useSelector(state => state.product.orderLoading);
+  const userLoading = useSelector(state => state.product.userLoading);
+  const basketLoading = useSelector(state => state.product.basketLoading);
   const basket = location.state;
 
-  if (!basket) {
-    history.push("/");
+  if (!location.state) {
+    history.goBack();
   }
-
   const values = useCheckBasketPrice(basket, user.email);
+
+  useEffect(() => {
+    if (orderSuccess && !orderLoading && !userLoading && !basketLoading) {
+      history.push("/");
+    }
+  }, [orderSuccess, orderLoading, userLoading, basketLoading]);
 
   return (
     <Fragment>
       <HeaderContainer />
+      {(orderLoading || userLoading || basketLoading) && <Spinner />}
       <Navbar />
-      {Object.keys(values).length > 0 ? (
+      {location.state && Object.keys(values).length > 0 ? (
         <CheckoutPageComponent basket={values} user={user} />
       ) : (
         <div className="beforeFooterHigh">

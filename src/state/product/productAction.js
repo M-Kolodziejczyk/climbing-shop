@@ -208,7 +208,6 @@ export const addToUser = data => async dispatch => {
       payload: data
     });
   } catch (error) {
-    console.log("error");
     dispatch({
       type: USER_ERROR,
       payload: error

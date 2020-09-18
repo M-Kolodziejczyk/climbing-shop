@@ -3,7 +3,6 @@ import CheckoutItemComponent from "./CheckoutItemComponent";
 import basketTotalPrice from "../../../helpers/basketTotalPrice";
 import { makeStyles } from "@material-ui/core/styles";
 import useCheckout from "../../../customHooks/useCheckout";
-import EditIcon from "@material-ui/icons/Edit";
 import {
   Grid,
   Container,
@@ -31,14 +30,42 @@ const useStyles = makeStyles(theme => ({
     }
   },
   totalPrice: {
-    color: "#f32836"
+    color: "#f32836",
+    marginTop: "20px",
+    [theme.breakpoints.up("sm")]: {
+      marginTop: "0",
+      textAlign: "right"
+    }
   },
 
   deliveryContainer: {
-    marginTop: "50px"
+    minHeight: "410px"
   },
   deliveryHeader: {
     marginBottom: "20px"
+  },
+  saveBtn: {
+    marginLeft: "40px",
+    backgroundColor: "#f32836",
+    marginTop: "5px",
+    "&:hover": {
+      backgroundColor: "#e40606"
+    }
+  },
+  editBtn: {
+    backgroundColor: "#f32836",
+    marginTop: "5px",
+    "&:hover": {
+      backgroundColor: "#e40606"
+    }
+  },
+  orderBtn: {
+    marginTop: "10px",
+    marginBottom: "20px",
+    backgroundColor: "#f32836",
+    "&:hover": {
+      backgroundColor: "#e40606"
+    }
   }
 }));
 
@@ -101,7 +128,7 @@ const CheckoutPageComponent = ({ basket, user }) => {
     } else {
       setEditAddress(false);
       formRef.current.setAttribute("hidden", true);
-      toggleBtnFormRef.current.innerText = "EDIT";
+      toggleBtnFormRef.current.innerText = "EDIT Address";
       handleChange(address);
     }
   };
@@ -156,25 +183,21 @@ const CheckoutPageComponent = ({ basket, user }) => {
           ))}
         </Grid>
         <Grid item container xs={12} className={classes.total}>
-          <Grid item xs={10}>
+          <Grid item xs={12} sm={6}>
             <Typography variant="h4">Summary:</Typography>
           </Grid>
-          <Grid item xs={2}>
-            <Typography
-              variant="h4"
-              align="center"
-              className={classes.totalPrice}
-            >
+          <Grid item xs={12} sm={6}>
+            <Typography variant="h4" className={classes.totalPrice}>
               {totalPrice} zł
             </Typography>
           </Grid>
         </Grid>
+        <Grid item xs={12} className={classes.deliveryHeader}>
+          <Typography variant="h3">Delivery Address:</Typography>
+        </Grid>
         <Grid item container xs={12} className={classes.deliveryContainer}>
-          <Grid item xs={12} className={classes.deliveryHeader}>
-            <Typography variant="h3">Delivery Address:</Typography>
-          </Grid>
           {!newAddress ? (
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <Typography gutterBottom variant="h4">
                 {user["custom:firstName"]}
               </Typography>
@@ -192,7 +215,7 @@ const CheckoutPageComponent = ({ basket, user }) => {
               </Typography>
             </Grid>
           ) : (
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <Typography gutterBottom variant="h4">
                 {values.firstName}
               </Typography>
@@ -210,13 +233,8 @@ const CheckoutPageComponent = ({ basket, user }) => {
               </Typography>
             </Grid>
           )}
-          <Grid item xs={6}>
-            <form
-              noValidate
-              // onSubmit={handleSubmit}
-              ref={formRef}
-              hidden={true}
-            >
+          <Grid item xs={12} md={6}>
+            <form noValidate ref={formRef} hidden={true}>
               <Grid container spacing={2} item xs={12}>
                 <Grid item xs={12}>
                   <TextField
@@ -305,20 +323,33 @@ const CheckoutPageComponent = ({ basket, user }) => {
                 </Grid>
               </Grid>
             </form>
-            <Button onClick={toggleForm}>
-              <EditIcon className={classes.editBtn} />
-              <ListItemText ref={toggleBtnFormRef}>Edit</ListItemText>
+            <Button
+              className={classes.editBtn}
+              variant="contained"
+              onClick={toggleForm}
+            >
+              <ListItemText ref={toggleBtnFormRef}>Edit Address</ListItemText>
             </Button>
             {editAddress && (
-              <Button onClick={saveAddress}>
-                <EditIcon className={classes.editBtn} />
-                <ListItemText>save</ListItemText>
+              <Button
+                className={classes.saveBtn}
+                variant="contained"
+                onClick={saveAddress}
+              >
+                <ListItemText>Save</ListItemText>
               </Button>
             )}
           </Grid>
-          <Grid item xs={12}>
-            <Button onClick={() => handleSubmit()}>Order</Button>
-          </Grid>
+        </Grid>
+        <Grid item xs={12}>
+          <Button
+            variant="contained"
+            size="large"
+            className={classes.orderBtn}
+            onClick={() => handleSubmit()}
+          >
+            Order
+          </Button>
         </Grid>
       </Grid>
     </Container>

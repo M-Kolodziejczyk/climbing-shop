@@ -27,12 +27,20 @@ const useStyles = makeStyles(theme => ({
   },
   productName: {
     color: "#212529",
-    fontSize: "18px"
+    fontSize: "18px",
+    textAlign: "center",
+    [theme.breakpoints.up("md")]: {
+      textAlign: "left"
+    }
   },
   manufacturer: {
     color: "#212529",
     fontSize: "20px",
-    fontWeight: "500"
+    fontWeight: "500",
+    textAlign: "center",
+    [theme.breakpoints.up("md")]: {
+      textAlign: "left"
+    }
   },
   price: {
     color: "#f32836",
@@ -103,7 +111,7 @@ const CheckoutItemComponent = ({ product }) => {
         )}
       </Grid>
       <Grid item xs={6} md={2}>
-        <Typography className={classes.total}>{product.amount}</Typography>
+        <Typography className={classes.total}>Qty: {product.amount}</Typography>
       </Grid>
       <Grid item xs={6} md={2}>
         <Typography className={classes.total}>{total} zl</Typography>

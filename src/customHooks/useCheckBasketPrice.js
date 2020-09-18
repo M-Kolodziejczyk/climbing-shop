@@ -11,9 +11,9 @@ const useCheckBasketPrice = (userBasket, email) => {
   const [isChange, setIsChange] = useState(false);
   const [isFinish, setIsFinish] = useState(false);
 
-  const basketKeys = Object.keys(basket);
+  async function FnLoop(basket) {
+    const basketKeys = Object.keys(basket);
 
-  async function FnLoop() {
     for (const key of basketKeys) {
       const result = await axios.get(
         `${config.api.invokeUrl}/products/${basket[key].productId}/`
@@ -64,10 +64,12 @@ const useCheckBasketPrice = (userBasket, email) => {
   }, [isFinish]);
 
   useEffect(() => {
-    FnLoop();
+    if (basket) {
+      FnLoop(basket);
+    }
 
     // eslint-disable-next-line
-  }, []);
+  }, [basket]);
 
   return products;
 };

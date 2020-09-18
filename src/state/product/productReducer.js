@@ -133,7 +133,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         order: action.payload,
-        orderSuccess: true
+        orderSuccess: true,
+        orderLoading: false
       };
     case ORDER_LOADING:
       return {
