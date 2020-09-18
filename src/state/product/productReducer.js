@@ -19,7 +19,8 @@ import {
   GET_ORDER,
   ADD_TO_USER,
   USER_LOADING,
-  USER_ERROR
+  USER_ERROR,
+  GET_USER
 } from "../types";
 
 const initialState = {
@@ -148,6 +149,13 @@ export default (state = initialState, action) => {
         orderLoading: false,
         orderSuccess: false
       };
+    case GET_USER: {
+      return {
+        ...state,
+        user: action.payload,
+        userLoading: false
+      };
+    }
     case ADD_TO_USER: {
       return {
         ...state,

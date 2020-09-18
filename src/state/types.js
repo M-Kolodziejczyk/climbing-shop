@@ -42,3 +42,4 @@ export const GET_ORDER = "GET_ORDER";
 export const ADD_TO_USER = "ADD_TO_USER";
 export const USER_LOADING = "USER_LOADING";
 export const USER_ERROR = "USER_ERROR";
+export const GET_USER = "GET_USER";

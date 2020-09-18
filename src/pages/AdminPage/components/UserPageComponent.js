@@ -54,7 +54,20 @@ const useStyles = makeStyles(theme => ({
     height: 224
   },
   tabs: {
-    borderRight: `1px solid ${theme.palette.divider}`
+    alignItems: "center",
+    [theme.breakpoints.up("md")]: {
+      borderRight: `1px solid ${theme.palette.divider}`
+    }
+  },
+  flexContainerVertical: {
+    [theme.breakpoints.down("sm")]: {
+      // flexDirection: "row"
+    }
+  },
+  vertical: {
+    [theme.breakpoints.down("sm")]: {
+      // flexDirection: "row"
+    }
   },
   edit: {
     marginRight: "15px"
@@ -97,28 +110,30 @@ const UserPageComponent = props => {
       <Container component="main" className="beforeFooter">
         <Box mt="20px">
           <Grid container spacing={2}>
-            <Grid item xs={2}>
+            <Grid item xs={12} md={2}>
               <Tabs
-                orientation="vertical"
-                variant="scrollable"
                 value={value}
                 onChange={handleChange}
-                aria-label="Vertical tabs example"
+                orientation="vertical"
+                variant="scrollable"
                 className={classes.tabs}
+                classes={{
+                  flexContainerVertical: classes.flexContainerVertical,
+                  vertical: classes.vertical
+                }}
               >
                 <Tab label="My Account" {...a11yProps(0)} />
                 <Tab label="My address" {...a11yProps(1)} />
-                <Tab label="Cart" {...a11yProps(2)} />
-                <Tab label="Shopping history" {...a11yProps(3)} />
+                <Tab label="Orders" {...a11yProps(2)} />
                 {props.userGroups.includes("AdminGroup") && (
-                  <Tab label="Products" {...a11yProps(4)} />
+                  <Tab label="Products" {...a11yProps(3)} />
                 )}
               </Tabs>
             </Grid>
             {props.loading ? (
               <Spinner />
             ) : (
-              <Grid item xs={10}>
+              <Grid item xs={12} md={10}>
                 <TabPanel value={value} index={0}>
                   <Typography variant="h4">My account</Typography>
                   <List>
@@ -155,17 +170,16 @@ const UserPageComponent = props => {
                   </List>
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                  <Typography variant="h4">My address</Typography>
+                  <Typography variant="h4" align="center">
+                    My address
+                  </Typography>
                   <UserAddressComponent user={props.user} />
                 </TabPanel>
                 <TabPanel value={value} index={2}>
-                  My Cart
-                </TabPanel>
-                <TabPanel value={value} index={3}>
-                  something
+                  Orders (Not ready yet)
                 </TabPanel>
                 {props.userGroups.includes("AdminGroup") && (
-                  <TabPanel value={value} index={4}>
+                  <TabPanel value={value} index={3}>
                     <Typography variant="h4">Products</Typography>
                     <Button
                       variant="contained"

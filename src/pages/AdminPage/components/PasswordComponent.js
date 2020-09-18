@@ -57,64 +57,66 @@ const PasswordComponent = props => {
 
   return (
     <ListItem divider>
-      <Grid item xs={2}>
-        <ListItemText>Password</ListItemText>
-      </Grid>
-      <Grid item xs={8} ref={userEl}>
-        <ListItemText>**********</ListItemText>
-      </Grid>
-      <form
-        className={classes.formPassword}
-        noValidate
-        autoComplete="off"
-        onSubmit={handleForm}
-      >
-        <Grid container>
-          <Grid item xs={5}>
-            <TextField
-              name={"oldPassword"}
-              className="input inputPassword"
-              error={errors.oldPassword ? true : false}
-              helperText={"" || errors.oldPassword}
-              value={values.oldPassword}
-              onChange={handleChange}
-              ref={inputEl}
-              hidden={true}
-              autoFocus
-              placeholder="Old Password"
-              type="password"
-            />
-          </Grid>
-          <Grid item xs={2}></Grid>
-          <Grid item xs={5}>
-            <TextField
-              name={"password"}
-              className="input"
-              error={errors.password ? true : false}
-              helperText={"" || errors.password}
-              value={values.password}
-              onChange={handleChange}
-              ref={inputEl2}
-              hidden={true}
-              autoFocus
-              placeholder="New Password"
-              type="password"
-            />
-          </Grid>
+      <Grid item container>
+        <Grid item xs={12} md={2}>
+          <ListItemText>Password</ListItemText>
         </Grid>
+        <Grid item xs={12} md={8} ref={userEl}>
+          <ListItemText>**********</ListItemText>
+        </Grid>
+        <form
+          className={classes.formPassword}
+          noValidate
+          autoComplete="off"
+          onSubmit={handleForm}
+        >
+          <Grid container>
+            <Grid item xs={12} sm={5}>
+              <TextField
+                name={"oldPassword"}
+                className="input inputPassword"
+                error={errors.oldPassword ? true : false}
+                helperText={"" || errors.oldPassword}
+                value={values.oldPassword}
+                onChange={handleChange}
+                ref={inputEl}
+                hidden={true}
+                autoFocus
+                placeholder="Old Password"
+                type="password"
+              />
+            </Grid>
+            <Grid item xs={2}></Grid>
+            <Grid item xs={12} sm={5}>
+              <TextField
+                name={"password"}
+                className="input"
+                error={errors.password ? true : false}
+                helperText={"" || errors.password}
+                value={values.password}
+                onChange={handleChange}
+                ref={inputEl2}
+                hidden={true}
+                autoFocus
+                placeholder="New Password"
+                type="password"
+              />
+            </Grid>
+          </Grid>
 
-        <Grid item xs={2}>
-          <ListItemSecondaryAction>
-            <Button onClick={handleFormClick} ref={editBtn}>
-              <EditIcon className={classes.editBtn} />
-              <ListItemText>Edit</ListItemText>
-            </Button>
-            <Button type="submit" ref={saveBtn} hidden={true}>
-              <ListItemText>Save</ListItemText>
-            </Button>
-          </ListItemSecondaryAction>
-        </Grid>
-      </form>
+          <Grid item xs={2}>
+            <ListItemSecondaryAction>
+              <Button onClick={handleFormClick} ref={editBtn}>
+                <EditIcon className={classes.editBtn} />
+                <ListItemText>Edit</ListItemText>
+              </Button>
+              <Button type="submit" ref={saveBtn} hidden={true}>
+                <ListItemText>Save</ListItemText>
+              </Button>
+            </ListItemSecondaryAction>
+          </Grid>
+        </form>
+      </Grid>
     </ListItem>
   );
 };

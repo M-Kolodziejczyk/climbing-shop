@@ -36,7 +36,8 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(3, 0, 2)
   },
   listItemTypography: {
-    fontSize: "20px"
+    fontSize: "20px",
+    [theme.breakpoints.up("sm")]: {}
   },
   listItem: {
     paddingTop: "0px",
@@ -77,11 +78,14 @@ const UserAddressComponent = props => {
   return (
     <Fragment>
       <Grid container>
-        <Grid item xs={6}>
+        <Grid item xs={12} md={6}>
           <List>
             <ListItem className={classes.listItem}>
               <Grid item xs={12}>
-                <Typography className={classes.listItemTypography}>
+                <Typography
+                  className={classes.listItemTypography}
+                  align="center"
+                >
                   {props.user["custom:firstName"]}{" "}
                   {props.user["custom:lastName"]}
                 </Typography>
@@ -89,14 +93,20 @@ const UserAddressComponent = props => {
             </ListItem>
             <ListItem className={classes.listItem}>
               <Grid item xs={12}>
-                <Typography className={classes.listItemTypography}>
+                <Typography
+                  className={classes.listItemTypography}
+                  align="center"
+                >
                   {"" || props.user["custom:address"]}
                 </Typography>
               </Grid>
             </ListItem>
             <ListItem className={classes.listItem}>
               <Grid item xs={12}>
-                <Typography className={classes.listItemTypography}>
+                <Typography
+                  className={classes.listItemTypography}
+                  align="center"
+                >
                   {"" || props.user["custom:zipCode"]}{" "}
                   {"" || props.user["custom:city"]}
                 </Typography>
@@ -104,7 +114,10 @@ const UserAddressComponent = props => {
             </ListItem>
             <ListItem className={classes.listItem}>
               <Grid item xs={12}>
-                <Typography className={classes.listItemTypography}>
+                <Typography
+                  className={classes.listItemTypography}
+                  align="center"
+                >
                   {"" || props.user["custom:phone"]}
                 </Typography>
               </Grid>
@@ -120,7 +133,7 @@ const UserAddressComponent = props => {
       </Grid>
       <form noValidate onSubmit={handleSubmit} ref={formRef} hidden={true}>
         <Grid container spacing={5} className={classes.formContainer}>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <TextField
               name="custom:firstName"
               value={values["custom:firstName"]}
@@ -135,7 +148,7 @@ const UserAddressComponent = props => {
               fullWidth
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <TextField
               name="custom:address"
               value={values["custom:address"]}
@@ -149,7 +162,7 @@ const UserAddressComponent = props => {
               fullWidth
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <TextField
               name="custom:lastName"
               value={values["custom:lastName"]}
@@ -163,7 +176,7 @@ const UserAddressComponent = props => {
               fullWidth
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <TextField
               name="custom:zipCode"
               value={values["custom:zipCode"]}
@@ -177,7 +190,7 @@ const UserAddressComponent = props => {
               fullWidth
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <TextField
               name="custom:phone"
               value={values["custom:phone"]}
@@ -191,7 +204,7 @@ const UserAddressComponent = props => {
               fullWidth
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <TextField
               name="custom:city"
               value={values["custom:city"]}

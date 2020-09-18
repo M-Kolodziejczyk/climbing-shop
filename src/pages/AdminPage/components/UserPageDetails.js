@@ -61,43 +61,45 @@ const UserPageDetails = props => {
 
   return (
     <ListItem divider>
-      <Grid item xs={2}>
-        <ListItemText>{label && label}</ListItemText>
+      <Grid item container>
+        <Grid item xs={12} md={2}>
+          <ListItemText>{label && label}</ListItemText>
+        </Grid>
+        <Grid item xs={12} md={8} ref={userEl}>
+          <ListItemText>{userData && userData}</ListItemText>
+        </Grid>
+        {props.edit && !props.passwordForm && (
+          <form
+            className={classes.form}
+            noValidate
+            autoComplete="off"
+            onSubmit={handleForm}
+          >
+            <TextField
+              name={props.attributeName}
+              className="input"
+              error={errors[props.attributeName] ? true : false}
+              helperText={"" || errors[props.attributeName]}
+              value={values[props.attributeName]}
+              onChange={handleChange}
+              ref={inputEl}
+              hidden={true}
+              autoFocus
+            />
+            <Grid item xs={2}>
+              <ListItemSecondaryAction>
+                <Button onClick={handleFormClick} ref={editBtn}>
+                  <EditIcon className={classes.editBtn} />
+                  <ListItemText>Edit</ListItemText>
+                </Button>
+                <Button type="submit" ref={saveBtn} hidden={true}>
+                  <ListItemText>Save</ListItemText>
+                </Button>
+              </ListItemSecondaryAction>
+            </Grid>
+          </form>
+        )}
       </Grid>
-      <Grid item xs={8} ref={userEl}>
-        <ListItemText>{userData && userData}</ListItemText>
-      </Grid>
-      {props.edit && !props.passwordForm && (
-        <form
-          className={classes.form}
-          noValidate
-          autoComplete="off"
-          onSubmit={handleForm}
-        >
-          <TextField
-            name={props.attributeName}
-            className="input"
-            error={errors[props.attributeName] ? true : false}
-            helperText={"" || errors[props.attributeName]}
-            value={values[props.attributeName]}
-            onChange={handleChange}
-            ref={inputEl}
-            hidden={true}
-            autoFocus
-          />
-          <Grid item xs={2}>
-            <ListItemSecondaryAction>
-              <Button onClick={handleFormClick} ref={editBtn}>
-                <EditIcon className={classes.editBtn} />
-                <ListItemText>Edit</ListItemText>
-              </Button>
-              <Button type="submit" ref={saveBtn} hidden={true}>
-                <ListItemText>Save</ListItemText>
-              </Button>
-            </ListItemSecondaryAction>
-          </Grid>
-        </form>
-      )}
     </ListItem>
   );
 };

@@ -19,7 +19,8 @@ import {
   GET_ORDER,
   ADD_TO_USER,
   USER_ERROR,
-  USER_LOADING
+  USER_LOADING,
+  GET_USER
 } from "../types";
 import axios from "axios";
 import { Storage } from "aws-amplify";
@@ -184,7 +185,14 @@ export const addToOrder = data => async dispatch => {
 
   try {
     await axios.post(`${config.api.invokeUrl}/orders/${data.id}/`, data);
-    dispatch(addToUser({ id: data.userId, orders: data.id }));
+    let res = await axios.get(`${config.api.invokeUrl}/user/${data.userId}/`);
+    let orders = [];
+    if (res.data !== "") {
+      orders = [...res.data.orders, data.id];
+    } else {
+      orders = [data.id];
+    }
+    dispatch(addToUser({ id: data.userId, orders: orders }));
     dispatch(removeBasket(data.email));
     dispatch({
       type: ADD_TO_ORDER,
@@ -193,6 +201,23 @@ export const addToOrder = data => async dispatch => {
   } catch (error) {
     dispatch({
       type: ORDER_ERROR,
+      payload: error
+    });
+  }
+};
+
+export const getUser = id => async dispatch => {
+  dispatch(setUserLoading());
+
+  try {
+    const res = await axios.get(`${config.api.invokeUrl}/user/${id}/`);
+    dispatch({
+      type: GET_USER,
+      payload: res.data
+    });
+  } catch (error) {
+    dispatch({
+      type: USER_ERROR,
       payload: error
     });
   }
