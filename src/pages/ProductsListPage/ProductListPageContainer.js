@@ -44,7 +44,7 @@ const ProductListPageContainer = props => {
         <Typography variant="h2" component="h1" className={classes.header}>
           {category.toUpperCase()}
         </Typography>
-        <Grid container>
+        <Grid container spacing={2}>
           {products &&
             products.length > 0 &&
             !loading &&

@@ -15,16 +15,15 @@ import {
 
 const useStyles = makeStyles(theme => ({
   productBox: {
-    flex: "0 0 24%",
-    boxShadow: "0 0 12px #aaa",
     marginBottom: "40px",
-    transition: "box-shadow .3s ease-in-out",
-    position: "relative",
-    margin: "0 5px",
     textDecoration: "none",
+    maxWidth: "480px",
+    justifyContent: "center",
+    [theme.breakpoints.up("sm")]: {
+      justifyContent: "flex-start"
+    },
     "&:hover": {
-      textDecoration: "none",
-      boxShadow: "0 0 12px 0 rgba(0, 0, 0, 0.8)"
+      textDecoration: "none"
     }
   },
 
@@ -33,6 +32,19 @@ const useStyles = makeStyles(theme => ({
     "&:hover": {
       textDecoration: "none"
     }
+  },
+
+  card: {
+    transition: "box-shadow .3s ease-in-out",
+    boxShadow: "0 0 12px #aaa",
+    position: "relative",
+    "&:hover": {
+      boxShadow: "0 0 12px 0 rgba(0, 0, 0, 0.8)"
+    }
+  },
+
+  cardContent: {
+    paddingTop: "25px"
   },
 
   label: {
@@ -44,6 +56,7 @@ const useStyles = makeStyles(theme => ({
     top: "0",
     right: "0"
   },
+
   productManufacturer: {
     fontSize: "14px",
     margin: "10px 0",
@@ -93,10 +106,10 @@ const ProductItem = ({ product }) => {
   const discPrice = discountPrice(product.price, product.discount);
 
   return (
-    <Grid item xs={3} className={classes.productBox}>
+    <Grid item xs={12} sm={6} md={4} lg={3} className={classes.productBox}>
       <Link to={`/products/${product.id}`} className={classes.link}>
-        <Card>
-          <CardContent>
+        <Card className={classes.card}>
+          <CardContent className={classes.cardContent}>
             {product.discount !== "0" ? (
               <Typography className={classes.label}>
                 -{product.discount}%

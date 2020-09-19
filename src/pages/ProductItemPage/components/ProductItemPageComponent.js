@@ -74,6 +74,9 @@ const useStyles = makeStyles(theme => ({
   save: {
     color: "#ff0000"
   },
+  description: {
+    wordBreak: "break-all"
+  },
   formContainer: {
     marginTop: "30px"
   },
@@ -133,6 +136,9 @@ const useStyles = makeStyles(theme => ({
   },
   alert: {
     width: "100%"
+  },
+  longDescriptionContent: {
+    wordBreak: "break-all"
   }
 }));
 
@@ -231,7 +237,11 @@ const ProductItemPageComponent = props => {
               </Fragment>
             )}
           </Grid>
-          <Typography variant="body1" align="justify">
+          <Typography
+            variant="body1"
+            align="justify"
+            className={classes.description}
+          >
             {product.description}
           </Typography>
           <form onSubmit={handleSubmit}>
@@ -282,7 +292,11 @@ const ProductItemPageComponent = props => {
           <Typography variant="h4" gutterBottom>
             Description:
           </Typography>
-          <Typography variant="body1" align="justify">
+          <Typography
+            variant="body1"
+            align="justify"
+            className={classes.longDescriptionContent}
+          >
             {product.longDescription}
           </Typography>
         </Grid>

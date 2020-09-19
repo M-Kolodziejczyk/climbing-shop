@@ -16,7 +16,7 @@ import ForgotPasswordVerificationPageContainer from "./pages/ForgotPasswordVerif
 import ChangePasswordConfirmationPageComponent from "./pages/ChangePasswordConfirmationPage/ChangePasswordConfirmationPageContainer";
 import EditProductPageContainer from "./pages/EditProductPage/EditProductPageContainer";
 import ProductItemPageContainer from "./pages/ProductItemPage/ProductItemPageContainer";
-import WorkingPageContainer from "./pages/workingPage/WorkingPageContainer";
+// import WorkingPageContainer from "./pages/workingPage/WorkingPageContainer";
 import NotFoundPageContainer from "./pages/NotFoundPage/NotFoundPageContainer";
 import BasketPageContainer from "./pages/BasketPage/BasketPageContainer";
 import CheckoutPageContainer from "./pages/CheckoutPage/CheckoutPageContainer";
@@ -72,7 +72,7 @@ const App = () => {
           component={ChangePasswordConfirmationPageComponent}
         />
         <Route exact path="/products/category/:category" component={Products} />
-        <Route exact path="/working" component={WorkingPageContainer} />
+        {/* <Route exact path="/working" component={WorkingPageContainer} /> */}
         <Route
           exact
           path="/products/:id"
