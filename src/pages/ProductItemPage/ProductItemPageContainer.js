@@ -15,6 +15,9 @@ const ProductItemPageContainer = props => {
   const userGroups = useSelector(state => state.auth.userGroups);
   const product = useSelector(state => state.product.product);
   const basket = useSelector(state => state.product.basket);
+  const productToBasketSuccess = useSelector(
+    state => state.product.productToBasketSuccess
+  );
 
   useEffect(() => {
     dispatch(setLoading());
@@ -47,6 +50,7 @@ const ProductItemPageContainer = props => {
           handleSubmit={handleSubmit}
           errors={errors}
           userGroups={userGroups}
+          productToBasketSuccess={productToBasketSuccess}
         />
       ) : (
         <div className="beforeFooterHigh">

@@ -38,7 +38,8 @@ const initialState = {
   user: null,
   userError: null,
   userLoading: false,
-  orderSuccess: false
+  orderSuccess: false,
+  productToBasketSuccess: false
 };
 
 export default (state = initialState, action) => {
@@ -46,7 +47,8 @@ export default (state = initialState, action) => {
     case SET_LOADING:
       return {
         ...state,
-        loading: true
+        loading: true,
+        productToBasketSuccess: false
       };
     case PRODUCT_ERROR:
       return {
@@ -97,7 +99,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         basketLoading: false,
-        basket: action.payload
+        basket: action.payload,
+        productToBasketSuccess: true
       };
     case REMOVE_FROM_BASKET:
       return {
@@ -121,6 +124,7 @@ export default (state = initialState, action) => {
     case BASKET_LOADING: {
       return {
         ...state,
+        productToBasketSuccess: false,
         basketLoading: true
       };
     }

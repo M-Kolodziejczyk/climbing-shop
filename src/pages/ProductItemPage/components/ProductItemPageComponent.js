@@ -163,10 +163,17 @@ function PropertiesDisplay({ properties }) {
 }
 
 const ProductItemPageComponent = props => {
-  const { product, amountChange, amount, handleSubmit, errors } = props;
+  const {
+    product,
+    amountChange,
+    amount,
+    handleSubmit,
+    errors,
+    productToBasketSuccess
+  } = props;
   const classes = useStyles();
   const [basketError, setBasketError] = useState(errors);
-
+  const [basketSuccess, setBasketSuccess] = useState(productToBasketSuccess);
   const discPrice = discountPrice(product.price, product.discount);
 
   useEffect(() => {
@@ -176,6 +183,14 @@ const ProductItemPageComponent = props => {
     }, 5000);
     return () => clearTimeout(timer);
   }, [errors]);
+
+  useEffect(() => {
+    setBasketSuccess(productToBasketSuccess);
+    const timer = setTimeout(() => {
+      setBasketSuccess(false);
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [productToBasketSuccess]);
 
   const handleClickMore = () => {
     amountChange(amount + 1);
@@ -275,12 +290,20 @@ const ProductItemPageComponent = props => {
                 </Button>
               </Grid>
               <Grid item xs={12}>
-                {Object.keys(basketError).length > 0 ? (
+                {Object.keys(basketError).length > 0 && (
                   <Alert className={classes.alert} severity="warning">
                     {basketError.basket}
                   </Alert>
-                ) : (
+                )}
+
+                {Object.keys(basketError).length === 0 && !basketSuccess && (
                   <div className={classes.alertHandler}></div>
+                )}
+
+                {basketSuccess && (
+                  <Alert className={classes.alert} severity="success">
+                    Product added to basket.
+                  </Alert>
                 )}
               </Grid>
             </Grid>
