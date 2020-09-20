@@ -28,3 +28,7 @@ button {
 .beforeFooterElement {
   min-height: calc(50vh - 70px);
 }
+
+.carousel {
+  margin-top: 50px;
+}
