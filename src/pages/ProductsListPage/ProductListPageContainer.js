@@ -23,7 +23,7 @@ const ProductListPageContainer = props => {
   const dispatch = useDispatch();
   const products = useSelector(state => state.product.products);
   const loading = useSelector(state => state.product.loading);
-  const categories = ["clothing", "shoes", "climbing", "backpacks"];
+  const categories = ["clothes", "shoes", "climbing", "backpacks"];
   const category = props.match.params.category;
 
   if (!categories.includes(category)) {

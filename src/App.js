@@ -9,7 +9,6 @@ import SignIn from "./pages/SignInPage/SignInPageContainer";
 import ForgotPassword from "./pages/ForgotPasswordPage/ForgotPasswordContainer";
 import WelcomePageContainer from "./pages/WelcomePage/WelcomePageContainer";
 import UserPageContainer from "./pages/AdminPage/UserPageContainer";
-// import ProductsPageContainer from "./pages/ProductsPage/ProductsPageContainer";
 import ProductFormPageContainer from "./pages/ProductFormPage/ProductFormPageContainer";
 import ForgotPasswordConfirmationPageContainer from "./pages/ForgotPasswordConfirmationPage/ForgotPasswordConfirmationPageContainer";
 import ForgotPasswordVerificationPageContainer from "./pages/ForgotPasswordVerificationPage/ForgotPasswordVerificationPageContainer";
@@ -55,7 +54,6 @@ const App = () => {
           path="/user/checkout"
           component={CheckoutPageContainer}
         />
-        {/* <Route exact path="/products" component={ProductsPageContainer} /> */}
         <Route
           exact
           path="/forgot-password-email"

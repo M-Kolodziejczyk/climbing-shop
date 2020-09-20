@@ -32,7 +32,7 @@ const Navbar = () => {
       <Container maxWidth="lg">
         <Grid container justifyContent="space-between">
           <Grid item xs={12} sm={3} className={classes.linkItem}>
-            <Link className={classes.link} to="/products/category/clothing">
+            <Link className={classes.link} to="/products/category/clothes">
               Clothing
             </Link>
           </Grid>
