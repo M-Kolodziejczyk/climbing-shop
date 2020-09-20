@@ -1,5 +1,5 @@
 import {
-  SET_LOADING,
+  SET_LOADING_PRODUCT,
   PRODUCT_ERROR,
   GET_PRODUCTS_BY_CATEGORY,
   ADD_PRODUCT,
@@ -16,7 +16,6 @@ import {
   ORDER_ERROR,
   ORDER_LOADING,
   ADD_TO_ORDER,
-  GET_ORDER,
   ADD_TO_USER,
   USER_LOADING,
   USER_ERROR,
@@ -44,7 +43,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case SET_LOADING:
+    case SET_LOADING_PRODUCT:
       return {
         ...state,
         loading: true,

@@ -1,5 +1,5 @@
 import {
-  SET_LOADING,
+  SET_LOADING_PRODUCT,
   PRODUCT_ERROR,
   GET_PRODUCTS_BY_CATEGORY,
   ADD_PRODUCT,
@@ -16,7 +16,6 @@ import {
   ORDER_ERROR,
   ORDER_LOADING,
   ADD_TO_ORDER,
-  GET_ORDER,
   ADD_TO_USER,
   USER_ERROR,
   USER_LOADING,
@@ -242,7 +241,7 @@ export const addToUser = data => async dispatch => {
 
 export const setLoading = () => {
   return {
-    type: SET_LOADING
+    type: SET_LOADING_PRODUCT
   };
 };
 

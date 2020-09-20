@@ -27,6 +27,8 @@ const CheckoutPageContainer = () => {
     if (orderSuccess && !orderLoading && !userLoading && !basketLoading) {
       history.push("/user/order-complete");
     }
+
+    // eslint-disable-next-line
   }, [orderSuccess, orderLoading, userLoading, basketLoading]);
 
   return (

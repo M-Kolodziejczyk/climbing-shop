@@ -17,6 +17,7 @@ export const LOGIN_ERROR = "LOGIN_ERROR";
 
 // Product Types
 export const PRODUCT_ERROR = "PRODUCT_ERROR";
+export const SET_LOADING_PRODUCT = "SET_LOADING_PRODUCT";
 export const GET_PRODUCTS_BY_CATEGORY = "GET_PRODUCTS_BY_CATEGORY";
 export const ADD_PRODUCT = "ADD_PRODUCT";
 export const FORM_LOADING = "FORM_LOADING";
