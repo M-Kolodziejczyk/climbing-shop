@@ -19,7 +19,8 @@ import {
   ADD_TO_USER,
   USER_ERROR,
   USER_LOADING,
-  GET_USER
+  GET_USER,
+  GET_ORDER
 } from "../types";
 import axios from "axios";
 import { Storage } from "aws-amplify";
@@ -196,6 +197,24 @@ export const addToOrder = data => async dispatch => {
     dispatch({
       type: ADD_TO_ORDER,
       payload: data
+    });
+  } catch (error) {
+    dispatch({
+      type: ORDER_ERROR,
+      payload: error
+    });
+  }
+};
+
+export const getOrder = id => async dispatch => {
+  dispatch(setOrderLoading());
+
+  try {
+    const res = await axios.post(`${config.api.invokeUrl}/orders/${id}/`);
+
+    dispatch({
+      type: GET_ORDER,
+      payload: res.data
     });
   } catch (error) {
     dispatch({

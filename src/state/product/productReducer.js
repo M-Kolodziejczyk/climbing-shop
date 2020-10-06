@@ -19,7 +19,8 @@ import {
   ADD_TO_USER,
   USER_LOADING,
   USER_ERROR,
-  GET_USER
+  GET_USER,
+  GET_ORDER
 } from "../types";
 
 const initialState = {
@@ -38,7 +39,8 @@ const initialState = {
   userError: null,
   userLoading: false,
   orderSuccess: false,
-  productToBasketSuccess: false
+  productToBasketSuccess: false,
+  completeOrder: null
 };
 
 export default (state = initialState, action) => {
@@ -144,6 +146,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         orderLoading: true
+      };
+    case GET_ORDER:
+      return {
+        ...state,
+        orderLoading: false,
+        completeOrder: action.payload
       };
     case ORDER_ERROR:
       return {
