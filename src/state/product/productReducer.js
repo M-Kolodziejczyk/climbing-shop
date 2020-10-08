@@ -20,7 +20,9 @@ import {
   USER_LOADING,
   USER_ERROR,
   GET_USER,
-  GET_ORDER
+  GET_ORDERS,
+  CLEAN_ORDERS,
+  ORDER_SUCCESS
 } from "../types";
 
 const initialState = {
@@ -35,12 +37,14 @@ const initialState = {
   order: null,
   orderLoading: false,
   orderError: null,
-  user: null,
+  orders: {},
+  user: {},
   userError: null,
   userLoading: false,
   orderSuccess: false,
   productToBasketSuccess: false,
-  completeOrder: null
+  completeOrder: null,
+  ordersSuccess: false
 };
 
 export default (state = initialState, action) => {
@@ -145,13 +149,29 @@ export default (state = initialState, action) => {
     case ORDER_LOADING:
       return {
         ...state,
-        orderLoading: true
+        orderLoading: true,
+        ordersSuccess: false
       };
-    case GET_ORDER:
+    case GET_ORDERS:
       return {
         ...state,
         orderLoading: false,
-        completeOrder: action.payload
+        completeOrder: action.payload,
+        orders: {
+          ...state.orders,
+          [action.payload.id]: action.payload
+        }
+      };
+    case CLEAN_ORDERS:
+      return {
+        ...state,
+        orders: {}
+      };
+    case ORDER_SUCCESS:
+      return {
+        ...state,
+        orderLoading: false,
+        ordersSuccess: true
       };
     case ORDER_ERROR:
       return {

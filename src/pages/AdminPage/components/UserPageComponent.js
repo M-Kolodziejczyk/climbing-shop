@@ -7,6 +7,7 @@ import Navbar from "../../../common/components/Navbar";
 import UserPageDetails from "./UserPageDetails";
 import PasswordComponent from "./PasswordComponent";
 import UserAddressComponent from "./UserAddressComponent";
+import UserOrdersComponent from "./UserOrdersComponent";
 import Spinner from "../../../common/components/Spinner";
 import { updateUser, changePassword } from "../../../state/auth/authActions";
 import {
@@ -87,6 +88,9 @@ const useStyles = makeStyles(theme => ({
       textDecoration: "none",
       color: "#ffffff"
     }
+  },
+  ordersHeader: {
+    marginTop: "20px"
   }
 }));
 
@@ -176,7 +180,36 @@ const UserPageComponent = props => {
                   <UserAddressComponent user={props.user} />
                 </TabPanel>
                 <TabPanel value={value} index={2}>
-                  Orders (Not ready yet)
+                  <Grid item container xs={12}>
+                    <Grid item xs={12}>
+                      <Typography variant="h4">Your orders:</Typography>
+                    </Grid>
+                    <Grid
+                      item
+                      container
+                      xs={12}
+                      className={classes.ordersHeader}
+                    >
+                      <Grid item xs={3}>
+                        <Typography variant="h5">Order ID:</Typography>
+                      </Grid>
+                      <Grid item xs={3}>
+                        <Typography variant="h5">Date:</Typography>
+                      </Grid>
+                      <Grid item xs={3}>
+                        <Typography variant="h5">Price:</Typography>
+                      </Grid>
+                      <Grid item xs={3}>
+                        <Typography variant="h5">Status</Typography>
+                      </Grid>
+                    </Grid>
+                    {Object.keys(props.orders).map((order, key) => (
+                      <UserOrdersComponent
+                        order={props.orders[order]}
+                        key={key}
+                      />
+                    ))}
+                  </Grid>
                 </TabPanel>
                 {props.userGroups.includes("AdminGroup") && (
                   <TabPanel value={value} index={3}>

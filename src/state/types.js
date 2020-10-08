@@ -37,7 +37,9 @@ export const BASKET_ERROR = "BASKET_ERROR";
 export const ADD_TO_ORDER = "ADD_TO_ORDER";
 export const ORDER_ERROR = "ORDER_ERROR";
 export const ORDER_LOADING = "ORDER_LOADING";
-export const GET_ORDER = "GET_ORDER";
+export const GET_ORDERS = "GET_ORDERS";
+export const CLEAN_ORDERS = "CLEAN_ORDERS";
+export const ORDER_SUCCESS = "ORDER_SUCCESS";
 
 // USer Types
 export const ADD_TO_USER = "ADD_TO_USER";

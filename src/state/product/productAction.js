@@ -20,7 +20,8 @@ import {
   USER_ERROR,
   USER_LOADING,
   GET_USER,
-  GET_ORDER
+  GET_ORDERS,
+  CLEAN_ORDERS
 } from "../types";
 import axios from "axios";
 import { Storage } from "aws-amplify";
@@ -206,15 +207,17 @@ export const addToOrder = data => async dispatch => {
   }
 };
 
-export const getOrder = id => async dispatch => {
-  dispatch(setOrderLoading());
+export const getOrders = ids => async dispatch => {
+  dispatch(cleanOrders());
 
   try {
-    const res = await axios.post(`${config.api.invokeUrl}/orders/${id}/`);
-
-    dispatch({
-      type: GET_ORDER,
-      payload: res.data
+    dispatch(setOrderLoading());
+    await ids.map(async value => {
+      const res = await axios.get(`${config.api.invokeUrl}/orders/${value}/`);
+      dispatch({
+        type: GET_ORDERS,
+        payload: res.data
+      });
     });
   } catch (error) {
     dispatch({
@@ -256,6 +259,12 @@ export const addToUser = data => async dispatch => {
       payload: error
     });
   }
+};
+
+export const cleanOrders = () => {
+  return {
+    type: CLEAN_ORDERS
+  };
 };
 
 export const setLoading = () => {
