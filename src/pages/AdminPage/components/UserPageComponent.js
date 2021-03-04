@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect, useRef, Fragment } from "react";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import HeaderContainer from "../../../common/containers/HeaderContainer";
@@ -98,6 +98,9 @@ const UserPageComponent = props => {
   const classes = useStyles();
   const [value, setValue] = useState(0);
   const [user, setUser] = useState(null);
+  const orderElement = useRef(null);
+
+  console.log(orderElement);
 
   useEffect(() => {
     setUser(props.user);
@@ -207,6 +210,7 @@ const UserPageComponent = props => {
                       <UserOrdersComponent
                         order={props.orders[order]}
                         key={key}
+                        ref={orderElement}
                       />
                     ))}
                   </Grid>
